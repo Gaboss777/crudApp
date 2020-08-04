@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {Col, Row, Container} from 'react-bootstrap';
-import { ViewTablet } from './components/tabletInfo';
-import { FormUsers } from './components/addUser';
-import { EditForm } from './components/editUser';
+import { ViewTablet } from './tabletInfo';
+import { FormUsers } from './addUser';
+import { EditForm } from './editUser';
 
 const crudApp =()=> {
     const userData = []
