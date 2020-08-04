@@ -1,7 +1,7 @@
 import React from 'react';
 import {Table, Button} from 'react-bootstrap';
 
-export const ViewTablet =(props)=>{
+export const ViewTablet =({users, editRow, deleteUser})=>{
     return(
         <Table responsive >
             <thead>
@@ -15,8 +15,8 @@ export const ViewTablet =(props)=>{
                 </tr>
             </thead>
             <tbody>
-                {props.users.length > 0 ? (
-                    props.users.map((user) =>
+                {users.length > 0 ? (
+                    users.map((user) =>
                         <tr key={user.id}>
                             <td>{user.id}</td>
                             <td>{user.name}</td>
@@ -27,11 +27,11 @@ export const ViewTablet =(props)=>{
                                 <Button 
                                     variant='success' 
                                     className='mx-1'
-                                    onClick={() => props.editRow(user)}>Edit</Button>
+                                    onClick={() => editRow(user.id)}>Edit</Button>
                                 <Button
                                     variant='danger'
                                     className='mx-1'
-                                    onClick={() => props.deleteUser(user.id)}>Delete</Button>
+                                    onClick={() => deleteUser(user.id)}>Delete</Button>
                             </td>
                         </tr>
                     )

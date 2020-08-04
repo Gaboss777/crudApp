@@ -1,35 +1,12 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import {Col, Row, Container} from 'react-bootstrap';
 import { ViewTablet } from './tabletInfo';
 import { FormUsers } from './addUser';
 import { EditForm } from './editUser';
+import { CrudFunction } from '../helpers/funcionesCrud';
 
-const crudApp =()=> {
-    const userData = []
-
-    const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
-    const [users, setUsers] = useState(userData)
-    const [edit, setEdit] = useState(false)
-    const [userActual, setUserActual] = useState(initialFormState)
-
-    const addUser = (user) => {
-        user.id = users.length + 1
-        setUsers([...users, user])
-    }
-
-    const deleteUser = (id) => {
-        setUsers(users.filter((user) => user.id !== id))
-    }
-
-    const editRow = (user) => {
-        setEdit(true)
-        setUserActual({id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation})
-    }
-
-    const updateUser = (id, updateUser) => {
-        setEdit(false)
-        setUsers(users.map((user) => (user.id === id ? updateUser : user)))
-    }
+const CrudApp =()=> {
+    const { users, edit, setEdit, userActual, addUser, deleteUser, editRow, updateUser } = CrudFunction()
     return (
         <Container fluid >
             <Row className='my-3'>
@@ -68,4 +45,4 @@ const crudApp =()=> {
     )
 }
 
-export default crudApp;
+export default CrudApp;
