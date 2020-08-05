@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { AddUser } from '../helpers/funcionesCrud';
 
 export const FormUsers = ({addUser}) => {
 
-    const { user, handleInputChange, handleSubmit } = AddUser({addUser});
+    const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
+    const [user, setUser] = useState(initialFormState)
+
+    const handleInputChange = event => {
+        const {name, value} = event.target
+        setUser({...user, [name]: value})
+    }
+
+    const handleSubmit = event => {
+        event.preventDefault()
+        if (!user.name || !user.lastName || !user.idDocument || !user.zoneLocation) return
+
+        addUser(user)
+        setUser(initialFormState)
+    }
+
     return(
         <Form onSubmit={handleSubmit} >
             <Row>

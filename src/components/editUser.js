@@ -1,10 +1,24 @@
-import React  from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Col, Row, Button} from 'react-bootstrap';
-import { EditUser } from '../helpers/funcionesCrud';
 
-export const EditForm = ({setEdit}) => {
+export const EditForm = ({setEdit, userActual, updateUser}) => {
 
-    const { user, handleInputChange, handleSubmit } = EditUser()
+    const [user, setUser] = useState(userActual)
+
+    const handleInputChange = event => {
+        const {name, value} = event.target
+        setUser({...user, [name]: value})
+    }
+
+    const handleSubmit = ({event, updateUser}) => {
+        event.preventDefault()
+        updateUser(user.id, user)
+    }
+
+    useEffect(() => {
+        setUser(userActual)
+    }, [userActual] )
+
     return(
         <Form onSubmit={handleSubmit} >
             <Row>
@@ -63,7 +77,7 @@ export const EditForm = ({setEdit}) => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Button variant='primary' size='lg' type='submit'>Editar</Button>
+            <Button variant='primary' size='lg' type='submit' className='mx-2' >Editar</Button>
             <Button variant='danger' size='lg' type='submit' onClick={() => setEdit(false)} >Cancelar</Button>
         </Form>
     )
