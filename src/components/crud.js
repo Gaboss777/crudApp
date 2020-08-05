@@ -28,9 +28,13 @@ const CrudApp =()=> {
         setUsers(users.map((user) => (user.id === id ? updateUser : user)))
     }
 
-    const editRow = (user) => {
+    /* Aqui no estas recibiendo el user, estas recibiendo el ID del user, te cambio el nombre del argumento para que se entienda mejor */
+    const editRow = (userID) => {
+        let user = users.find(x=>x.id===userID) // Usamos el find para conseguir el elemento cuyo ID es igual al que recibe nuestra funcion
+      
         setEdit(true)
-        setUserActual({id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation})
+        /* Ya conseguimos el user no hace falta destructurar, lo podemos pasar completo */
+        setUserActual(user)
     }
 
     return (
