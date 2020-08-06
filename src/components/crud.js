@@ -26,12 +26,6 @@ const CrudApp =()=> {
         setUsers(users.map((user) => (user.id === id ? updateUser : user)))
     }
 
-    const editRow = (userID) => {
-        let user = users.find(x=>x.id===userID)
-        setEdit(true)
-        setUserActual(user)
-    }
-
     return (
         <Container fluid >
             <Row className='my-3'>
