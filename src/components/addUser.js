@@ -24,8 +24,8 @@ export const FormUsers = ({addUser}) => {
             <Row>
                 <Col>
                     <Form.Group as={Row} >
-                        <Form.Label column sm='4' >Nombre</Form.Label>
-                        <Col sm='8'>
+                        <Form.Label column sm='3' >Nombre</Form.Label>
+                        <Col sm='9'>
                             <Form.Control
                                 type='text'
                                 name='name'
@@ -37,8 +37,8 @@ export const FormUsers = ({addUser}) => {
                 </Col>
                 <Col>
                     <Form.Group as={Row} >
-                        <Form.Label column sm='4' >Apellido</Form.Label>
-                        <Col sm='8'>
+                        <Form.Label column sm='3' >Apellido</Form.Label>
+                        <Col sm='9'>
                             <Form.Control
                                 type='text'
                                 name='lastName'
@@ -52,8 +52,8 @@ export const FormUsers = ({addUser}) => {
             <Row>
                 <Col>
                     <Form.Group as={Row} >
-                        <Form.Label column sm='4' >CI/RIF</Form.Label>
-                        <Col sm='8'>
+                        <Form.Label column sm='3' >CI/RIF</Form.Label>
+                        <Col sm='9'>
                             <Form.Control
                                 type='number'
                                 name='idDocument'
@@ -65,8 +65,8 @@ export const FormUsers = ({addUser}) => {
                 </Col>
                 <Col>
                     <Form.Group as={Row} >
-                        <Form.Label column sm='4' >Zona</Form.Label>
-                        <Col sm='8'>
+                        <Form.Label column sm='3' >Zona</Form.Label>
+                        <Col sm='9'>
                             <Form.Control
                                 type='text'
                                 name='zoneLocation'
@@ -77,7 +77,7 @@ export const FormUsers = ({addUser}) => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Button variant='primary' size='lg' type='submit'>Agregar</Button>
+            <Button variant='outline-primary' size='lg' type='submit' >Agregar</Button>
         </Form>
     )
 }

@@ -5,14 +5,12 @@ import { FormUsers } from './addUser';
 import { EditForm } from './editUser';
 
 const CrudApp =()=> {
-    const userData = [
-        { id: 1, name:'Gabriel', lastName:'Palacios', idDocument:'654654', zoneLocation:'Caracas'}
-    ]
+    const userData = []
 
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
     const [users, setUsers] = useState(userData)
-    const [edit, setEdit] = useState(false)
     const [userActual, setUserActual] = useState(initialFormState)
+    const [edit, setEdit] = useState(false)
 
     const addUser = (user) => {
         user.id = users.length + 1
@@ -28,9 +26,10 @@ const CrudApp =()=> {
         setUsers(users.map((user) => (user.id === id ? updateUser : user)))
     }
 
-    const editRow = (user) => {
+    const editRow = (userID) => {
+        let user = users.find(x=>x.id===userID)
         setEdit(true)
-        setUserActual({id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation})
+        setUserActual(user)
     }
 
     return (
@@ -38,22 +37,22 @@ const CrudApp =()=> {
             <Row className='my-3'>
                 <h1 className='mx-auto'>PROYECTO CRUD</h1>
             </Row>
-            <Row className='text-center'>
+            <Row className='text-center mx-auto'>
             {edit ? (
                 <Col>
                     <Col>
                         <h2>Editar Datos</h2>
                     </Col>
-                    <Col>
-                        <EditForm setEdit={setEdit} userActual={userActual} updateUser={updateUser} />
+                    <Col className='my-3'>
+                        <EditForm setEdit={setEdit} userActual={userActual} updateUser={updateUser} edit={edit}/>
                     </Col>
                 </Col>
                 ) : (
                 <Col>
                     <Col>
-                    <h2>Agregar Datos</h2>
+                    <h2>Nuevo usuario</h2>
                     </Col>
-                    <Col>
+                    <Col className='my-3'>
                         <FormUsers addUser={addUser} />
                     </Col>
                 </Col>
@@ -62,7 +61,7 @@ const CrudApp =()=> {
                     <Col>
                         <h2>Datos</h2>
                     </Col>
-                    <Col>
+                    <Col className='my-3'>
                         <ViewTablet users={users} deleteUser={deleteUser} editRow={editRow} />
                     </Col>
                 </Col>

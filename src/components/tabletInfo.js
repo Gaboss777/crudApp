@@ -25,11 +25,11 @@ export const ViewTablet =({users, editRow, deleteUser})=>{
                             <td>{user.zoneLocation}</td>
                             <td>
                                 <Button 
-                                    variant='success' 
+                                    variant='outline-success' 
                                     className='mx-1'
                                     onClick={() => editRow(user.id)}>Edit</Button>
                                 <Button
-                                    variant='danger'
+                                    variant='outline-danger'
                                     className='mx-1'
                                     onClick={() => deleteUser(user.id)}>Delete</Button>
                             </td>

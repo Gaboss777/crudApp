@@ -5,19 +5,19 @@ export const EditForm = ({setEdit, userActual, updateUser}) => {
 
     const [user, setUser] = useState(userActual)
 
+    useEffect(() => {
+        setUser(userActual)
+    }, [] )
+
     const handleInputChange = event => {
         const {name, value} = event.target
         setUser({...user, [name]: value})
     }
 
-    const handleSubmit = ({event, updateUser}) => {
+    const handleSubmit = ({event}) => {
         event.preventDefault()
         updateUser(user.id, user)
     }
-
-    useEffect(() => {
-        setUser(userActual)
-    }, [userActual] )
 
     return(
         <Form onSubmit={handleSubmit} >
@@ -77,8 +77,8 @@ export const EditForm = ({setEdit, userActual, updateUser}) => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Button variant='primary' size='lg' type='submit' className='mx-2' >Editar</Button>
-            <Button variant='danger' size='lg' type='submit' onClick={() => setEdit(false)} >Cancelar</Button>
+            <Button variant='outline-primary' size='lg' type='submit' className='mx-2' >Editar</Button>
+            <Button variant='outline-danger' size='lg' type='submit' onClick={() => setEdit(false)} >Cancelar</Button>
         </Form>
     )
 }
