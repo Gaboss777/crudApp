@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
-export const FormUsers = ({addUser, handleClose, show}) => {
+export const NewUser = ({addUser, handleClose, show}) => {
 
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
 
@@ -38,7 +38,8 @@ export const FormUsers = ({addUser, handleClose, show}) => {
                                         name='name'
                                         placeholder='Ingrese Nombre'
                                         value={user.name}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -51,7 +52,8 @@ export const FormUsers = ({addUser, handleClose, show}) => {
                                         name='lastName'
                                         placeholder='Ingrese Apellido'
                                         value={user.lastName}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -66,7 +68,8 @@ export const FormUsers = ({addUser, handleClose, show}) => {
                                         name='idDocument'
                                         placeholder='Ingrese Cedula o RIF'
                                         value={user.idDocument}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -79,7 +82,8 @@ export const FormUsers = ({addUser, handleClose, show}) => {
                                         name='zoneLocation'
                                         placeholder='Zona donde Vive'
                                         value={user.zoneLocation}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -98,7 +102,7 @@ export const FormUsers = ({addUser, handleClose, show}) => {
     )
 }
 
-export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) => {
+export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, setConfirm}) => {
 
     const [user, setUser] = useState(userActual)
 
@@ -132,7 +136,8 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) =
                                         name='name'
                                         placeholder='Ingrese Nombre'
                                         value={user.name}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -145,7 +150,8 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) =
                                         name='lastName'
                                         placeholder='Ingrese Apellido'
                                         value={user.lastName}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -160,7 +166,8 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) =
                                         name='idDocument'
                                         placeholder='Ingrese Cedula o RIF'
                                         value={user.idDocument}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -173,7 +180,8 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) =
                                         name='zoneLocation'
                                         placeholder='Zona donde Vive'
                                         value={user.zoneLocation}
-                                        onChange={handleInputChange} />
+                                        onChange={handleInputChange}
+                                        />
                                 </Col>
                             </Form.Group>
                         </Col>
@@ -189,6 +197,7 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose, show}) =
                                 className='mx-2'
                                 onClick={() => {
                                     setEdit(false)
+                                    setConfirm(false)
                                     handleClose()
                                 }} >Cancelar</Button>
                         </Col>
@@ -211,19 +220,18 @@ export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton >
-                <Modal.title>Desea borrar los siguientes datos?</Modal.title>
+                <Modal.Title>Desea borrar los siguientes datos?</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} >
                     <Row>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Nombre</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' >Nombre</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         type='text'
                                         name='name'
-                                        placeholder='Ingrese Nombre'
                                         value={userActual.name}
                                         readOnly />
                                 </Col>
@@ -231,12 +239,11 @@ export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show
                         </Col>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Apellido</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' >Apellido</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         type='text'
                                         name='lastName'
-                                        placeholder='Ingrese Apellido'
                                         value={userActual.lastName}
                                         readOnly />
                                 </Col>
@@ -246,12 +253,11 @@ export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show
                     <Row>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >CI/RIF</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' >CI/RIF</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         type='number'
                                         name='idDocument'
-                                        placeholder='Ingrese Cedula o RIF'
                                         value={userActual.idDocument}
                                         readOnly />
                                 </Col>
@@ -259,12 +265,11 @@ export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show
                         </Col>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Zona</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' >Zona</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         type='text'
                                         name='zoneLocation'
-                                        placeholder='Zona donde Vive'
                                         value={userActual.zoneLocation}
                                         readOnly />
                                 </Col>
@@ -273,16 +278,17 @@ export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show
                     </Row>
                     <Row className='justify-content-center'>
                         <Col xs lg='3'>
-                            <Button variant='outline-primary' type='submit' className='mx-2' onClick={handleClose} >Eliminar</Button>
+                            <Button variant='outline-danger' type='submit' className='mx-2' >Eliminar</Button>
                         </Col>
                         <Col xs lg='3'>
-                            <Button 
-                                variant='outline-danger' 
-                                type='submit' 
-                                onClick={()=> {
+                            <Button
+                                variant='outline-dark'
+                                type='submit'
+                                className='mx-2'
+                                onClick={() => {
                                     setConfirm(false)
                                     handleClose()
-                                    }} >Cerrar</Button>
+                                }} >Cancelar</Button>
                         </Col>
                     </Row>
                 </Form>

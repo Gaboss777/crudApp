@@ -1,7 +1,7 @@
 import React from 'react';
 import {Table, Button} from 'react-bootstrap';
 
-export const ViewTablet =({users, editRow, confirmDelete, handleOpen})=>{
+export const ViewTablet =({users, editRow, handleOpen, setEdit})=>{
     return(
         <Table responsive bordered striped >
             <thead>
@@ -26,12 +26,18 @@ export const ViewTablet =({users, editRow, confirmDelete, handleOpen})=>{
                                     variant='outline-success'
                                     className='mx-1'
                                     handleOpen={handleOpen}
-                                    onClick={() => editRow(user)}>Editar</Button>
+                                    onClick={() => { 
+                                        editRow(user)
+                                        setEdit(true)
+                                        }}>Editar</Button>
                                 <Button
                                     variant='outline-danger'
                                     className='mx-1'
                                     handleOpen={handleOpen}
-                                    onClick={() => confirmDelete(user)}>Borrar</Button>
+                                    onClick={() => {
+                                        editRow(user)
+                                        setEdit(false)
+                                        }}>Borrar</Button>
                             </td>
                         </tr>
                     )

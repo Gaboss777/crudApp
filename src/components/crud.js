@@ -1,7 +1,7 @@
 import React, {useState}  from 'react';
 import {Col, Row, Container, Button} from 'react-bootstrap';
 import { ViewTablet } from './tabletInfo';
-import { DeleteUser, EditForm, FormUsers } from './userOperations';
+import { DeleteUser, EditUser, NewUser } from './userOperations';
 
 const CrudApp =()=> {
     /* Data */
@@ -28,15 +28,9 @@ const CrudApp =()=> {
         setUsers([ ...users, user ])
     }
 
-    const confirmDelete = user => {
-        setConfirm(true)
-
-        setUserActual({ id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation })
-        handleOpen()
-    }
-
     const deleteUser = id => {
         setEdit(false)
+        setConfirm(false)
 
         setUsers(users.filter(user => user.id !== id))
     }
@@ -44,15 +38,22 @@ const CrudApp =()=> {
     const updateUser = (id, updateUser) => {
         let update = users.map(user => (user.id === id ? updateUser : user))
         setEdit(false)
+        setConfirm(false)
         setUsers(update)
     }
 
     const editRow = user => {
-        // let user = users.find(x=>x.id===userID) // Se mantiene en el codigo.
-        setEdit(true)
+        let userInfo = { id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation }
 
-        setUserActual({ id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation })
-        handleOpen()
+        if (edit) {
+            setConfirm(false)
+            setUserActual(userInfo)
+            handleOpen()
+        } else {
+            setConfirm(true)
+            setUserActual(userInfo)
+            handleOpen()
+        }
     }
 
     return (
@@ -62,17 +63,13 @@ const CrudApp =()=> {
             </Row>
             <Col>
                 <Button variant='outline-primary' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
-                { confirm ? (
-                    <DeleteUser show={show} handleClose={handleClose} confirm={confirm} userActual={userActual} setConfirm={setConfirm} />
-                ) : (
-                    <div>
-                        {edit ? (
-                            <EditForm show={show} handleClose={handleClose} edit={edit} userActual={userActual} updateUser={updateUser} setEdit={setEdit} />
-                        ) : (
-                            <FormUsers show={show} handleClose={handleClose} addUser={addUser} />
-                        )}
-                    </div>
-                )}
+                <div>{ edit
+                        ?   <EditUser show={show} handleClose={handleClose} userActual={userActual} updateUser={updateUser} setEdit={setEdit} setConfirm={setConfirm} />   :
+                        <div>{ confirm
+                            ?   <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} />
+                            :   <NewUser show={show} handleClose={handleClose} addUser={addUser} />
+                        }</div>
+                }</div>
             </Col>
             <Row className='text-center mx-auto'>
                 <Col>
@@ -80,7 +77,7 @@ const CrudApp =()=> {
                         <h2>Datos</h2>
                     </Col>
                     <Col className='my-3'>
-                        <ViewTablet users={users} editRow={editRow} confirmDelete={confirmDelete}  handleOpen={handleOpen}/>
+                        <ViewTablet users={users} editRow={editRow} setEdit={setEdit} handleOpen={handleOpen}/>
                     </Col>
                 </Col>
             </Row>
