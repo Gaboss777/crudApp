@@ -1,17 +1,26 @@
 import React, {useState}  from 'react';
-import {Col, Row, Container} from 'react-bootstrap';
+import {Col, Row, Container, Button} from 'react-bootstrap';
 import { ViewTablet } from './tabletInfo';
-import { FormUsers } from './addUser';
-import { EditForm } from './editUser';
+import { ModalForm } from './modalForm';
 
 const CrudApp =()=> {
-    const userData = []
+    /* Data */
+    const userData = [
+        { id: 1, name:'Gabriel', lastName:'Palacios', idDocument:'18667937', zoneLocation:'Caracas'}
+    ]
 
+    /* Valores iniciales */
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
     const [users, setUsers] = useState(userData)
     const [userActual, setUserActual] = useState(initialFormState)
     const [edit, setEdit] = useState(false)
+    const [show, setShow] = useState(false)
 
+    /* Funciones Modal Show */
+    const handleClose =()=> setShow(false)
+    const handleOpen =()=> setShow(true)
+
+    /* Funciones acciones */
     const addUser = (user) => {
         user.id = users.length + 1
         setUsers([...users, user])
@@ -30,6 +39,7 @@ const CrudApp =()=> {
         let user = users.find(x=>x.id===userID)
         setEdit(true)
         setUserActual(user)
+        handleOpen()
     }
 
     return (
@@ -37,32 +47,31 @@ const CrudApp =()=> {
             <Row className='my-3'>
                 <h1 className='mx-auto'>PROYECTO CRUD</h1>
             </Row>
-            <Row className='text-center mx-auto'>
-            {edit ? (
-                <Col>
-                    <Col>
-                        <h2>Editar Datos</h2>
-                    </Col>
-                    <Col className='my-3'>
-                        <EditForm setEdit={setEdit} userActual={userActual} updateUser={updateUser} edit={edit}/>
-                    </Col>
-                </Col>
+            <Col>
+                <Button variant='outline-primary' onClick={handleOpen} >Agregar Usuario</Button>
+                {edit ? (
+                    <ModalForm
+                        show={show}
+                        handleClose={handleClose}
+                        edit={edit}
+                        userActual={userActual}
+                        updateUser={updateUser}
+                        setEdit={setEdit} />
                 ) : (
-                <Col>
-                    <Col>
-                    <h2>Nuevo usuario</h2>
-                    </Col>
-                    <Col className='my-3'>
-                        <FormUsers addUser={addUser} />
-                    </Col>
-                </Col>
-            )}
+                    <ModalForm
+                        show={show}
+                        handleClose={handleClose}
+                        addUser={addUser}
+                     />
+                )}
+            </Col>
+            <Row className='text-center mx-auto'>
                 <Col>
                     <Col>
                         <h2>Datos</h2>
                     </Col>
                     <Col className='my-3'>
-                        <ViewTablet users={users} deleteUser={deleteUser} editRow={editRow} />
+                        <ViewTablet users={users} deleteUser={deleteUser} editRow={editRow} handleOpen={handleOpen}/>
                     </Col>
                 </Col>
             </Row>

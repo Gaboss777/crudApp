@@ -1,13 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Form, Col, Row, Button} from 'react-bootstrap';
 
-export const EditForm = ({setEdit, userActual, updateUser}) => {
+export const EditForm = ({setEdit, userActual, updateUser, handleClose}) => {
 
     const [user, setUser] = useState(userActual)
-
-    useEffect(() => {
-        setUser(userActual)
-    }, [] )
 
     const handleInputChange = event => {
         const {name, value} = event.target
@@ -78,7 +74,10 @@ export const EditForm = ({setEdit, userActual, updateUser}) => {
                 </Col>
             </Row>
             <Button variant='outline-primary' size='lg' type='submit' className='mx-2' >Editar</Button>
-            <Button variant='outline-danger' size='lg' type='submit' onClick={() => setEdit(false)} >Cancelar</Button>
+            <Button variant='outline-danger' size='lg' type='submit' onClick={() => {
+                setEdit(false)
+                handleClose()
+                }} >Cancelar</Button>
         </Form>
     )
 }
