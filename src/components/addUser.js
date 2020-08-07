@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
-export const FormUsers = ({closeModal, addUser, handleClose}) => {
+export const FormUsers = ({addUser, handleClose}) => {
 
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
 
@@ -79,8 +79,14 @@ export const FormUsers = ({closeModal, addUser, handleClose}) => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Button variant='outline-primary' size='lg' type='submit' className='mx-2' >Agregar</Button>
-            <Button variant='outline-danger' size='lg' type='submit' onClick={handleClose} >Cerrar</Button>
+            <Row className='justify-content-center'>
+                <Col xs lg='3'>
+                    <Button variant='outline-primary' type='submit' className='mx-2' >Agregar</Button>
+                </Col>
+                <Col xs lg='3'>
+                    <Button variant='outline-danger' type='submit' onClick={handleClose} >Cerrar</Button>
+                </Col>
+            </Row>
         </Form>
     )
 }

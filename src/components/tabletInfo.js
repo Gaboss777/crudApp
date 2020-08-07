@@ -1,12 +1,11 @@
 import React from 'react';
 import {Table, Button} from 'react-bootstrap';
 
-export const ViewTablet =({users, editRow, deleteUser, handleOpen})=>{
+export const ViewTablet =({users, editRow, confirmDelete, handleOpen})=>{
     return(
-        <Table responsive >
+        <Table responsive bordered striped >
             <thead>
                 <tr>
-                    {/* <th>#</th> */}
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>CI/RIF</th>
@@ -18,7 +17,6 @@ export const ViewTablet =({users, editRow, deleteUser, handleOpen})=>{
                 {users.length > 0 ? (
                     users.map(user =>
                         <tr key={user.id}>
-                            {/* <td>{user.id}</td> */}
                             <td>{user.name}</td>
                             <td>{user.lastName}</td>
                             <td>{user.idDocument}</td>
@@ -32,13 +30,14 @@ export const ViewTablet =({users, editRow, deleteUser, handleOpen})=>{
                                 <Button
                                     variant='outline-danger'
                                     className='mx-1'
-                                    onClick={() => deleteUser(user.id)}>Borrar</Button>
+                                    handleOpen={handleOpen}
+                                    onClick={() => confirmDelete(user)}>Borrar</Button>
                             </td>
                         </tr>
                     )
                 ) : (
                     <tr>
-                        <td colSpan={3}>No hay usuarios registrados</td>
+                        <td colSpan={5}>No hay usuarios registrados</td>
                     </tr>
                 )
                 }
