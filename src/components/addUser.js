@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 export const FormUsers = ({closeModal, addUser, handleClose}) => {
 
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
+
     const [user, setUser] = useState(initialFormState)
 
     const handleInputChange = event => {

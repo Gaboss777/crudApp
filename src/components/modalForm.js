@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FormUsers } from './addUser';
 import { EditForm } from './editUser';
 import { Modal } from 'react-bootstrap';

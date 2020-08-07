@@ -6,7 +6,7 @@ export const ViewTablet =({users, editRow, deleteUser, handleOpen})=>{
         <Table responsive >
             <thead>
                 <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>CI/RIF</th>
@@ -16,19 +16,19 @@ export const ViewTablet =({users, editRow, deleteUser, handleOpen})=>{
             </thead>
             <tbody>
                 {users.length > 0 ? (
-                    users.map((user) =>
+                    users.map(user =>
                         <tr key={user.id}>
-                            <td>{user.id}</td>
+                            {/* <td>{user.id}</td> */}
                             <td>{user.name}</td>
                             <td>{user.lastName}</td>
                             <td>{user.idDocument}</td>
                             <td>{user.zoneLocation}</td>
                             <td>
-                                <Button 
-                                    variant='outline-success' 
+                                <Button
+                                    variant='outline-success'
                                     className='mx-1'
                                     handleOpen={handleOpen}
-                                    onClick={() => editRow(user.id)}>Editar</Button>
+                                    onClick={() => editRow(user)}>Editar</Button>
                                 <Button
                                     variant='outline-danger'
                                     className='mx-1'

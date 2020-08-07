@@ -5,13 +5,14 @@ import { ModalForm } from './modalForm';
 
 const CrudApp =()=> {
     /* Data */
-    const userData = [
+    const usersData = [
         { id: 1, name:'Gabriel', lastName:'Palacios', idDocument:'18667937', zoneLocation:'Caracas'}
     ]
 
     /* Valores iniciales */
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
-    const [users, setUsers] = useState(userData)
+
+    const [users, setUsers] = useState(usersData)
     const [userActual, setUserActual] = useState(initialFormState)
     const [edit, setEdit] = useState(false)
     const [show, setShow] = useState(false)
@@ -21,24 +22,28 @@ const CrudApp =()=> {
     const handleOpen =()=> setShow(true)
 
     /* Funciones acciones */
-    const addUser = (user) => {
+    const addUser = user => {
         user.id = users.length + 1
-        setUsers([...users, user])
+        setUsers([ ...users, user ])
     }
 
-    const deleteUser = (id) => {
-        setUsers(users.filter((user) => user.id !== id))
+    const deleteUser = id => {
+        setEdit(false)
+
+        setUsers(users.filter(user => user.id !== id))
     }
 
     const updateUser = (id, updateUser) => {
+        let update = users.map(user => (user.id === id ? updateUser : user))
         setEdit(false)
-        setUsers(users.map((user) => (user.id === id ? updateUser : user)))
+        setUsers(update)
     }
 
-    const editRow = (userID) => {
-        let user = users.find(x=>x.id===userID)
+    const editRow = user => {
+        // let user = users.find(x=>x.id===userID) // Se mantiene en el codigo.
         setEdit(true)
-        setUserActual(user)
+
+        setUserActual({ id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation })
         handleOpen()
     }
 
@@ -71,7 +76,7 @@ const CrudApp =()=> {
                         <h2>Datos</h2>
                     </Col>
                     <Col className='my-3'>
-                        <ViewTablet users={users} deleteUser={deleteUser} editRow={editRow} handleOpen={handleOpen}/>
+                        <ViewTablet users={users} editRow={editRow} deleteUser={deleteUser}  handleOpen={handleOpen}/>
                     </Col>
                 </Col>
             </Row>

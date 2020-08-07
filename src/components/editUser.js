@@ -1,18 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Col, Row, Button} from 'react-bootstrap';
 
 export const EditForm = ({setEdit, userActual, updateUser, handleClose}) => {
 
     const [user, setUser] = useState(userActual)
 
+    useEffect(
+        () => {
+            setUser(userActual)
+        },
+        []
+    )
+
     const handleInputChange = event => {
         const {name, value} = event.target
+
         setUser({...user, [name]: value})
     }
 
-    const handleSubmit = ({event}) => {
+    const handleSubmit = event => {
         event.preventDefault()
+
         updateUser(user.id, user)
+        handleClose()
     }
 
     return(
@@ -74,9 +84,13 @@ export const EditForm = ({setEdit, userActual, updateUser, handleClose}) => {
                 </Col>
             </Row>
             <Button variant='outline-primary' size='lg' type='submit' className='mx-2' >Editar</Button>
-            <Button variant='outline-danger' size='lg' type='submit' onClick={() => {
-                setEdit(false)
-                handleClose()
+            <Button
+                variant='outline-danger'
+                size='lg'
+                type='submit'
+                onClick={() => {
+                    setEdit(false)
+                    handleClose()
                 }} >Cancelar</Button>
         </Form>
     )
