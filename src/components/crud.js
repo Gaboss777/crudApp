@@ -1,13 +1,13 @@
 /* Dependencias */
-import React, {useState, useEffect}  from 'react';
-import {Col, Row, Container, Button} from 'react-bootstrap';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Col, Row, Container, Button } from 'react-bootstrap';
 
 /* Componentes APP */
 import { ViewTablet } from './tabletInfo';
 import { DeleteUser, EditUser, NewUser } from './userOperations';
 import API from './api';
 
-const CrudApp =()=> {
+const CrudApp = () => {
     /* Data */
     const usersData = []
     const [users, setUsers] = useState(usersData)
@@ -19,10 +19,10 @@ const CrudApp =()=> {
                 setUsers(data)
             })
             .catch(err => console.log('Error en datos', err))
-        }, [setUsers])
+    }, [setUsers])
 
     /* Valores iniciales */
-    const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
+    const initialFormState = { id: null, name: '', lastName: '', idDocument: '', zoneLocation: '' }
 
     const [userActual, setUserActual] = useState(initialFormState)
     const [edit, setEdit] = useState(false)
@@ -30,13 +30,13 @@ const CrudApp =()=> {
     const [confirm, setConfirm] = useState(false)
 
     /* Funciones Modal Show */
-    const handleClose =()=> setShow(false)
-    const handleOpen =()=> setShow(true)
+    const handleClose = () => setShow(false)
+    const handleOpen = () => setShow(true)
 
     /* Funciones acciones */
     const addUser = user => {
         user.id = users.length + 1
-        setUsers([ ...users, user ])
+        setUsers([...users, user])
 
     }
 
@@ -83,25 +83,39 @@ const CrudApp =()=> {
     return (
         <Container fluid className='w-75'>
             <Row className='my-3'>
-                <h1 className='mx-auto'>PROYECTO CRUD</h1>
+                { /* Dentro de un row SOLO debe haber cols */}
+                <Col sm={12}>
+                    <h1 className='mx-auto'>PROYECTO CRUD</h1>
+                </Col>
+
             </Row>
-            <Col>
-                <Button variant='outline-primary' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
-                <div>{ edit
-                        ?   <EditUser show={show} handleClose={handleClose} userActual={userActual} updateUser={updateUser} setEdit={setEdit} setConfirm={setConfirm} />   :
-                        <div>{ confirm
-                            ?   <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} checkId={checkId} />
-                            :   <NewUser show={show} handleClose={handleClose} addUser={addUser} />
-                        }</div>
-                }</div>
-            </Col>
+            {/* UN col siempre debe estar dentro de un row */}
+            <Row>
+                <Col>
+                    <Button variant='outline-primary' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
+                    {/* No renderizes divs al pedo, usa Fragments cuando necesites englobar vainas */}
+                    <Fragment>
+                        {edit ?
+                            <EditUser show={show} handleClose={handleClose} userActual={userActual} updateUser={updateUser} setEdit={setEdit} setConfirm={setConfirm} /> :
+                            <Fragment>
+                                {
+                                    confirm ?
+                                        <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} checkId={checkId} />
+                                        :
+                                        <NewUser show={show} handleClose={handleClose} addUser={addUser} />
+                                }
+                            </Fragment>
+                        }
+                    </Fragment>
+                </Col>
+            </Row>
             <Row className='text-center mx-auto'>
                 <Col>
                     <Col>
                         <h2>Datos</h2>
                     </Col>
                     <Col className='my-3'>
-                        <ViewTablet users={users} editRow={editRow} setEdit={setEdit} handleOpen={handleOpen}/>
+                        <ViewTablet users={users} editRow={editRow} setEdit={setEdit} handleOpen={handleOpen} />
                     </Col>
                 </Col>
             </Row>
