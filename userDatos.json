@@ -1,0 +1,25 @@
+{
+  "usersData": [
+    {
+      "id": 1,
+      "name": "Gabriel",
+      "lastName": "Palacios",
+      "idDocument": "654654",
+      "zoneLocation": "Caracas"
+    },
+    {
+      "id": 2,
+      "name": "Jhosbe",
+      "lastName": "Garcia",
+      "idDocument": "65654",
+      "zoneLocation": "Caracas"
+    },
+    {
+      "id": 3,
+      "name": "Luis",
+      "lastName": "Rafael",
+      "idDocument": "5654",
+      "zoneLocation": "Espana"
+    }
+  ]
+}

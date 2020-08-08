@@ -1,18 +1,29 @@
-import React, {useState}  from 'react';
+/* Dependencias */
+import React, {useState, useEffect}  from 'react';
 import {Col, Row, Container, Button} from 'react-bootstrap';
+
+/* Componentes APP */
 import { ViewTablet } from './tabletInfo';
 import { DeleteUser, EditUser, NewUser } from './userOperations';
+import API from './api';
 
 const CrudApp =()=> {
     /* Data */
-    const usersData = [
-        { id: 1, name:'Gabriel', lastName:'Palacios', idDocument:'18667937', zoneLocation:'Caracas'}
-    ]
+    const usersData = []
+    const [users, setUsers] = useState(usersData)
+
+    useEffect(() => {
+        API.get()
+            .then(response => {
+                const data = response.data
+                setUsers(data)
+            })
+            .catch(err => console.log('Error en datos', err))
+        }, [setUsers])
 
     /* Valores iniciales */
     const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
 
-    const [users, setUsers] = useState(usersData)
     const [userActual, setUserActual] = useState(initialFormState)
     const [edit, setEdit] = useState(false)
     const [show, setShow] = useState(false)
@@ -26,6 +37,7 @@ const CrudApp =()=> {
     const addUser = user => {
         user.id = users.length + 1
         setUsers([ ...users, user ])
+
     }
 
     const deleteUser = id => {
@@ -40,6 +52,7 @@ const CrudApp =()=> {
         setEdit(false)
         setConfirm(false)
         setUsers(update)
+
     }
 
     const editRow = user => {
@@ -56,6 +69,17 @@ const CrudApp =()=> {
         }
     }
 
+    const checkId = id => {
+        let idCheck = users.map(user => (user.id !== id ? user.id - 1 : user))
+        setUsers(idCheck)
+
+        API.put(`/${id}`, users)
+            .then(response => {
+                console.log(response.data)
+            })
+
+    }
+
     return (
         <Container fluid className='w-75'>
             <Row className='my-3'>
@@ -66,7 +90,7 @@ const CrudApp =()=> {
                 <div>{ edit
                         ?   <EditUser show={show} handleClose={handleClose} userActual={userActual} updateUser={updateUser} setEdit={setEdit} setConfirm={setConfirm} />   :
                         <div>{ confirm
-                            ?   <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} />
+                            ?   <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} checkId={checkId} />
                             :   <NewUser show={show} handleClose={handleClose} addUser={addUser} />
                         }</div>
                 }</div>

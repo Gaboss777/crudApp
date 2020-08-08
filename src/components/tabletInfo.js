@@ -16,7 +16,7 @@ export const ViewTablet =({users, editRow, handleOpen, setEdit})=>{
             <tbody>
                 {users.length > 0 ? (
                     users.map(user =>
-                        <tr key={user.id}>
+                        <tr key={user.id} >
                             <td>{user.name}</td>
                             <td>{user.lastName}</td>
                             <td>{user.idDocument}</td>

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import API from './api';
 
 export const NewUser = ({addUser, handleClose, show}) => {
 
@@ -18,6 +20,13 @@ export const NewUser = ({addUser, handleClose, show}) => {
 
         addUser(user)
         setUser(initialFormState)
+
+        axios.post(`http://localhost:3000/usersData`, user)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(err => console.log('Error', err))
+
         handleClose()
     }
 
@@ -116,6 +125,12 @@ export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, se
         event.preventDefault()
 
         updateUser(user.id, user)
+
+        API.put(`/${user.id}`, user)
+            .then(response => {
+                console.log(response.data)
+            })
+
         handleClose()
     }
 
@@ -208,12 +223,19 @@ export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, se
     )
 }
 
-export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show})=>{
+export const DeleteUser =({handleClose, deleteUser, userActual, setConfirm, show, checkId})=>{
 
     const handleSubmit = event => {
         event.preventDefault()
 
         deleteUser(userActual.id)
+
+        API.delete(`/${userActual.id}`)
+            .then(response => {
+                console.log(response.data)
+            })
+
+        checkId(userActual.id)
         handleClose()
     }
 
