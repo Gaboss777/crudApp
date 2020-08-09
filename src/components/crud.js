@@ -1,62 +1,83 @@
 /* Dependencias */
 import React, { useState, useEffect, Fragment } from 'react';
+import axios from 'axios';
 import { Col, Row, Container, Button } from 'react-bootstrap';
 
 /* Componentes APP */
 import { ViewTablet } from './tabletInfo';
-import { DeleteUser, EditUser, NewUser } from './userOperations';
+import { NewUser } from './addUser';
+import { EditUser } from './editUser';
+import { DeleteUser } from './deleteUser';
 import API from './api';
 
 const CrudApp = () => {
     /* Data */
-    const usersData = []
-    const [users, setUsers] = useState(usersData)
-
-    useEffect(() => {
-        API.get()
-            .then(response => {
-                const data = response.data
-                setUsers(data)
-            })
-            .catch(err => console.log('Error en datos', err))
-    }, [setUsers])
+    const [users, setUsers] = useState([])
 
     /* Valores iniciales */
-    const initialFormState = { id: null, name: '', lastName: '', idDocument: '', zoneLocation: '' }
-
+    const initialFormState = { id: '', name: '', lastName: '', idDocument: '', zoneLocation: '' }
     const [userActual, setUserActual] = useState(initialFormState)
     const [edit, setEdit] = useState(false)
     const [show, setShow] = useState(false)
     const [confirm, setConfirm] = useState(false)
 
-    /* Funciones Modal Show */
-    const handleClose = () => setShow(false)
+    /* Mostrar valores de la Api */
+    useEffect(() => {
+        axios.get(`http://localhost:3000/usersData`)
+            .then(response => {
+                setUsers(response.data)
+                console.log(response.data)
+            })
+            .catch(err => console.log('Error en datos', err))
+    }, [setUsers])
+
+    /* Funciones Modal */
+    const handleClose = () => {
+        setShow(false)
+        setEdit(false)
+        setConfirm(false)
+    }
     const handleOpen = () => setShow(true)
 
-    /* Funciones acciones */
+    /* Acciones */
+
+    /* Agregar usuario */
     const addUser = user => {
         user.id = users.length + 1
         setUsers([...users, user])
-
     }
 
-    const deleteUser = id => {
+    /* Eliminar usuario */
+    const deleteUser = (id) => {
         setEdit(false)
         setConfirm(false)
 
         setUsers(users.filter(user => user.id !== id))
     }
 
+    /* Editar usuario */
     const updateUser = (id, updateUser) => {
         let update = users.map(user => (user.id === id ? updateUser : user))
         setEdit(false)
         setConfirm(false)
+
         setUsers(update)
 
+        API.put(`/${id}`, update)
+        .then(response => {
+            const data = response.data
+            console.log('Actualziado correctamente')
+            console.log(data)
+        })
+        .catch(err => console.log('Error al actualziar', err))
+
+        handleClose()
     }
 
-    const editRow = user => {
+    /* Botones Editar o Borrar */
+    const editRow = (user, estado) => {
         let userInfo = { id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation }
+        setEdit(estado)
 
         if (edit) {
             setConfirm(false)
@@ -69,27 +90,20 @@ const CrudApp = () => {
         }
     }
 
-    const checkId = id => {
-        let idCheck = users.map(user => (user.id !== id ? user.id - 1 : user))
-        setUsers(idCheck)
-
-        API.put(`/${id}`, users)
-            .then(response => {
-                console.log(response.data)
-            })
-
+    const updateList = id => {
+        let list = users.map(user => {
+            const ListId = { id: user.id, name: user.name, lastName: user.lastName, idDocument: user.idDocument, zoneLocation: user.zoneLocation }
+            return ListId
+        })
     }
 
     return (
         <Container fluid className='w-75'>
             <Row className='my-3'>
-                { /* Dentro de un row SOLO debe haber cols */}
                 <Col sm={12}>
                     <h1 className='mx-auto'>PROYECTO CRUD</h1>
                 </Col>
-
             </Row>
-            {/* UN col siempre debe estar dentro de un row */}
             <Row>
                 <Col>
                     <Button variant='outline-primary' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
@@ -100,7 +114,7 @@ const CrudApp = () => {
                             <Fragment>
                                 {
                                     confirm ?
-                                        <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} checkId={checkId} />
+                                        <DeleteUser show={show} handleClose={handleClose} userActual={userActual} setConfirm={setConfirm} deleteUser={deleteUser} />
                                         :
                                         <NewUser show={show} handleClose={handleClose} addUser={addUser} />
                                 }
