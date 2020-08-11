@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
-export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, setConfirm}) => {
+export const EditUser = ({ userActual, updateUser, handleClose, show}) => {
 
     const [user, setUser] = useState(userActual)
 
@@ -17,7 +17,7 @@ export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, se
     }
 
     return(
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} onHide={handleClose} centered animation='fade'>
             <Modal.Header closeButton >
                 <Modal.Title>Editar Datos</Modal.Title>
             </Modal.Header>
@@ -92,7 +92,7 @@ export const EditUser = ({setEdit, userActual, updateUser, handleClose, show, se
                             <Button variant='outline-success' type='submit' className='mx-2' >Actualizar</Button>
                         </Col>
                         <Col xs lg='3'>
-                            <Button variant='outline-danger' type='submit' className='mx-2' onClick={() => handleClose()} >Cancelar</Button>
+                            <Button variant='outline-danger' type='submit' className='mx-2' onClick={handleClose} >Cancelar</Button>
                         </Col>
                     </Row>
                 </Form>

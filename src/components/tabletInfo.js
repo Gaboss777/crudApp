@@ -41,7 +41,7 @@ export const ViewTablet =({users, editRow})=>{
                     )
                 ) : (
                     <tr>
-                        <td colSpan={5}>No hay usuarios registrados</td>
+                        <td colSpan={6}>No hay usuarios registrados</td>
                     </tr>
                 )
                 }

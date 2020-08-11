@@ -1,5 +1,4 @@
 import React from 'react';
-import API from './api';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 
 export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
@@ -8,18 +7,10 @@ export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
         event.preventDefault()
 
         deleteUser(userActual.id)
-
-        API.delete(`/${userActual.id}`)
-        .then(response => {
-            console.log('Usuario borrado')
-        })
-        .catch(err => console.log('Error al eliminar usuario', err))
-
-        handleClose()
     }
 
     return (
-        <Modal show={show} onHide={handleClose} centered size='sm'>
+        <Modal show={show} onHide={handleClose} centered size='sm' animation='fade'>
             <Modal.Header closeButton >
                 <Modal.Title>Desea borrar los siguientes datos?</Modal.Title>
             </Modal.Header>
@@ -42,7 +33,7 @@ export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
                             <Button variant='outline-danger' type='submit' className='mx-2' onClick={handleSubmit} >Eliminar</Button>
                         </Col>
                         <Col xs lg='5'>
-                            <Button variant='outline-dark' type='submit' className='mx-2' onClick={() => handleClose()}>Cancelar</Button>
+                            <Button variant='outline-dark' type='submit' className='mx-2' onClick={handleClose}>Cancelar</Button>
                         </Col>
                     </Row>
             </Modal.Body>

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import Calls from '../axios-common/callaxios';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
 export const NewUser = ({addUser, handleClose, show}) => {
 
-    const initialFormState = { id: '', name:'', lastName:'', idDocument:'', zoneLocation:''}
-
+    const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
     const [user, setUser] = useState(initialFormState)
 
     const handleInputChange = event => {
@@ -15,23 +14,15 @@ export const NewUser = ({addUser, handleClose, show}) => {
 
     const handleSubmit = event => {
         event.preventDefault()
-        // if (!user.name || !user.lastName || !user.idDocument || !user.zoneLocation) return
 
         addUser(user)
+        Calls.createApi(user)
+
         setUser(initialFormState)
-
-        axios.post('http://localhost:3000/usersData', user)
-        .then(response => {
-            console.log('Ingresado con exito')
-            console.log(response.data);
-        })
-        .catch(err => console.log('Error al ingresar datos', err))
-
-        handleClose()
     }
 
     return(
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} onHide={handleClose} centered animation='fade'>
             <Modal.Header closeButton >
                 <Modal.Title>Nuevo Usuario</Modal.Title>
             </Modal.Header>
