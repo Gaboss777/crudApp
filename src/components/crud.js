@@ -3,7 +3,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { uuid } from 'uuidv4';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import { Col, Row, Container, Badge, Button } from 'react-bootstrap';
+
+/* Funciones externas */
 import Calls from '../axios-common/callaxios';
+import AlertNotify from './alerts';
 
 /* Componentes */
 import { ViewTablet } from './tablets/tabletInfo';
@@ -28,13 +31,8 @@ const CrudApp = () => {
 
     /* Mostrar valores de la Api */
     useEffect(() => {
-        showAll()
-    }, []);
-
-    /* Mostrar datos */
-    const showAll =()=> {
         Calls.getApi({setUsers})
-    }
+    }, []);
 
     /* Funciones Modal */
     const handleClose = () => {
@@ -43,23 +41,6 @@ const CrudApp = () => {
         setConfirm(false)
     }
     const handleOpen = () => setShow(true)
-
-    /* Funciones Alertas */
-    const notify =(accion)=> {
-        if (accion === 'add') {
-            toast.info("USUARIO AGREGADO")
-        }
-        if (accion === 'edit') {
-            toast.success("USUARIO EDITADO")
-        }
-        if (accion === 'remove') {
-            toast.error("USUARIO ELIMINADO")
-        }
-        if (accion === 'warning') {
-            toast.warning("BUSQUEDA INVALIDA")
-        }
-    }
-
 
     /* Funciones tabla buscar */
     const handleEstadoOpen =()=> setEstado(true)
@@ -75,7 +56,7 @@ const CrudApp = () => {
             handleEstadoOpen()
             setFindUser(filtrarDatos)
         } else {
-            notify('warning')
+            AlertNotify.NoFoundNotify("DATO NO ENCONTRADO")
         }
     }
 
@@ -85,7 +66,7 @@ const CrudApp = () => {
         setUsers([...users, lastuser])
         handleClose()
         handleEstadoClose()
-        notify('add')
+        AlertNotify.InfoNotify("USUARIO AGREGADO")
     }
 
     /* Eliminar usuario */
@@ -97,7 +78,7 @@ const CrudApp = () => {
         setUsers(users.filter(user => user.id !== id))
         handleClose()
         handleEstadoClose()
-        notify('remove')
+        AlertNotify.RemoveNotify("USUARIO ELIMINADO")
 
     }
 
@@ -111,7 +92,7 @@ const CrudApp = () => {
         Calls.updateApi(id, updateUser)
         handleClose()
         handleEstadoClose()
-        notify('edit')
+        AlertNotify.EditNotify("USUARIO EDITADO")
     }
 
     /* Botones Editar o Borrar */
