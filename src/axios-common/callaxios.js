@@ -1,14 +1,12 @@
 
 import ServicesData from './Services';
 
-const showApi =({setUsers})=> {
+const getApi=({setUsers})=> {
     ServicesData.getAll()
         .then(response => {
-            const data = response.data
-            setUsers(data)
-            console.log(data)
+            setUsers(response.data)
+            console.log(response.data)
         })
-        .catch(err => console.log('Error en datos', err))
 }
 
 const createApi = data => {
@@ -39,18 +37,9 @@ const removeApi = id => {
     .catch(err => console.log('Error al eliminar usuario', err))
 }
 
-const removeAll = (userList) => {
-    ServicesData.removeAll()
-        .then(response => {
-            console.log('Datos Eliminados')
-        })
-        .catch(err => console.log('Error al eliminar datos', err))
-}
-
 export default {
+    getApi,
     createApi,
     updateApi,
-    showApi,
     removeApi,
-    removeAll
 }

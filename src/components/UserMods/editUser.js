@@ -1,38 +1,33 @@
 import React, {useState} from 'react';
-import Calls from '../axios-common/callaxios';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
-export const NewUser = ({addUser, handleClose, show}) => {
+export const EditUser = ({ userActual, updateUser, handleClose, show}) => {
 
-    const initialFormState = { id: null, name:'', lastName:'', idDocument:'', zoneLocation:''}
-    const [user, setUser] = useState(initialFormState)
+    const [user, setUser] = useState(userActual)
 
     const handleInputChange = event => {
         const {name, value} = event.target
         setUser({...user, [name]: value})
     }
 
-    const handleSubmit = event => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
-        addUser(user)
-        Calls.createApi(user)
-
-        setUser(initialFormState)
+        updateUser(userActual.id, user)
     }
 
     return(
-        <Modal show={show} onHide={handleClose} centered animation='fade'>
-            <Modal.Header closeButton >
-                <Modal.Title>Nuevo Usuario</Modal.Title>
+        <Modal show={show} onHide={handleClose} centered animation='fade' size='lg'>
+            <Modal.Header >
+                <Modal.Title className='text-center w-100' >Editar Datos</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} >
                     <Row>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Nombre</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Nombre</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         required
                                         type='text'
@@ -46,8 +41,8 @@ export const NewUser = ({addUser, handleClose, show}) => {
                         </Col>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Apellido</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Apellido</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         required
                                         type='text'
@@ -63,8 +58,8 @@ export const NewUser = ({addUser, handleClose, show}) => {
                     <Row>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >CI/RIF</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         required
                                         type='number'
@@ -78,8 +73,8 @@ export const NewUser = ({addUser, handleClose, show}) => {
                         </Col>
                         <Col>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' >Zona</Form.Label>
-                                <Col sm='9'>
+                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Zona</Form.Label>
+                                <Col sm='8'>
                                     <Form.Control
                                         required
                                         type='text'
@@ -92,12 +87,10 @@ export const NewUser = ({addUser, handleClose, show}) => {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Row className='justify-content-center'>
-                        <Col xs lg='3'>
-                            <Button variant='outline-primary' type='submit' className='mx-2' >Agregar</Button>
-                        </Col>
-                        <Col xs lg='3'>
-                            <Button variant='outline-danger' type='submit' onClick={handleClose} >Cerrar</Button>
+                    <Row className='text-center'>
+                        <Col>
+                            <Button variant='outline-success' type='submit' className='mx-2' >Actualizar</Button>
+                            <Button variant='outline-danger' type='submit' className='mx-2' onClick={handleClose} >Cancelar</Button>
                         </Col>
                     </Row>
                 </Form>

@@ -16,19 +16,9 @@ const remove=(id)=> {
     return http.delete(`/usersData/${id}`)
 }
 
-const removeAll=()=>{
-    return http.delete(`/usersData`)
-}
-
-const findData=(data)=>{
-    return http.get(`/usersData?idDocument=${data}`)
-}
-
 export default {
     getAll,
     create,
     update,
     remove,
-    removeAll,
-    findData
 }
