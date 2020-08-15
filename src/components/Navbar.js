@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { Navbar, Nav, Button, Form, InputGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export const MenuCrud =({Buscar, handleOpen})=> {
     
@@ -20,23 +22,27 @@ export const MenuCrud =({Buscar, handleOpen})=> {
     }
 
     return(
-    <Navbar expand="lg" bg='primary' variant='dark' >
+    <Navbar expand="lg" bg='dark' variant='dark' className='py-0' >
         <Navbar.Brand href="#home">PROYECTO CRUD</Navbar.Brand>
         <Nav className='mr-auto'>
-            <Button variant='secondary' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
+            <Button variant='secondary' size='sm' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
         </Nav>
         <Form className='w-25' onSubmit={handleSubmit} inline >
             <Form.Group>
                 <InputGroup >
                     <Form.Control 
                         type='text' 
+                        size='sm'
                         placeholder='Buscar datos' 
                         value={find} 
                         onChange={onChangefindData} 
                         required 
-                        className='my-auto'/>
+                        className='mt-2'
+                        aria-label='Buscar datos'
+                        aria-describedby='addon1'
+                        />
                     <InputGroup.Append >
-                        <Button variant='secondary' type='submit'>Buscar</Button>
+                        <Button variant='secondary' size='sm' type='submit' id='addon1' ><FontAwesomeIcon icon={faSearch} /></Button>
                     </InputGroup.Append>
                 </InputGroup>
             </Form.Group>

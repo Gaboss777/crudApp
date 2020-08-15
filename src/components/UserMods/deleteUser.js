@@ -1,5 +1,7 @@
 import React from 'react';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
@@ -11,21 +13,14 @@ export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
     return (
         <Modal show={show} onHide={handleClose} centered size='sm' animation='fade'>
-            <Modal.Header>
-                <Modal.Title className='text-center w-100' >Desea borrar los siguientes datos?</Modal.Title>
+            <Modal.Header className='bg-danger'>
+                <Modal.Title className='text-center w-100 text-white' >CONFIRM</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Row>
                 <Col className='text-center'>
-                    <p className='font-weight-bolder text-uppercase'>Cedula / RIF: 
-                        <p className='font-weight-normal'>{userActual.idDocument} </p>
-                    </p>
-                    <p className='font-weight-bolder text-uppercase'>Nombre y Apellido: 
-                        <p className='font-weight-normal'>{userActual.name} {userActual.lastName} </p>
-                    </p>
-                    <p className='font-weight-bolder text-uppercase'>Zona: 
-                        <p className='font-weight-normal'>{userActual.zoneLocation} </p>
-                    </p>
+                    <FontAwesomeIcon icon={faExclamationTriangle} size="6x" className='my-2 text-danger' />
+                    <p>Esta seguro de eliminar los siguiente(s) dato(s)</p>
                 </Col>
             </Row>
                     <Row className='text-center'>

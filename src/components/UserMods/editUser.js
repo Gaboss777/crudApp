@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
-export const EditUser = ({ userActual, updateUser, handleClose, show}) => {
+export const EditUser = ({userActual, updateUser, handleClose, show}) => {
 
     const [user, setUser] = useState(userActual)
+    console.log(user)
 
     const handleInputChange = event => {
         const {name, value} = event.target
@@ -18,8 +19,8 @@ export const EditUser = ({ userActual, updateUser, handleClose, show}) => {
 
     return(
         <Modal show={show} onHide={handleClose} centered animation='fade' size='lg'>
-            <Modal.Header >
-                <Modal.Title className='text-center w-100' >Editar Datos</Modal.Title>
+            <Modal.Header className='bg-success' >
+                <Modal.Title className='text-center w-100 text-white' >Editar Datos</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} >

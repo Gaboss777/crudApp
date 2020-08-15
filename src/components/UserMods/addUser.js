@@ -23,8 +23,8 @@ export const NewUser = ({addUser, handleClose, show}) => {
 
     return(
         <Modal show={show} onHide={handleClose} centered size='lg'>
-            <Modal.Header >
-                <Modal.Title className='text-center w-100' >Nuevo Usuario</Modal.Title>
+            <Modal.Header className='bg-primary' >
+                <Modal.Title className='text-center w-100 text-white' >Nuevo Usuario</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} >
