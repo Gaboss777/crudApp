@@ -20,8 +20,12 @@
     "react-bootstrap-table2-editor": "^1.4.0",
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
     "react-scripts": "^3.4.1",
     "react-toastify": "^6.0.8",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "uuidv4": "^6.2.2"
   },
   "scripts": {
