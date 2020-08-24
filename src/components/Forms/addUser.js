@@ -23,7 +23,7 @@ const NewUser = ({addUser, handleClose, show}) => {
     }
 
     return(
-        <Modal show={show} onHide={handleClose} centered size='lg'>
+        <Modal show={show} onHide={handleClose} centered >
             <Modal.Header className='bg-primary' >
                 <Modal.Title className='text-center w-100 text-white' >Nuevo Usuario</Modal.Title>
             </Modal.Header>

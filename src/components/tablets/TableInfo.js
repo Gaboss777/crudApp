@@ -7,7 +7,7 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { getUserList, getUserActual } from '../../ducks/users';
 
-const TableList =({list, getList, loading})=> {
+const TableList =({list, getList, loading, userActual})=> {
 
     useEffect(() => {
         getList()
@@ -33,7 +33,7 @@ const TableList =({list, getList, loading})=> {
                   type="button"
                   size='sm'
                   onClick={ () => onSizePerPageChange(option.page) }
-                  className={ `btn ${isSelect ? 'btn-warning' : 'btn-dark'}` }
+                  variant={isSelect ? 'warning' : 'dark'}
                 >
                   { option.text }
                   </Button>
@@ -62,7 +62,8 @@ const TableList =({list, getList, loading})=> {
 
         if (typeof page === 'string') {
           activeStyle.backgroundColor = 'white'
-          activeStyle.color = 'black'
+          activeStyle.color = 'orange'
+          activeStyle.borderColor = 'black'
         }
 
         /* eslint-disable */
@@ -108,6 +109,7 @@ const TableList =({list, getList, loading})=> {
                 let userInfo = check
                 userInfo.push(row)
                 setCheck(userInfo)
+                userActual(check)
                 console.log(check)
             } else {
                 setCheck([])
@@ -176,7 +178,8 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
     {
-        getList: () => dispatch(getUserList("usersDedicados"))
+        getList: () => dispatch(getUserList("usersDedicados")),
+        userActual: (data) => dispatch(getUserActual(data))
     }
 )
 

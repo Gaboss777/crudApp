@@ -8,6 +8,10 @@ export const actionCreator=(resource)=>{
         CREATE_REQUESTED:resource.toUpperCase()+'_CREATE_REQUESTED',
         CREATE_SUCCEEDED:resource.toUpperCase()+'_CREATE_SUCCEEDED',
         CREATE_FAILED:resource.toUpperCase()+'_CREATE_FAILED',
+        INFO_ACTUAL:resource.toUpperCase()+'_INFO_ACTUAL',
+        DELETE_REQUESTED:resource.toUpperCase()+'_DELETE_REQUESTED',
+        DELETE_SUCCEEDED:resource.toUpperCase()+'_DELETE_SUCCEEDED',
+        DELETE_FAILED:resource.toUpperCase()+'_DELETE_FAILED'
     }
 }
 const ACTIONS = actionCreator('user');
@@ -36,10 +40,29 @@ export const createUser=(user)=>{
     }
 }
 
+export const removeUser=(user)=>{
+    return dispatch=>{
+        dispatch({type:ACTIONS.DELETE_REQUESTED})
+        Axios.delete(apiUrl+`/usersData/${user.id}`).then(res=>{
+            dispatch({type:ACTIONS.DELETE_SUCCEEDED,payload:res.data})
+        })
+        .catch(err=>{
+            dispatch({type:ACTIONS.DELETE_FAILED})
+        })
+    }
+}
+
+export const getUserActual =(user)=>{
+    return dispatch =>{
+        dispatch({type:ACTIONS.INFO_ACTUAL, payload:user})
+    }
+}
+
 
 
 const initialState={
     list:[],
+    user:[],
     loading:false
 }
 
@@ -74,6 +97,21 @@ export const usersReducer = (state=initialState,{type,payload})=>{
             return{
                 ...state,
                 list:[...state.list,payload]
+            }
+        case ACTIONS.DELETE_REQUESTED:
+            return{
+                ...state,
+                loading:true
+            }
+        case ACTIONS.DELETE_SUCCEEDED:
+            return{
+                ...state,
+                list: state.list.filter(user => user.id !== payload)
+            }
+        case ACTIONS.INFO_ACTUAL:
+            return{
+                ...state,
+                user: payload
             }
         default:
             return state

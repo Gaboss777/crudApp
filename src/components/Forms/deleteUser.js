@@ -2,13 +2,18 @@ import React from 'react';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { removeUser } from '../../ducks/users';
 
 const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
+
+    console.log(userActual)
 
     const handleSubmit = event => {
         event.preventDefault()
 
         deleteUser(userActual.id)
+        handleClose()
     }
 
     return (
@@ -34,4 +39,16 @@ const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
     )
 }
 
-export default DeleteUser
+const mapStateToProps = state => (
+    {
+        userActual: state.users.user
+    }
+)
+
+const mapDispatchToProps = dispatch => (
+    {
+        deleteUser: (data) => dispatch(removeUser(data))
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteUser)
