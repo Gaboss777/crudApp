@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
-export const EditUser = ({userActual, updateUser, handleClose, show}) => {
+const EditUser = ({userActual, updateUser, handleClose, show}) => {
 
     const [user, setUser] = useState(userActual)
     console.log(user)
@@ -99,3 +99,5 @@ export const EditUser = ({userActual, updateUser, handleClose, show}) => {
         </Modal>
     )
 }
+
+export default EditUser

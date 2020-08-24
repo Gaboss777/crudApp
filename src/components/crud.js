@@ -11,9 +11,9 @@ import Calls from '../axios-common/callaxios'; //Interactua con API
 import AlertNotify from './alerts'; //Interactua con Alertas
 
 /* Componentes */
-import { NewUser } from './UserMods/addUser';
-import { EditUser } from './UserMods/editUser';
-import { DeleteUser } from './UserMods/deleteUser';
+import { NewUser } from './Forms/addUser';
+import { EditUser } from './Forms/editUser';
+import { DeleteUser } from './Forms/deleteUser';
 import { MenuCrud } from './Navbar';
 import { TableNew } from './tablets/newTable';
 

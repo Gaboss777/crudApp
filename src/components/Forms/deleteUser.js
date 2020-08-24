@@ -3,7 +3,7 @@ import { Row, Col, Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
-export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
+const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -33,3 +33,5 @@ export const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
         </Modal>
     )
 }
+
+export default DeleteUser
