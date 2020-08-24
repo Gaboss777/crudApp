@@ -7,11 +7,10 @@ import { removeUser } from '../../ducks/users';
 
 const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
-    console.log(userActual)
+    console.log(userActual.id)
 
     const handleSubmit = event => {
         event.preventDefault()
-
         deleteUser(userActual.id)
         handleClose()
     }
