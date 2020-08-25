@@ -37,7 +37,7 @@ const NewUser = ({addUser, handleClose, show}) => {
                                         type='text'
                                         name='razonSocial'
                                         placeholder='Ingrese Nombre'
-                                        value={user.name}
+                                        value={user.razonSocial}
                                         onChange={handleInputChange}
                                         />
                                 </Col>
@@ -45,14 +45,12 @@ const NewUser = ({addUser, handleClose, show}) => {
                             <Form.Group as={Row} >
                                 <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Servicio</Form.Label>
                                 <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='services'
-                                        placeholder='Tipo de Servicio'
-                                        value={user.services}
-                                        onChange={handleInputChange}
-                                        />
+                                <Form.Control as='select' value={user.services} onChange={handleInputChange} name='services' >
+                                    <option>Elija un Servicio</option>
+                                    <option value='Residencial' >Residencial</option>
+                                    <option value='PYMES' >PYMES</option>
+                                    <option value='Dedicado '>Dedicado</option>
+                                </Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} >
@@ -97,14 +95,12 @@ const NewUser = ({addUser, handleClose, show}) => {
                             <Form.Group as={Row} >
                                 <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Estado</Form.Label>
                                 <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='Estado'
-                                        placeholder='Estado actual'
-                                        value={user.Estado}
-                                        onChange={handleInputChange}
-                                        />
+                                <Form.Control as='select' value={user.Estado} onChange={handleInputChange} name='Estado' >
+                                    <option>Elija un Estado</option>
+                                    <option value='Activo' >Activo</option>
+                                    <option value='Cancelado' >Cancelado</option>
+                                    <option value='Suspendido' >Suspendido</option>
+                                </Form.Control>
                                 </Col>
                             </Form.Group> 
                     <Row className='text-center'>

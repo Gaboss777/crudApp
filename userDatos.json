@@ -1,175 +1,59 @@
 {
   "usersData": [
     {
-      "id": "3b350a2a-12ec-43f6-af2d-8433182c4001",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
+      "id": "d131952a-3822-4c25-9c76-a24c65599b2d",
+      "razonSocial": "Edificio Morocaima",
       "Estado": "Activo",
-      "idDocument": "18667937",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "1f9661cd-0fd9-41f0-ac1d-1cd246b0c8ae",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "3665247",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "816db1b7-6246-4254-9be6-db60bccbbee0",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "19162328",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "53ca214e-3369-44cf-a29d-cbf4719b07b4",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "2514253",
-      "zoneLocation": "Espana"
-    },
-    {
-      "id": "723ed33d-dd79-4724-b267-22ad1c8350b6",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "6352418",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "1b80429d-a366-4023-ade0-fbe5b86a8b74",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "6532415",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "7b2219b3-537a-4d70-ad41-7666f2612082",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "3665247",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "c95cba86-8383-4b10-bd1a-8ec8fa330519",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "4254152",
-      "zoneLocation": "Chile"
-    },
-    {
-      "id": "bc7c6003-417d-49d3-9cb2-8e3b0b21e530",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "65465465",
-      "zoneLocation": "Bolivia"
-    },
-    {
-      "id": "496d70ac-1c06-4ba2-8938-3ae62b644d10",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "65465464",
-      "zoneLocation": "Uruguay"
-    },
-    {
-      "id": "64547c07-c3b6-4014-87c4-498445fcfa57",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "15436352",
-      "zoneLocation": "Bolivia"
-    },
-    {
-      "id": "2e781c42-b2d1-4441-b1ec-213d07489f34",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "654654",
-      "zoneLocation": "Espana"
-    },
-    {
-      "id": "3d9381f5-da87-4d94-b095-592445dcd31e",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "6548465",
-      "zoneLocation": "Uruguay"
-    },
-    {
-      "id": "7c6e49ff-d3c3-42d2-8c5c-0afbbdb7076f",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "24253615",
-      "zoneLocation": "Chile"
-    },
-    {
-      "id": "ff72efa6-9e48-49ce-92f9-de4a298b70ef",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "78549352",
-      "zoneLocation": "Caracas"
-    },
-    {
-      "id": "04411359-1643-4e69-9f1b-b17faadbb2b4",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "24635111",
-      "zoneLocation": "Espana"
-    },
-    {
-      "id": "c1bcfb47-5d13-4c72-99f2-4ee7bf490e48",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "24528363",
-      "zoneLocation": "Suiza"
-    },
-    {
-      "id": "7bf3e0b2-5709-4c51-8e81-e958f6ad01e2",
-      "razonSocial": "EMPRESA",
-      "services": "DEDICADO",
-      "MB": "1 MB",
-      "Estado": "Activo",
-      "idDocument": "1425631",
-      "zoneLocation": "Panama"
-    },
-    {
-      "id": "7f1aecfb-9c1a-448a-b567-a6cb2cff4711",
-      "razonSocial": "Galaxy Entrenainer",
-      "Estado": "Activo",
-      "idDocument": "J-2535142-9",
-      "zoneLocation": "Caracas",
-      "services": "Dedicado",
+      "idDocument": "J5245263",
+      "zoneLocation": "El Llanito",
+      "services": "PYMES",
+      "": "PYMES",
       "MB": "10"
+    },
+    {
+      "id": "a9fc13e8-775f-4b20-acbc-62e8751208e8",
+      "razonSocial": "Galaxy Entrenainer",
+      "Estado": "Suspendido",
+      "idDocument": "J-2535142-9",
+      "zoneLocation": "Espana",
+      "services": "PYMES",
+      "MB": "2"
+    },
+    {
+      "id": "6cbc8f82-be48-45cd-99ab-0c57582dd4a1",
+      "razonSocial": "Rafael",
+      "Estado": "Activo",
+      "idDocument": "54654",
+      "zoneLocation": "Caracas",
+      "services": "Residencial",
+      "MB": "100"
+    },
+    {
+      "id": "5b38a992-06e0-4a78-b5ef-6c33ac323a2e",
+      "razonSocial": "Galaxy Entretainer",
+      "Estado": "Suspendido",
+      "idDocument": "j55246352",
+      "zoneLocation": "Bolivia",
+      "services": "PYMES",
+      "MB": "10"
+    },
+    {
+      "id": "cc2f7bf2-ed6b-4c9b-ba30-368d91809aa8",
+      "razonSocial": "Galaxy",
+      "Estado": "Cancelado",
+      "idDocument": "j55246352",
+      "zoneLocation": "Bolivia",
+      "services": "Dedicado ",
+      "MB": "2"
+    },
+    {
+      "id": "ae0a0da9-cd2e-46c1-a5af-0b867e278703",
+      "razonSocial": "Cerecom",
+      "Estado": "Activo",
+      "idDocument": "654654654",
+      "zoneLocation": "Caracas",
+      "services": "PYMES",
+      "MB": "2"
     }
   ]
 }

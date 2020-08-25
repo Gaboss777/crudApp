@@ -13,7 +13,7 @@ const TableList =({list, getList, loading, userActual})=> {
         getList()
     }, [])
 
-    const [ check, setCheck ] = useState([])
+    const [ check, setCheck ] = useState(null)
 
     /* Opciones Paginacion */
     const customTotal = (from, to, size) => {
@@ -55,14 +55,16 @@ const TableList =({list, getList, loading, userActual})=> {
         if (active) {
           activeStyle.backgroundColor = 'orange'
           activeStyle.color = 'black';
+          activeStyle.borderColor = 'orange'
         } else {
           activeStyle.backgroundColor = 'black'
           activeStyle.color = 'white'
+          activeStyle.borderColor = 'black'
         }
 
         if (typeof page === 'string') {
           activeStyle.backgroundColor = 'white'
-          activeStyle.color = 'orange'
+          activeStyle.color = 'black'
           activeStyle.borderColor = 'black'
         }
 
@@ -94,8 +96,6 @@ const TableList =({list, getList, loading, userActual})=> {
             text: '10', value: 10
         }, {
             text: '20', value: 20
-        }, {
-            text: 'Todo', value: list.length
         }]
     }
 
@@ -106,13 +106,10 @@ const TableList =({list, getList, loading, userActual})=> {
         classes: 'bg-gradient-primary',
         onSelect: (row, isSelect, rowIndex, e) => {
             if (isSelect) {
-                let userInfo = check
-                userInfo.push(row)
-                setCheck(userInfo)
-                userActual(check)
-                console.log(check)
+                userActual(row)
+                console.log(row)
             } else {
-                setCheck([])
+                setCheck(null)
                 console.log(check)
             }
         },
@@ -120,7 +117,7 @@ const TableList =({list, getList, loading, userActual})=> {
             if (isSelect) {
                 setCheck(rows)
             } else {
-                setCheck([])
+                setCheck(null)
             }
         }
 
@@ -158,6 +155,7 @@ const TableList =({list, getList, loading, userActual})=> {
                                 filter={filterFactory()}
                                 filterPosition='top'
                                 headerClasses='bg-warning text-white'
+                                noDataIndication='Tabla vacia'
                                 { ...paginationTableProps }
                                 />
                         </div>

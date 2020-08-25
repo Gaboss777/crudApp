@@ -40,7 +40,7 @@ const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
 const mapStateToProps = state => (
     {
-        userActual: state.users.user
+        userActual: state.users.selected
     }
 )
 

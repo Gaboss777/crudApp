@@ -1,14 +1,16 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import ButtonActions from './btnActions';
+import Logo from '../img/LOGO.png';
 
 export const MenuCrud =()=> {
 
     return(
     <Navbar expand="lg" bg='light' className='mb-3' >
-        <Navbar.Brand href="#home">PROYECTO CRUD</Navbar.Brand>
+        <Navbar.Brand href="#home">
+            <img src={Logo} alt='Logo' />
+        </Navbar.Brand>
         <Nav >
-            <Nav.Link href='#home'>home</Nav.Link>
             <ButtonActions />
         </Nav>
     </Navbar>
