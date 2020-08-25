@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { updateUser } from '../../ducks/users';
 
 const EditUser = ({userActual, editUser, handleClose, show}) => {
-
     const [user, setUser] = useState(userActual)
 
     const handleInputChange = event => {
+        /* Dont be lazy, use your separate states for each input */
         const {name, value} = event.target
         setUser({...user, [name]: value})
     }

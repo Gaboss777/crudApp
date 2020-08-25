@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { removeUser } from '../../ducks/users';
-
+/* How is this a form? why is it forms folder? */
 const DeleteUser =({handleClose, deleteUser, userActual, show})=>{
 
     console.log(userActual.id)
