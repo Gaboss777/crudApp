@@ -9,7 +9,7 @@ const NewUser = ({addUser, handleClose}) => {
 
     const initialFormState = { id: uuid(), razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: '' }
     const [user, setUser] = useState(initialFormState)
-
+    /* Lazy state handling also here */
     const handleInputChange = event => {
         const {name, value} = event.target
         setUser({...user, [name]: value})

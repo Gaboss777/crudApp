@@ -6,7 +6,12 @@ import Alerts from '../Alerts/alerts';
 
 const EditUser = ({userActual, editUser, handleClose, show}) => {
     const [user, setUser] = useState(userActual)
-
+    /* 
+        Again, lazy state handling:
+        const [name,setName]=useState("");
+        const [location,setLocation]=useState("")
+        Si usas el modo lazy cuando tengas checkboxes te va a partir la madre la logica
+    */
     const handleInputChange = event => {
         const {name, value} = event.target
         setUser({...user, [name]: value})

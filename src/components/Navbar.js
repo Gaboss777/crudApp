@@ -9,7 +9,6 @@ import { faUserEdit, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-
 import { connect } from 'react-redux';
 
 const MenuCrud =(props)=> {
-
     return(
     <Navbar expand="lg" bg='light' className='mb-3' >
         <Navbar.Brand href="#home">

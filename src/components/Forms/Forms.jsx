@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-
+/* 
+* Por que este archivo se llama forms si tiene 1 solo form?
+* Also, deberias usar UserForm en lugar de FormUser, es mas legible (en realidad no afecta solo q es mas legible asi)
+*/
 const FormUser = ( props ) => {
     return(
         <Form onSubmit={props.handleSubmit} >

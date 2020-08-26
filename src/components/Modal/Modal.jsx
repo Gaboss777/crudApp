@@ -2,6 +2,9 @@ import React, { useState, Fragment } from 'react';
 import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+/* Don`t just use props, destructure your props object 
+    const CallModal = ({children})=>{}
+*/
 const CallModal = ( props ) => {
     const [show, setShow] = useState(false)
 
