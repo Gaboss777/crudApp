@@ -1,23 +1,14 @@
 {
   "usersData": [
     {
-      "id": "d131952a-3822-4c25-9c76-a24c65599b2d",
-      "razonSocial": "Edificio Morocaima",
-      "Estado": "Activo",
-      "idDocument": "J5245263",
-      "zoneLocation": "El Llanito",
-      "services": "PYMES",
-      "": "PYMES",
-      "MB": "10"
-    },
-    {
       "id": "a9fc13e8-775f-4b20-acbc-62e8751208e8",
       "razonSocial": "Galaxy Entrenainer",
       "Estado": "Suspendido",
       "idDocument": "J-2535142-9",
-      "zoneLocation": "Espana",
+      "zoneLocation": "Caracas",
       "services": "PYMES",
-      "MB": "2"
+      "bandwidth": "2",
+      "ipAddress": "192.168.0.1"
     },
     {
       "id": "6cbc8f82-be48-45cd-99ab-0c57582dd4a1",
@@ -26,7 +17,8 @@
       "idDocument": "54654",
       "zoneLocation": "Caracas",
       "services": "Residencial",
-      "MB": "100"
+      "bandwidth": "100",
+      "ipAddress": "192.168.0.1"
     },
     {
       "id": "5b38a992-06e0-4a78-b5ef-6c33ac323a2e",
@@ -35,7 +27,8 @@
       "idDocument": "j55246352",
       "zoneLocation": "Bolivia",
       "services": "PYMES",
-      "MB": "10"
+      "bandwidth": "10",
+      "ipAddress": "192.168.0.1"
     },
     {
       "id": "cc2f7bf2-ed6b-4c9b-ba30-368d91809aa8",
@@ -43,8 +36,9 @@
       "Estado": "Cancelado",
       "idDocument": "j55246352",
       "zoneLocation": "Bolivia",
-      "services": "Dedicado ",
-      "MB": "2"
+      "services": "PYMES",
+      "bandwidth": "2",
+      "ipAddress": "192.168.0.1"
     },
     {
       "id": "ae0a0da9-cd2e-46c1-a5af-0b867e278703",
@@ -53,7 +47,58 @@
       "idDocument": "654654654",
       "zoneLocation": "Caracas",
       "services": "PYMES",
-      "MB": "2"
+      "bandwidth": "2",
+      "ipAddress": "192.168.0.1"
+    },
+    {
+      "id": "8bbb2607-21ac-402d-9fd5-289277a1a30e",
+      "razonSocial": "Galaxy Entrenainer",
+      "idDocument": "J-2535142-9",
+      "zoneLocation": "Espana",
+      "bandwidth": "10",
+      "Estado": "Activo",
+      "services": "Residencial",
+      "ipAddress": "192.168.0.1"
+    },
+    {
+      "id": "47a81efc-3128-4dc5-a396-5c80ef53eb41",
+      "razonSocial": "Jhosbelis Garcia",
+      "idDocument": "19162328",
+      "zoneLocation": "Caracas",
+      "bandwidth": "10",
+      "Estado": "Activo",
+      "services": "Residencial",
+      "ipAddress": "192.168.0.1"
+    },
+    {
+      "id": "a1ed573a-a1a0-4856-b96b-b977ac6d1922",
+      "razonSocial": "Hola",
+      "idDocument": "J4245281",
+      "zoneLocation": "Caracas",
+      "bandwidth": "10",
+      "Estado": "Activo",
+      "services": "PYMES",
+      "ipAddress": "192.168.0.1"
+    },
+    {
+      "id": "84e8e708-0606-4826-b225-8f4aff5a0290",
+      "razonSocial": "Galaxy Entrenainer",
+      "idDocument": "J-2535142-9",
+      "zoneLocation": "Gaboss",
+      "bandwidth": "10",
+      "Estado": "Cancelado",
+      "services": "Residencial",
+      "ipAddress": "192.168.0.1"
+    },
+    {
+      "id": "2f4f1e72-a71b-4566-b35d-e9852c65d885",
+      "razonSocial": "Prueba",
+      "idDocument": "5245245",
+      "zoneLocation": "Caracas",
+      "bandwidth": "10",
+      "Estado": "Activo",
+      "services": "Residencial",
+      "ipAddress": "192.168.0.10"
     }
   ]
 }

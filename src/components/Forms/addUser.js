@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import FormUser from './Forms';
 import { createUser}  from '../../ducks/users';
 import { uuid } from 'uuidv4'
+import Alerts from '../Alerts/alerts';
 
-const NewUser = ({addUser, handleClose, show}) => {
+const NewUser = ({addUser, handleClose}) => {
 
-    const initialFormState = { id: uuid(), razonSocial: '', Estado:'', idDocument: '', zoneLocation:'', services: '' }
+    const initialFormState = { id: uuid(), razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: '' }
     const [user, setUser] = useState(initialFormState)
 
     const handleInputChange = event => {
@@ -19,99 +20,11 @@ const NewUser = ({addUser, handleClose, show}) => {
 
         addUser(user)
         setUser(initialFormState)
-        handleClose()
+        Alerts.InfoNotify("USUARIO AGREGADO")
     }
 
     return(
-        <Modal show={show} onHide={handleClose} centered >
-            <Modal.Header className='bg-primary' >
-                <Modal.Title className='text-center w-100 text-white' >Nuevo Usuario</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={handleSubmit} >
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Razon Social</Form.Label>
-                                <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='razonSocial'
-                                        placeholder='Ingrese Nombre'
-                                        value={user.razonSocial}
-                                        onChange={handleInputChange}
-                                        />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Servicio</Form.Label>
-                                <Col sm='8'>
-                                <Form.Control as='select' value={user.services} onChange={handleInputChange} name='services' >
-                                    <option>Elija un Servicio</option>
-                                    <option value='Residencial' >Residencial</option>
-                                    <option value='PYMES' >PYMES</option>
-                                    <option value='Dedicado '>Dedicado</option>
-                                </Form.Control>
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
-                                <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='idDocument'
-                                        placeholder='Ingrese Cedula o RIF'
-                                        value={user.idDocument}
-                                        onChange={handleInputChange}
-                                        />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Zona</Form.Label>
-                                <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='zoneLocation'
-                                        placeholder='Zona donde Vive'
-                                        value={user.zoneLocation}
-                                        onChange={handleInputChange}
-                                        />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >MB</Form.Label>
-                                <Col sm='8'>
-                                    <Form.Control
-                                        required
-                                        type='text'
-                                        name='MB'
-                                        placeholder='MB'
-                                        value={user.MB}
-                                        onChange={handleInputChange}
-                                        />
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm='4' className='font-weight-bold text-uppercase' >Estado</Form.Label>
-                                <Col sm='8'>
-                                <Form.Control as='select' value={user.Estado} onChange={handleInputChange} name='Estado' >
-                                    <option>Elija un Estado</option>
-                                    <option value='Activo' >Activo</option>
-                                    <option value='Cancelado' >Cancelado</option>
-                                    <option value='Suspendido' >Suspendido</option>
-                                </Form.Control>
-                                </Col>
-                            </Form.Group> 
-                    <Row className='text-center'>
-                        <Col>
-                            <Button variant='outline-primary' type='submit' className='mx-2' >Agregar</Button>
-                            <Button variant='outline-danger' type='submit' onClick={handleClose} >Cerrar</Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Modal.Body>
-        </Modal>
+        <FormUser user={user} handleSubmit={handleSubmit} handleInputChange={handleInputChange} textSubmit="Agregar" variantBtn='outline-primary' />
     )
 }
 

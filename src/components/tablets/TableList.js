@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import { PaginationProvider, PaginationListStandalone, PaginationTotalStandalone, SizePerPageDropdownStandalone } from 'react-bootstrap-table2-paginator';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, FormControl, Container, Row, Col, Badge } from 'react-bootstrap';
 import { getUserList, getUserActual } from '../../ducks/users';
 
 const TableList =({list, getList, loading, userActual})=> {
@@ -12,8 +12,6 @@ const TableList =({list, getList, loading, userActual})=> {
     useEffect(() => {
         getList()
     }, [])
-
-    const [ check, setCheck ] = useState(null)
 
     /* Opciones Paginacion */
     const customTotal = (from, to, size) => {
@@ -82,7 +80,6 @@ const TableList =({list, getList, loading, userActual})=> {
         pageButtonRenderer,
         sizePerPageRenderer,
         totalSize: list.length,
-        custom: true,
         paginationSize: 10,
         paginationIndex: 0,
         firstPageText: '<<',
@@ -109,61 +106,88 @@ const TableList =({list, getList, loading, userActual})=> {
                 userActual(row)
                 console.log(row)
             } else {
-                setCheck(null)
-                console.log(check)
-            }
-        },
-        onSelectAll: (isSelect, rows, e) => {
-            if (isSelect) {
-                setCheck(rows)
-            } else {
-                setCheck(null)
+                userActual(null)
             }
         }
-
     }
+
+    /* Form Busqueda y Botones */
+    const CustomSearch = props => {
+        let input
+        const handleClick=()=>{
+            props.onSearch(input.value)
+        }
+        const handleClear=()=>{
+            props.onSearch('')
+            input.value=''
+        }
+        return (
+            <Container className='my-2' fluid >
+                <Row>
+                    <Col xs lg='4' className='px-0'>
+                        <FormControl placeholder='Buscar...' ref={n => input = n} type='text' />
+                    </Col>
+                    <Col xs lg='1'>
+                        <Button variant='warning' type='submit' onClick={ handleClick } >Buscar</Button>
+                    </Col>
+                    <Col xs lg='1'>
+                        <Button variant='dark' type='submit' onClick={ handleClear } >Limpiar</Button>
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
+
 
     /* Columnas */
     const columns = [
-        { dataField: 'razonSocial', text: 'RAZON SOCIAL', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'idDocument', text: 'CI / RIF', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'zoneLocation', text: 'UBICACION', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'services', text: 'SERVICIO', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'MB', text: 'MB', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'Estado', text: 'ESTADO', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() }
+        { dataField: 'razonSocial', text: 'Razon Social', sort: true, align: 'center', headerAlign: 'center' },
+        { dataField: 'idDocument', text: 'CI / RIF', sort: true, align: 'center', headerAlign: 'center' },
+        { dataField: 'zoneLocation', text: 'Ubicacion', sort: true, align: 'center', headerAlign: 'center' },
+        { dataField: 'services', text: 'Servicio', sort: true, align: 'center', headerAlign: 'center' },
+        { dataField: 'bandwidth', text: 'Bandwidth', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
+        { dataField: 'ipAddress', text: 'Direccion IP', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
+        { dataField: 'Estado', text: 'Estado', sort: true, align: 'center', headerAlign: 'center', 
+            formatter: (CellContent, row)=>{
+                if(CellContent === 'Activo') {
+                    return <Badge variant='success'>Activo</Badge>
+                }
+                if(CellContent === 'Suspendido' ) {
+                    return <Badge variant='warning' >Suspendido</Badge>
+                }
+                if(CellContent === 'Cancelado') {
+                    return <Badge variant='danger' >Cancelado</Badge>
+                }
+            }
+        }
     ]
 
     return (
-        <>
+        <div>
             {
                 !loading && list.length > 0 &&
-                <PaginationProvider pagination={ paginationFactory(options)} >
+                <ToolkitProvider keyField='id' data={list} columns={columns} search >
                 {
-                    ({ paginationProps, paginationTableProps }) => (
+                    props => (
                         <div>
-                            <SizePerPageDropdownStandalone { ...paginationProps } className='p-1' />
-                            <PaginationTotalStandalone { ...paginationProps } />
-                            <PaginationListStandalone { ...paginationProps } />
+                            <CustomSearch {...props.searchProps} />
                             <BootstrapTable
                                 bootstrap4
-                                hover
-                                keyField='id'
-                                data={list}
-                                columns={columns}
                                 selectRow={selectRow}
                                 bordered={false}
-                                filter={filterFactory()}
-                                filterPosition='top'
                                 headerClasses='bg-warning text-white'
-                                noDataIndication='Tabla vacia'
-                                { ...paginationTableProps }
+                                noDataIndication='Datos no encontrados'
+                                pagination={ paginationFactory(options)}
+                                filter={ filterFactory() }
+                                filterPosition='top'
+                                { ...props.baseProps }
                                 />
                         </div>
                     )
                 }
-                </PaginationProvider>
+                </ToolkitProvider>
             }
-        </>
+        </div>
     )
 }
 
