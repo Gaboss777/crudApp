@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeUser } from '../ducks/users';
-import ConfirmWarning from './Alerts/ConfirmWarning';
-import Alerts from './Alerts/alerts';
+import { removeUser } from '../../ducks/users';
+import ConfirmWarning from '../Alerts/ConfirmWarning';
+import Alerts from '../Alerts/alerts';
 
 const DeleteUser =({deleteUser, userActual})=>{
 

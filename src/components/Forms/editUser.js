@@ -6,13 +6,13 @@ import Alerts from '../Alerts/alerts';
 
 const EditUser = ({userActual, editUser}) => {
 
-    const handleEvent = (data) => {
+    const handleSubmit = (data) => {
         editUser(userActual.id, data)
         Alerts.EditNotify("DATOS ACTUALIZADOS")
     }
 
     return(
-        <UserForm handleSubmit={handleEvent} textSubmit="Agregar" variantBtn='outline-success' data={userActual} />
+        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='outline-success' data={userActual} />
     )
 }
 

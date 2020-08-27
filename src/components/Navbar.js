@@ -4,7 +4,7 @@ import Logo from '../img/LOGO.png';
 import CallModal from './Modal/Modal';
 import NewUser from './Forms/addUser';
 import EditUser from './Forms/editUser';
-import DeleteUser from './deleteUser';
+import DeleteUser from './DeleteUser/deleteUser';
 import { faUserEdit, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
