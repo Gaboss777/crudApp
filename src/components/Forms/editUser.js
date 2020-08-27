@@ -1,30 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { updateUser } from '../../ducks/users';
-import FormUser from './Forms';
+import UserForm from './Form';
 import Alerts from '../Alerts/alerts';
 
-const EditUser = ({userActual, editUser, handleClose, show}) => {
-    const [user, setUser] = useState(userActual)
-    /* 
-        Again, lazy state handling:
-        const [name,setName]=useState("");
-        const [location,setLocation]=useState("")
-        Si usas el modo lazy cuando tengas checkboxes te va a partir la madre la logica
-    */
-    const handleInputChange = event => {
-        const {name, value} = event.target
-        setUser({...user, [name]: value})
-    }
+const EditUser = ({userActual, editUser}) => {
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        editUser(user.id, user)
+    const handleEvent = (data) => {
+        editUser(userActual.id, data)
         Alerts.EditNotify("DATOS ACTUALIZADOS")
     }
 
     return(
-        <FormUser user={user} handleSubmit={handleSubmit} handleInputChange={handleInputChange} textSubmit="Editar" variantBtn='outline-success' />
+        <UserForm handleSubmit={handleEvent} textSubmit="Agregar" variantBtn='outline-success' data={userActual} />
     )
 }
 

@@ -1,30 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import FormUser from './Forms';
+import UserForm from './Form';
 import { createUser}  from '../../ducks/users';
 import { uuid } from 'uuidv4'
 import Alerts from '../Alerts/alerts';
 
-const NewUser = ({addUser, handleClose}) => {
+const NewUser = ({addUser}) => {
 
-    const initialFormState = { id: uuid(), razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: '' }
-    const [user, setUser] = useState(initialFormState)
-    /* Lazy state handling also here */
-    const handleInputChange = event => {
-        const {name, value} = event.target
-        setUser({...user, [name]: value})
-    }
+    const initialState = { razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: ''}
 
-    const handleSubmit = event => {
-        event.preventDefault()
-
-        addUser(user)
-        setUser(initialFormState)
+    const handleEvent = (data) => {
+        let newUser = Object.assign({ id: uuid() }, data)
+        addUser(newUser)
         Alerts.InfoNotify("USUARIO AGREGADO")
     }
 
     return(
-        <FormUser user={user} handleSubmit={handleSubmit} handleInputChange={handleInputChange} textSubmit="Agregar" variantBtn='outline-primary' />
+        <UserForm handleSubmit={handleEvent} textSubmit="Agregar" variantBtn='outline-primary' data={initialState} />
     )
 }
 

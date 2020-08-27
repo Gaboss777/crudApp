@@ -2,10 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-/* Don`t just use props, destructure your props object 
-    const CallModal = ({children})=>{}
-*/
-const CallModal = ( props ) => {
+const CallModal = ( {OverLayPlace, TooltipText, variantBtn, sizeBtn, disabled, iconBtn, sizeModal, HeaderModalColor, titleModal, children} ) => {
     const [show, setShow] = useState(false)
 
     const handleOpen =()=> setShow(true)
@@ -13,15 +10,15 @@ const CallModal = ( props ) => {
 
     return (
         <Fragment>
-                <OverlayTrigger placement={props.OverLayPlace} overlay={<Tooltip >{props.TooltipText}</Tooltip>}>
-                    <Button variant={props.variantBtn} size={props.sizeBtn} onClick={handleOpen} disabled={props.disabled} ><FontAwesomeIcon size='xs' icon={props.iconBtn}  /></Button>
+                <OverlayTrigger placement={OverLayPlace} overlay={<Tooltip >{TooltipText}</Tooltip>}>
+                    <Button variant={variantBtn} size={sizeBtn} onClick={handleOpen} disabled={disabled} ><FontAwesomeIcon size='xs' icon={iconBtn}  /></Button>
                 </OverlayTrigger>
-                <Modal show={show} onHide={handleClose} centered size={props.sizeModal} >
-                    <Modal.Header className={props.HeaderModalColor} closeButton >
-                        <Modal.Title className='text-center w-100 text-white' >{props.titleModal}</Modal.Title>
+                <Modal show={show} onHide={handleClose} centered size={sizeModal} >
+                    <Modal.Header className={HeaderModalColor} closeButton >
+                        <Modal.Title className='text-center w-100 text-white' >{titleModal}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        { props.children }
+                        { children }
                     </Modal.Body>
                 </Modal>
         </Fragment>

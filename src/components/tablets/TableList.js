@@ -147,7 +147,7 @@ const TableList =({list, getList, loading, userActual})=> {
         { dataField: 'services', text: 'Servicio', sort: true, align: 'center', headerAlign: 'center' },
         { dataField: 'bandwidth', text: 'Bandwidth', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
         { dataField: 'ipAddress', text: 'Direccion IP', sort: true, align: 'center', headerAlign: 'center', filter: textFilter() },
-        { dataField: 'Estado', text: 'Estado', sort: true, align: 'center', headerAlign: 'center', 
+        { dataField: 'estado', text: 'Estado', sort: true, align: 'center', headerAlign: 'center', 
             formatter: (CellContent, row)=>{
                 if(CellContent === 'Activo') {
                     return <Badge variant='success'>Activo</Badge>

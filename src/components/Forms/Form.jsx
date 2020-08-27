@@ -1,12 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-/* 
-* Por que este archivo se llama forms si tiene 1 solo form?
-* Also, deberias usar UserForm en lugar de FormUser, es mas legible (en realidad no afecta solo q es mas legible asi)
-*/
-const FormUser = ( props ) => {
+
+const UserForm = ({handleEvent, variantBtn, textSubmit, data}) => {
+
+    const [razonSocial, setRazonSocial] = useState(data.razonSocial)
+    const [idDocument, setIdDocument] = useState(data.idDocument)
+    const [zoneLocation, setZoneLocation] = useState(data.zoneLocation)
+    const [bandwidth, setBandwidth] = useState(data.bandwidth)
+    const [estado, setEstado] = useState(data.estado)
+    const [services, setServices] = useState(data.services)
+    const [ipAddress, setIpAddress] = useState(data.ipAddress)
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        let info = { razonSocial, idDocument, zoneLocation, bandwidth, estado, services, ipAddress }
+        handleEvent(info)
+    }
+
     return(
-        <Form onSubmit={props.handleSubmit} >
+        <Form onSubmit={handleSubmit}>
             <Form.Group >
                 <Form.Label className='font-weight-bold text-uppercase' >Razon Social</Form.Label>
                 <Form.Control
@@ -14,8 +26,8 @@ const FormUser = ( props ) => {
                     type='text'
                     name='razonSocial'
                     placeholder='Ingrese Nombre'
-                    value={props.user.razonSocial}
-                    onChange={props.handleInputChange}
+                    value={razonSocial}
+                    onChange={({target}) => setRazonSocial(target.value)}
                     />
             </Form.Group>
             <Form.Row>
@@ -26,8 +38,8 @@ const FormUser = ( props ) => {
                         type='text'
                         name='idDocument'
                         placeholder='Ingrese Cedula o RIF'
-                        value={props.user.idDocument}
-                        onChange={props.handleInputChange}
+                        value={idDocument}
+                        onChange={({target}) => setIdDocument(target.value)}
                         />
                 </Form.Group>
                 <Form.Group as={Col} >
@@ -37,8 +49,8 @@ const FormUser = ( props ) => {
                         type='text'
                         name='zoneLocation'
                         placeholder='Zona donde Vive'
-                        value={props.user.zoneLocation}
-                        onChange={props.handleInputChange}
+                        value={zoneLocation}
+                        onChange={({target}) => setZoneLocation(target.value)}
                         />
                 </Form.Group>
             </Form.Row>
@@ -50,8 +62,8 @@ const FormUser = ( props ) => {
                         type='text'
                         name='bandwidth'
                         placeholder='bandwidth'
-                        value={props.user.bandwidth}
-                        onChange={props.handleInputChange}
+                        value={bandwidth}
+                        onChange={({target}) => setBandwidth(target.value)}
                         />
                 </Form.Group>
                 <Form.Group as={Col} >
@@ -61,15 +73,15 @@ const FormUser = ( props ) => {
                         type='text'
                         name='ipAddress'
                         placeholder='ipAddress'
-                        value={props.user.ipAddress}
-                        onChange={props.handleInputChange}
+                        value={ipAddress}
+                        onChange={({target}) => setIpAddress(target.value)}
                         />
                 </Form.Group>
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
-                    <Form.Control as='select' value={props.user.services} onChange={props.handleInputChange} name='services' >
+                    <Form.Control as='select' value={services} onChange={({target}) => setServices(target.value)} name='services' >
                         <option>Elija un Servicio</option>
                         <option value='Residencial' >Residencial</option>
                         <option value='PYMES' >PYMES</option>
@@ -78,7 +90,7 @@ const FormUser = ( props ) => {
                 </Form.Group>
                 <Form.Group as={Col} >
                     <Form.Label className='font-weight-bold text-uppercase' >Estado</Form.Label>
-                    <Form.Control as='select' value={props.user.Estado} onChange={props.handleInputChange} name='Estado' >
+                    <Form.Control as='select' value={estado} onChange={({target}) => setEstado(target.value)} name='Estado' >
                         <option>Elija un Estado</option>
                         <option value='Activo' >Activo</option>
                         <option value='Cancelado' >Cancelado</option>
@@ -88,11 +100,11 @@ const FormUser = ( props ) => {
             </Form.Row>
             <Row className='text-center'>
                 <Col>
-                    <Button variant={props.variantBtn} type='submit' >{props.textSubmit}</Button>
+                    <Button variant={variantBtn} type='submit' >{textSubmit}</Button>
                 </Col>
             </Row>
         </Form>
     )
 }
 
-export default FormUser
+export default UserForm

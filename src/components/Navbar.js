@@ -8,7 +8,7 @@ import DeleteUser from './deleteUser';
 import { faUserEdit, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
-const MenuCrud =(props)=> {
+const MenuCrud =({ userSelected })=> {
     return(
     <Navbar expand="lg" bg='light' className='mb-3' >
         <Navbar.Brand href="#home">
@@ -19,10 +19,10 @@ const MenuCrud =(props)=> {
                 <CallModal OverLayPlace='bottom' TooltipText="Agregar" HeaderModalColor='bg-primary' titleModal='Nuevo Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserPlus} >
                     <NewUser />
                 </CallModal>
-                <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} disabled={props.userSelected ? false : true } >
+                <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} disabled={userSelected ? false : true } >
                     <EditUser />
                 </CallModal>
-                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="sm" iconBtn={faTrashAlt} disabled={props.userSelected ? false : true } >
+                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="sm" iconBtn={faTrashAlt} disabled={userSelected ? false : true } >
                     <DeleteUser />
                 </CallModal>
             </ButtonGroup>
