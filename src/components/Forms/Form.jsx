@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
-const UserForm = ({handleEvent, variantBtn, textSubmit, data}) => {
+const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
 
     const [razonSocial, setRazonSocial] = useState(data.razonSocial)
     const [idDocument, setIdDocument] = useState(data.idDocument)
@@ -11,14 +11,14 @@ const UserForm = ({handleEvent, variantBtn, textSubmit, data}) => {
     const [services, setServices] = useState(data.services)
     const [ipAddress, setIpAddress] = useState(data.ipAddress)
 
-    const handleSubmit = (event) => {
+    const onSubmit = (event) => {
         event.preventDefault()
         let info = { razonSocial, idDocument, zoneLocation, bandwidth, estado, services, ipAddress }
-        handleEvent(info)
+        handleSubmit(info)
     }
 
     return(
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={onSubmit}>
             <Form.Group >
                 <Form.Label className='font-weight-bold text-uppercase' >Razon Social</Form.Label>
                 <Form.Control

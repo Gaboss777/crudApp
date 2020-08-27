@@ -9,14 +9,14 @@ const NewUser = ({addUser}) => {
 
     const initialState = { razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: ''}
 
-    const handleEvent = (data) => {
+    const handleSubmit = (data) => {
         let newUser = Object.assign({ id: uuid() }, data)
         addUser(newUser)
         Alerts.InfoNotify("USUARIO AGREGADO")
     }
 
     return(
-        <UserForm handleSubmit={handleEvent} textSubmit="Agregar" variantBtn='outline-primary' data={initialState} />
+        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='outline-primary' data={initialState} />
     )
 }
 
