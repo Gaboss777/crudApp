@@ -61,7 +61,7 @@ export const updateUser=(id, user)=>{
     return dispatch=>{
         dispatch({type:ACTIONS.UPDATE_REQUESTED})
         Axios.put(apiUrl+`/usersData/${id}`, user).then(res=>{
-            console.log(res.data.id)
+            console.log(res.data)
             dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: res.data})
         })
         .catch(err=>{
@@ -124,7 +124,9 @@ export const usersReducer = (state=initialState,{type,payload})=>{
         case ACTIONS.DELETE_SUCCEEDED:
             return{
                 ...state,
-                list: state.list.filter(user => user.id !== payload)
+                list: state.list.filter(user => user.id !== payload),
+                loading: false,
+                selected: null
             }
         case ACTIONS.UPDATE_REQUESTED:
             return{
@@ -134,12 +136,14 @@ export const usersReducer = (state=initialState,{type,payload})=>{
         case ACTIONS.UPDATE_SUCCEEDED:
             return{
                 ...state,
-                list: state.list.map(user => user.id === payload.id ? payload.user : user)
+                list: state.list.map(user => user.id === payload.id ? payload.user : user),
+                loading: false
             }
         case ACTIONS.INFO_SELECTED:
             return{
                 ...state,
-                selected: payload
+                selected: payload,
+                loading: false
             }
         default:
             return state
