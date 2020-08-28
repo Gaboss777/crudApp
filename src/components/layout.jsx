@@ -4,9 +4,9 @@ import { ToastContainer, Zoom } from 'react-toastify';
 
 const Layout =({ children })=> {
     return(
-        <Container>
+        <Container fluid>
             <Row>
-                <Col xs={12} >
+                <Col xs lg={12} >
                     { children }
                 </Col>
             </Row>

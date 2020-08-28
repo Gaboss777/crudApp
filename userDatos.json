@@ -5,7 +5,7 @@
       "idDocument": "54654",
       "zoneLocation": "Caracas",
       "bandwidth": "100",
-      "estado": "Activo",
+      "estado": "Cancelado",
       "services": "Residencial",
       "ipAddress": "192.168.0.1",
       "id": "6cbc8f82-be48-45cd-99ab-0c57582dd4a1"
@@ -139,6 +139,24 @@
       "estado": "Activo",
       "services": "Residencial",
       "ipAddress": "172.16.0.2"
+    },
+    {
+      "id": "0d4c5cb4-c763-41d0-91a1-ad3e72c86517",
+      "razonSocial": "",
+      "idDocument": "",
+      "zoneLocation": "",
+      "bandwidth": "",
+      "services": "",
+      "ipAddress": ""
+    },
+    {
+      "id": "3ba9c781-b594-4e62-9199-53c228d9c711",
+      "razonSocial": "",
+      "idDocument": "",
+      "zoneLocation": "",
+      "bandwidth": "",
+      "services": "",
+      "ipAddress": ""
     }
   ]
 }

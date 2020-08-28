@@ -14,7 +14,7 @@ const ConfirmWarning = (props) => {
             </Row>
             <Row className='text-center'>
                 <Col>
-                    <Button variant='outline-danger' type='submit' className='mx-2' onClick={props.handleSubmit} >{props.textBtn}</Button>
+                    <Button variant='danger' type='submit' className='mx-2' onClick={props.handleSubmit} >{props.textBtn}</Button>
                 </Col>
             </Row>
         </Container>

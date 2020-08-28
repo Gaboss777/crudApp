@@ -12,7 +12,7 @@ const EditUser = ({userActual, editUser}) => {
     }
 
     return(
-        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='outline-success' data={userActual} />
+        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='success' data={userActual} />
     )
 }
 

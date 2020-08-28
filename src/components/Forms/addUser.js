@@ -16,7 +16,7 @@ const NewUser = ({addUser}) => {
     }
 
     return(
-        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='outline-primary' data={initialState} />
+        <UserForm handleSubmit={handleSubmit} textSubmit="Agregar" variantBtn='primary' data={initialState} />
     )
 }
 
