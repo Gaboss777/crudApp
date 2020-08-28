@@ -22,7 +22,7 @@ const MenuCrud =({ userSelected })=> {
                 <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} disabled={userSelected ? false : true } >
                     <EditUser />
                 </CallModal>
-                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="sm" iconBtn={faTrashAlt} disabled={userSelected ? false : true } >
+                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="lg" iconBtn={faTrashAlt} disabled={userSelected ? false : true } >
                     <DeleteUser />
                 </CallModal>
             </ButtonGroup>

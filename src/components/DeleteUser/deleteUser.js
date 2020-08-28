@@ -14,7 +14,7 @@ const DeleteUser =({deleteUser, userActual, handleClose})=>{
     }
 
     return (
-        <ConfirmWarning textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} />
+        <ConfirmWarning textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} data={userActual} />
     )
 }
 

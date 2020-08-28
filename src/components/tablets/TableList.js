@@ -85,7 +85,6 @@ const TableList =({list, getList, loading, userActual})=> {
         onSelect: (row, isSelect, rowIndex, e) => {
             if (isSelect) {
                 userActual(row)
-                console.log(row)
             } else {
                 userActual(null)
             }
@@ -128,7 +127,7 @@ const TableList =({list, getList, loading, userActual})=> {
         { dataField: 'services', text: 'Servicio', sort: true, align: 'center', headerAlign: 'center' },
         { dataField: 'bandwidth', text: 'Bandwidth', sort: true, align: 'center', headerAlign: 'center' },
         { dataField: 'ipAddress', text: 'Direccion IP', sort: true, align: 'center', headerAlign: 'center' },
-        { dataField: 'estado', text: 'Estado', sort: true, align: 'center', headerAlign: 'center', 
+        { dataField: 'estado', text: 'Estatus', sort: true, align: 'center', headerAlign: 'center', 
             formatter: (CellContent, row)=>{
                 return <Badge variant={CellContent === 'Activo' ? 'success' : CellContent === 'Suspendido' ? 'warning' : 'danger'} className='text-uppercase'>{CellContent}</Badge>
             }
