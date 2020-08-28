@@ -1,52 +1,40 @@
-import React, {useState} from 'react';
-import { Navbar, Nav, Button, Form, InputGroup } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { Navbar, Nav, ButtonGroup } from 'react-bootstrap';
+import Logo from '../img/LOGO.png';
+import CallModal from './Modal/Modal';
+import NewUser from './Forms/addUser';
+import EditUser from './Forms/editUser';
+import DeleteUser from './DeleteUser/deleteUser';
+import { faUserEdit, faTrashAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 
-export const MenuCrud =({Buscar, handleOpen})=> {
-    
-    const initialForm = ''
-    const [find, setFind] = useState(initialForm)
-
-    const onChangefindData = e => {
-        const data = e.target.value
-        setFind(data)
-    }
-
-    const handleSubmit =(e)=> {
-        e.preventDefault()
-
-        Buscar(find)
-        setFind(initialForm)
-
-    }
-
+const MenuCrud =({ userSelected })=> {
     return(
-    <Navbar expand="lg" bg='dark' variant='dark' className='py-0' >
-        <Navbar.Brand href="#home">PROYECTO CRUD</Navbar.Brand>
-        <Nav className='mr-auto'>
-            <Button variant='secondary' size='sm' className='my-3' onClick={handleOpen} >Nuevo Usuario</Button>
+    <Navbar expand="lg" bg='light' className='mb-3' >
+        <Navbar.Brand href="#home">
+            <img src={Logo} alt='Logo' />
+        </Navbar.Brand>
+        <Nav >
+            <ButtonGroup >
+                <CallModal OverLayPlace='bottom' TooltipText="Agregar" HeaderModalColor='bg-primary' titleModal='Nuevo Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserPlus} >
+                    <NewUser />
+                </CallModal>
+                <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} disabled={userSelected ? false : true } >
+                    <EditUser />
+                </CallModal>
+                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="sm" iconBtn={faTrashAlt} disabled={userSelected ? false : true } >
+                    <DeleteUser />
+                </CallModal>
+            </ButtonGroup>
         </Nav>
-        <Form className='w-25' onSubmit={handleSubmit} inline >
-            <Form.Group>
-                <InputGroup >
-                    <Form.Control 
-                        type='text' 
-                        size='sm'
-                        placeholder='Buscar datos' 
-                        value={find} 
-                        onChange={onChangefindData} 
-                        required 
-                        className='mt-2'
-                        aria-label='Buscar datos'
-                        aria-describedby='addon1'
-                        />
-                    <InputGroup.Append >
-                        <Button variant='secondary' size='sm' type='submit' id='addon1' ><FontAwesomeIcon icon={faSearch} /></Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            </Form.Group>
-        </Form>
     </Navbar>
     )
 }
+
+const mapStateToProps = state => (
+    {
+        userSelected: state.users.selected
+    }
+)
+
+export default connect(mapStateToProps, null)(MenuCrud)
