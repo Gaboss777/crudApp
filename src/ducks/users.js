@@ -46,9 +46,8 @@ export const createUser=(user)=>{
 export const removeUser=(id)=>{
     return dispatch=>{
         dispatch({type:ACTIONS.DELETE_REQUESTED})
-        Axios.delete(apiUrl+`/usersData/${id}`, {data: id}).then(res=>{
-            console.log(res)
-            console.log(id)
+        Axios.delete(apiUrl+`/usersData/${id}`).then(res=>{
+            console.log(res.data)
             dispatch({type:ACTIONS.DELETE_SUCCEEDED,payload:id})
         })
         .catch(err=>{
@@ -62,7 +61,8 @@ export const updateUser=(id, user)=>{
         dispatch({type:ACTIONS.UPDATE_REQUESTED})
         Axios.put(apiUrl+`/usersData/${id}`, user).then(res=>{
             console.log(res.data.id)
-            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: res.data})
+            console.log(res.data)
+            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: user})
         })
         .catch(err=>{
             dispatch({type:ACTIONS.UPDATE_FAILED, payload:err})
@@ -124,7 +124,9 @@ export const usersReducer = (state=initialState,{type,payload})=>{
         case ACTIONS.DELETE_SUCCEEDED:
             return{
                 ...state,
-                list: state.list.filter(user => user.id !== payload)
+                list: state.list.filter(user => user.id !== payload),
+                loading: false,
+                selected: null
             }
         case ACTIONS.UPDATE_REQUESTED:
             return{
@@ -134,12 +136,14 @@ export const usersReducer = (state=initialState,{type,payload})=>{
         case ACTIONS.UPDATE_SUCCEEDED:
             return{
                 ...state,
-                list: state.list.map(user => user.id === payload.id ? payload.user : user)
+                list: state.list.map(user => user.id === payload.id ? payload.user : user),
+                loading: false
             }
         case ACTIONS.INFO_SELECTED:
             return{
                 ...state,
-                selected: payload
+                selected: payload,
+                loading: false
             }
         default:
             return state

@@ -4,16 +4,16 @@ import { removeUser } from '../../ducks/users';
 import ConfirmWarning from '../Alerts/ConfirmWarning';
 import Alerts from '../Alerts/alerts';
 
-const DeleteUser =({deleteUser, userActual})=>{
+const DeleteUser =({deleteUser, userActual, handleClose})=>{
 
-    const handleSubmit = event => {
-        event.preventDefault()
-        deleteUser(userActual.id)
+    const handleSubmit = (data) => {
+        data.map(user => deleteUser(user.id))
         Alerts.RemoveNotify("USUARIO ELIMINADO")
+        handleClose()
     }
 
     return (
-        <ConfirmWarning textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} />
+        <ConfirmWarning textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} data={userActual} />
     )
 }
 

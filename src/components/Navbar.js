@@ -19,10 +19,12 @@ const MenuCrud =({ userSelected })=> {
                 <CallModal OverLayPlace='bottom' TooltipText="Agregar" HeaderModalColor='bg-primary' titleModal='Nuevo Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserPlus} >
                     <NewUser />
                 </CallModal>
-                <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} disabled={userSelected ? false : true } >
+                <CallModal OverLayPlace='bottom' TooltipText="Editar" HeaderModalColor='bg-success' titleModal='Editar Usuario' variantBtn='warning' sizeBtn='lg' iconBtn={faUserEdit} 
+                disabled={Array.isArray(userSelected) ? true : userSelected ? false : true } >
                     <EditUser />
                 </CallModal>
-                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="sm" iconBtn={faTrashAlt} disabled={userSelected ? false : true } >
+                <CallModal OverLayPlace='bottom' TooltipText="Eliminar" HeaderModalColor='bg-danger' titleModal='Eliminar Usuario' variantBtn='warning' sizeBtn='lg' sizeModal="lg" iconBtn={faTrashAlt} 
+                disabled={userSelected || Array.isArray(userSelected) ? false : true } >
                     <DeleteUser />
                 </CallModal>
             </ButtonGroup>

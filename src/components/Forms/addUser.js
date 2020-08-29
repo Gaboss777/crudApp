@@ -5,7 +5,7 @@ import { createUser}  from '../../ducks/users';
 import { uuid } from 'uuidv4'
 import Alerts from '../Alerts/alerts';
 
-const NewUser = ({addUser}) => {
+const NewUser = ({addUser, handleClose}) => {
 
     const initialState = { razonSocial: '', idDocument: '', zoneLocation: '', bandwidth: '', Estado: '', services: '', ipAddress: ''}
 
@@ -13,6 +13,7 @@ const NewUser = ({addUser}) => {
         let newUser = Object.assign({ id: uuid() }, data)
         addUser(newUser)
         Alerts.InfoNotify("USUARIO AGREGADO")
+        handleClose()
     }
 
     return(

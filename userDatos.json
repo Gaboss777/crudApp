@@ -1,162 +1,34 @@
 {
   "usersData": [
     {
-      "razonSocial": "rafa",
-      "idDocument": "54654",
-      "zoneLocation": "Caracas",
-      "bandwidth": "100",
-      "estado": "Cancelado",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.1",
-      "id": "6cbc8f82-be48-45cd-99ab-0c57582dd4a1"
-    },
-    {
-      "id": "5b38a992-06e0-4a78-b5ef-6c33ac323a2e",
-      "razonSocial": "Galaxy Entretainer",
-      "estado": "Suspendido",
-      "idDocument": "j55246352",
-      "zoneLocation": "Bolivia",
-      "services": "PYMES",
-      "bandwidth": "10",
-      "ipAddress": "192.168.0.1"
-    },
-    {
-      "id": "cc2f7bf2-ed6b-4c9b-ba30-368d91809aa8",
-      "razonSocial": "Galaxy",
-      "estado": "Cancelado",
-      "idDocument": "j55246352",
-      "zoneLocation": "Bolivia",
-      "services": "PYMES",
-      "bandwidth": "2",
-      "ipAddress": "192.168.0.1"
-    },
-    {
-      "id": "ae0a0da9-cd2e-46c1-a5af-0b867e278703",
-      "razonSocial": "Cerecom",
-      "estado": "Activo",
-      "idDocument": "654654654",
-      "zoneLocation": "Caracas",
-      "services": "PYMES",
-      "bandwidth": "2",
-      "ipAddress": "192.168.0.1"
-    },
-    {
-      "id": "8bbb2607-21ac-402d-9fd5-289277a1a30e",
-      "razonSocial": "Galaxy Entrenainer",
+      "razonSocial": "Galaxy Prueba",
       "idDocument": "J-2535142-9",
-      "zoneLocation": "Espana",
+      "zoneLocation": "Caracas",
       "bandwidth": "10",
       "estado": "Activo",
       "services": "Residencial",
-      "ipAddress": "192.168.0.1"
+      "ipAddress": "192.168.0.10",
+      "id": "3a3ccec5-8b54-4112-ad5d-393cae2d5671"
     },
     {
-      "id": "47a81efc-3128-4dc5-a396-5c80ef53eb41",
+      "id": "f01b2340-363d-448b-9a2a-e7ebc646bf19",
       "razonSocial": "Jhosbelis Garcia",
       "idDocument": "19162328",
       "zoneLocation": "Caracas",
       "bandwidth": "10",
       "estado": "Activo",
       "services": "Residencial",
-      "ipAddress": "192.168.0.1"
+      "ipAddress": "192.168.0.20"
     },
     {
-      "id": "a1ed573a-a1a0-4856-b96b-b977ac6d1922",
-      "razonSocial": "Hola",
-      "idDocument": "J4245281",
-      "zoneLocation": "Caracas",
-      "bandwidth": "10",
-      "estado": "Activo",
-      "services": "PYMES",
-      "ipAddress": "192.168.0.1"
-    },
-    {
-      "id": "84e8e708-0606-4826-b225-8f4aff5a0290",
-      "razonSocial": "Galaxy Entrenainer",
+      "razonSocial": "Hola Mundo",
       "idDocument": "J-2535142-9",
-      "zoneLocation": "Gaboss",
-      "bandwidth": "10",
-      "estado": "Cancelado",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.1"
-    },
-    {
-      "id": "2f4f1e72-a71b-4566-b35d-e9852c65d885",
-      "razonSocial": "Prueba",
-      "idDocument": "5245245",
-      "zoneLocation": "Caracas",
-      "bandwidth": "10",
-      "estado": "Activo",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.10"
-    },
-    {
-      "id": "7e5f6357-d7f4-4e57-a3e6-48d376095395",
-      "razonSocial": "Hola",
-      "idDocument": "18667937",
       "zoneLocation": "Bolivia",
-      "bandwidth": "10",
-      "estado": "Activo",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.10"
-    },
-    {
-      "razonSocial": "Gabriel",
-      "idDocument": "18667937",
-      "zoneLocation": "Caracas",
-      "bandwidth": "100",
-      "estado": "Activo",
-      "services": "PYMES",
-      "ipAddress": "192.168.0.1",
-      "id": "ece74ef5-46e3-4f37-ad1d-2fb0da96ad19"
-    },
-    {
-      "razonSocial": "Hola",
-      "idDocument": "18667937",
-      "zoneLocation": "Gaboss",
       "bandwidth": "10",
       "estado": "Activo",
       "services": "Residencial",
       "ipAddress": "192.168.0.10",
-      "id": "c2adcdfc-a2ee-4db8-ad76-7677d6f8536e"
-    },
-    {
-      "id": "c088a081-e2cb-41b8-8330-ff8f11290f24",
-      "razonSocial": "Gabriel",
-      "idDocument": "J-2535142-9",
-      "zoneLocation": "Gaboss",
-      "bandwidth": "asdad",
-      "estado": "Activo",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.10"
-    },
-    {
-      "id": "820caa1a-9487-490a-8dc3-6e22c4b69c04",
-      "razonSocial": "Rafael Eduardo",
-      "idDocument": "191616263",
-      "zoneLocation": "Bolivia",
-      "bandwidth": "100",
-      "estado": "Activo",
-      "services": "Residencial",
-      "ipAddress": "172.16.0.2"
-    },
-    {
-      "id": "0d4c5cb4-c763-41d0-91a1-ad3e72c86517",
-      "razonSocial": "",
-      "idDocument": "",
-      "zoneLocation": "",
-      "bandwidth": "",
-      "services": "",
-      "ipAddress": ""
-    },
-    {
-      "id": "3ba9c781-b594-4e62-9199-53c228d9c711",
-      "razonSocial": "",
-      "idDocument": "",
-      "zoneLocation": "",
-      "bandwidth": "",
-      "services": "",
-      "ipAddress": ""
+      "id": "bd7440ae-87be-4e44-b6f1-f21dd04c383f"
     }
   ]
 }

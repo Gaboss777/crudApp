@@ -4,11 +4,12 @@ import { updateUser } from '../../ducks/users';
 import UserForm from './Form';
 import Alerts from '../Alerts/alerts';
 
-const EditUser = ({userActual, editUser}) => {
+const EditUser = ({userActual, editUser, handleClose}) => {
 
     const handleSubmit = (data) => {
         editUser(userActual.id, data)
         Alerts.EditNotify("DATOS ACTUALIZADOS")
+        handleClose()
     }
 
     return(

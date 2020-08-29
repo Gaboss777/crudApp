@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, cloneElement } from 'react';
 import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,7 +18,7 @@ const CallModal = ( {OverLayPlace, TooltipText, variantBtn, sizeBtn, disabled, i
                         <Modal.Title className='text-center w-100 text-white' >{titleModal}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        { children }
+                        { cloneElement(children, {handleClose}) }
                     </Modal.Body>
                 </Modal>
         </Fragment>
