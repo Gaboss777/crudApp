@@ -6,9 +6,8 @@ import Alerts from '../Alerts/alerts';
 
 const DeleteUser =({deleteUser, userActual, handleClose})=>{
 
-    const handleSubmit = event => {
-        event.preventDefault()
-        deleteUser(userActual.id)
+    const handleSubmit = (data) => {
+        data.map(user => deleteUser(user.id))
         Alerts.RemoveNotify("USUARIO ELIMINADO")
         handleClose()
     }

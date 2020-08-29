@@ -46,9 +46,8 @@ export const createUser=(user)=>{
 export const removeUser=(id)=>{
     return dispatch=>{
         dispatch({type:ACTIONS.DELETE_REQUESTED})
-        Axios.delete(apiUrl+`/usersData/${id}`, {data: id}).then(res=>{
-            console.log(res)
-            console.log(id)
+        Axios.delete(apiUrl+`/usersData/${id}`).then(res=>{
+            console.log(res.data)
             dispatch({type:ACTIONS.DELETE_SUCCEEDED,payload:id})
         })
         .catch(err=>{
@@ -61,8 +60,9 @@ export const updateUser=(id, user)=>{
     return dispatch=>{
         dispatch({type:ACTIONS.UPDATE_REQUESTED})
         Axios.put(apiUrl+`/usersData/${id}`, user).then(res=>{
+            console.log(res.data.id)
             console.log(res.data)
-            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: res.data})
+            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: user})
         })
         .catch(err=>{
             dispatch({type:ACTIONS.UPDATE_FAILED, payload:err})

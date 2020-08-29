@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -7,6 +7,8 @@ import { Button, ButtonGroup, FormControl, Badge, InputGroup, Container, Col, Ro
 import { getUserList, getUserActual } from '../../ducks/users';
 
 const TableList =({list, getList, loading, userActual})=> {
+
+    const [checked, setChecked] = useState([])
 
     useEffect(() => {
         getList()
@@ -84,9 +86,23 @@ const TableList =({list, getList, loading, userActual})=> {
         classes: 'bg-gradient-primary text-white',
         onSelect: (row, isSelect, rowIndex, e) => {
             if (isSelect) {
-                userActual(row)
+                let dataAdd = checked
+                dataAdd.push(row)
+                setChecked(dataAdd)
+                console.log(checked.length)
+                if (checked.length > 1) {
+                    userActual(checked)
+                    console.log(checked)
+                } else {
+                    userActual(checked[0])
+                }
             } else {
-                userActual(null)
+                let dataRemove = checked
+                dataRemove.splice(dataRemove.indexOf(row), 1)
+                setChecked(dataRemove)
+                if( checked.length === 0) {
+                    userActual(null)
+                }
             }
         }
     }
@@ -133,6 +149,9 @@ const TableList =({list, getList, loading, userActual})=> {
             }
         }
     ]
+
+    console.log(loading)
+    console.log(list)
 
     return (
         <div>
