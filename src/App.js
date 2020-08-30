@@ -8,13 +8,14 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import TableList from './components/tablets/TableList';
 import Layout from './components/layout';
 import MenuCrud from './components/Navbar';
+import UserList from './components/User/List';
 
 function App() {
   return(
     <div>
-        <MenuCrud />
+     
         <Layout >
-          <TableList />
+          <UserList />
         </Layout>
     </div>
   )
