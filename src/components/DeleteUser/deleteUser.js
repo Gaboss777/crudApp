@@ -1,25 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { removeUser } from '../../ducks/users';
-import ConfirmWarning from '../Alerts/ConfirmWarning';
+import DeleteAlert from '../Alerts/DeleteAlert';
 import Alerts from '../Alerts/alerts';
 
-const DeleteUser =({deleteUser, userActual, handleClose})=>{
+const DeleteUser =({deleteUser, dataSelected, handleClose})=>{
 
     const handleSubmit = (data) => {
-        data.map(user => deleteUser(user.id))
+        deleteUser(data.id)
         Alerts.RemoveNotify("USUARIO ELIMINADO")
         handleClose()
     }
 
     return (
-        <ConfirmWarning textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} data={userActual} />
+        <DeleteAlert textBtn="Eliminar" textWarning="Desea Eliminar el siguiente dato?" handleSubmit={handleSubmit} data={dataSelected} />
     )
 }
 
 const mapStateToProps = state => (
     {
-        userActual: state.users.selected
+        dataSelected: state.users.selected
     }
 )
 
