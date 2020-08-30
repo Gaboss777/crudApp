@@ -8,13 +8,13 @@ export const actionCreator=(resource)=>{
         CREATE_REQUESTED:resource.toUpperCase()+'_CREATE_REQUESTED',
         CREATE_SUCCEEDED:resource.toUpperCase()+'_CREATE_SUCCEEDED',
         CREATE_FAILED:resource.toUpperCase()+'_CREATE_FAILED',
-        INFO_SELECTED:resource.toUpperCase()+'_INFO_SELECTED',
+        CHECKED:resource.toUpperCase()+'_CHECKED',
         DELETE_REQUESTED:resource.toUpperCase()+'_DELETE_REQUESTED',
         DELETE_SUCCEEDED:resource.toUpperCase()+'_DELETE_SUCCEEDED',
         DELETE_FAILED:resource.toUpperCase()+'_DELETE_FAILED',
         UPDATE_REQUESTED:resource.toUpperCase()+'_UPDATE_REQUESTED',
         UPDATE_SUCCEEDED:resource.toUpperCase()+'_UPDATE_SUCCEEDED',
-        UPDATE_FAILED:resource.toUpperCase()+'_UPDATE_FAILED'
+        UPDATE_FAILED:resource.toUpperCase()+'_UPDATE_FAILED',
     }
 }
 const ACTIONS = actionCreator('user');
@@ -60,9 +60,7 @@ export const updateUser=(id, user)=>{
     return dispatch=>{
         dispatch({type:ACTIONS.UPDATE_REQUESTED})
         Axios.put(apiUrl+`/usersData/${id}`, user).then(res=>{
-            console.log(res.data.id)
-            console.log(res.data)
-            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: user})
+            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: res.data})
         })
         .catch(err=>{
             dispatch({type:ACTIONS.UPDATE_FAILED, payload:err})
@@ -70,17 +68,22 @@ export const updateUser=(id, user)=>{
     }
 }
 
-export const getUserActual =(user)=>{
-    return dispatch =>{
-        dispatch({type:ACTIONS.INFO_SELECTED, payload:user})
+export const selectRow =(e, user)=>{
+    if(e) {
+        return dispatch =>{
+            dispatch({type:ACTIONS.CHECKED, payload: user})
+        }
+    } else {
+        return dispatch =>{
+            dispatch({type:ACTIONS.CHECKED, payload: null})
+        }
     }
 }
 
 
-
 const initialState={
     list:[],
-    selected:null,
+    selected: null,
     loading:false
 }
 
@@ -136,14 +139,14 @@ export const usersReducer = (state=initialState,{type,payload})=>{
         case ACTIONS.UPDATE_SUCCEEDED:
             return{
                 ...state,
-                list: state.list.map(user => user.id === payload.id ? payload.user : user),
-                loading: false
+                list: state.list.map(user => user.id === payload.id ? payload: user),
+                loading: false,
+                selected: null
             }
-        case ACTIONS.INFO_SELECTED:
+        case ACTIONS.CHECKED:
             return{
                 ...state,
-                selected: payload,
-                loading: false
+                selected: payload
             }
         default:
             return state

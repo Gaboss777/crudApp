@@ -1,27 +1,17 @@
 {
   "usersData": [
     {
-      "razonSocial": "Galaxy Prueba",
-      "idDocument": "J-2535142-9",
-      "zoneLocation": "Caracas",
-      "bandwidth": "10",
-      "estado": "Activo",
-      "services": "Residencial",
-      "ipAddress": "192.168.0.10",
-      "id": "3a3ccec5-8b54-4112-ad5d-393cae2d5671"
-    },
-    {
-      "id": "f01b2340-363d-448b-9a2a-e7ebc646bf19",
       "razonSocial": "Jhosbelis Garcia",
       "idDocument": "19162328",
       "zoneLocation": "Caracas",
       "bandwidth": "10",
-      "estado": "Activo",
+      "estado": "Cancelado",
       "services": "Residencial",
-      "ipAddress": "192.168.0.20"
+      "ipAddress": "192.168.0.20",
+      "id": "f01b2340-363d-448b-9a2a-e7ebc646bf19"
     },
     {
-      "razonSocial": "Hola Mundo",
+      "razonSocial": "Prueba",
       "idDocument": "J-2535142-9",
       "zoneLocation": "Bolivia",
       "bandwidth": "10",

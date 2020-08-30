@@ -3,7 +3,7 @@ import { Row, Col, Button, Container, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
-const ConfirmWarning = ({handleSubmit, textWarning, textBtn, data}) => {
+const DeleteAlert = ({handleSubmit, textWarning, textBtn, data}) => {
 
     const handleClick =(event)=>{
         event.preventDefault()
@@ -31,34 +31,15 @@ const ConfirmWarning = ({handleSubmit, textWarning, textBtn, data}) => {
                             </tr>
                         </thead>
                         <tbody>
-                        { Array.isArray(data) ?
-                            <>
-                            { data.map(user => (
-                                <tr>
-                                    <td>{user.razonSocial}</td>
-                                    <td>{user.idDocument} </td>
-                                    <td>{user.zoneLocation} </td>
-                                    <td>{user.bandwidth}</td>
-                                    <td>{user.ipAddress} </td>
-                                    <td>{user.services}</td>
-                                    <td>{user.estado}</td>
-                                </tr>
-                                ))
-                            } </>
-                            : <>
-                            {
-                                <tr>
-                                    <td>{data.razonSocial}</td>
-                                    <td>{data.idDocument} </td>
-                                    <td>{data.zoneLocation} </td>
-                                    <td>{data.bandwidth}</td>
-                                    <td>{data.ipAddress} </td>
-                                    <td>{data.services}</td>
-                                    <td>{data.estado}</td>
-                                </tr>
-                            }
-                            </>
-                        }
+                            <tr>
+                                <td>{data.razonSocial}</td>
+                                <td>{data.idDocument} </td>
+                                <td>{data.zoneLocation} </td>
+                                <td>{data.bandwidth}</td>
+                                <td>{data.ipAddress} </td>
+                                <td>{data.services}</td>
+                                <td>{data.estado}</td>
+                            </tr>
                         </tbody>
                     </Table>
                 </Col>
@@ -72,4 +53,4 @@ const ConfirmWarning = ({handleSubmit, textWarning, textBtn, data}) => {
     )
 }
 
-export default ConfirmWarning
+export default DeleteAlert
