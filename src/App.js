@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootswatch/dist/materia/bootstrap.min.css';
-import './App.css';
+import './App.scss';
 import UsersList from './components/users/List';
 import Layout from './components/layout';
 import MainMenu from './components/Navbar';

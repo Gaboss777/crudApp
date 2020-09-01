@@ -3,7 +3,7 @@ import { Table, FormCheck, Badge } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 
-const UsersList = ({list, loading, getUserList, selectRow}) => {
+const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
     useEffect(() => {
         getUserList()
     }, [])
@@ -11,7 +11,7 @@ const UsersList = ({list, loading, getUserList, selectRow}) => {
     return (
         <>
         {!loading && list.length > 0 &&
-            <Table size='sm' striped >
+            <Table size='sm'>
                 <thead className='bg-warning text-white text-center text-uppercase'>
                     <tr>
                         <th><FormCheck type='checkbox' /></th>
@@ -31,8 +31,8 @@ const UsersList = ({list, loading, getUserList, selectRow}) => {
                 </thead>
                 <tbody className='text-center' >
                     { list.map(user => (
-                        <tr >
-                            <td><FormCheck type='checkbox' onChange={({ target }) => selectRow( target.checked, user )} /></td>
+                        <tr className='hover-table' onClick={()=>selectRow(!document.getElementById('select_row_'+user.id).checked,user)} >
+                            <td><FormCheck checked={selected.find(x=>x.id===user.id)} id={'select_row_'+user.id} type='checkbox' onChange={({ target }) => selectRow( target.checked, user )} /></td>
                             <td>{user.name}</td>
                             <td>{user.document} </td>
                             <td>{user.email}</td>
@@ -58,7 +58,8 @@ const UsersList = ({list, loading, getUserList, selectRow}) => {
 const MSTP = state => (
     {
         list: state.users.list,
-        loading: state.users.loading
+        loading: state.users.loading,
+        selected:state.users.selected
     }
 )
 
