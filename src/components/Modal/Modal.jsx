@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UsersModal = ( {OverLayPlace, TooltipText, variantBtn, sizeBtn, disabled, iconBtn, sizeModal, HeaderModalColor, titleModal, children} ) => {
     const [show, setShow] = useState(false)
-
     const handleOpen =()=> setShow(true)
     const handleClose =()=> setShow(false)
-
     return (
         <Fragment>
                 <OverlayTrigger placement={OverLayPlace} overlay={<Tooltip >{TooltipText}</Tooltip>}>

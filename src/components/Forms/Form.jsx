@@ -1,56 +1,81 @@
-import React, {useState} from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import React, { useState, Fragment, useEffect } from 'react';
+import { OverlayTrigger, Modal, Tooltip, Form, Row, Col, Button } from 'react-bootstrap';
+import { createUser, updateUser } from '../../ducks/users';
+import { connect } from 'react-redux';
+import { faUserPlus, faUserEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
 
-    const [razonSocial, setRazonSocial] = useState(data.razonSocial)
-    const [idDocument, setIdDocument] = useState(data.idDocument)
-    const [zoneLocation, setZoneLocation] = useState(data.zoneLocation)
-    const [bandwidth, setBandwidth] = useState(data.bandwidth)
-    const [estado, setEstado] = useState(data.estado)
-    const [services, setServices] = useState(data.services)
-    const [ipAddress, setIpAddress] = useState(data.ipAddress)
+const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, selection }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState(user ? user.name : "")
+    const [document, setDocument] = useState(user ? user.document : "")
+    const [location, setLocation] = useState(user ? user.location : "")
+    const [bandwidth, setBandwidth] = useState(user ? user.bandwidth : "")
+    const [status, setStatus] = useState(user ? user.status : "")
+    const [service, setService] = useState(user ? user.service : "")
+    const [ip, setIp] = useState(user ? user.ip : "");
+
+
+    useEffect(() => {
+        if (user && editing) {
+            setName(user.name)
+            setDocument(user.document)
+            setLocation(user.location)
+            setBandwidth(user.bandwidth)
+            setStatus(user.status)
+            setService(user.service)
+            setIp(user.ip)
+        }
+    }, [user,editing])
+
+
     const [valid, setValid] = useState(false)
-
     const onSubmit = (event) => {
+        event.preventDefault()
         const form = event.currentTarget
         if (form.checkValidity() === false) {
-            event.preventDefault()
             event.stopPropagation()
         } else {
-            event.preventDefault()
-            let info = { razonSocial, idDocument, zoneLocation, bandwidth, estado, services, ipAddress }
-            handleSubmit(info)
+            let newUser = { name, document, location, bandwidth, status, service, ip }
+            if (!user) {
+                createUser(newUser)
+
+            }
+            else {
+                updateUser({ ...newUser, id: user.id })
+
+            }
+
         }
+        setShowModal(false)
         setValid(true)
     }
 
-    return(
+    const formjsx = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
             <Form.Group controlId='validation01' >
-                <Form.Label className='font-weight-bold text-uppercase' >Razon Social</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase' >Razon Social </Form.Label>
                 <Form.Control
                     required
                     type='text'
-                    name='razonSocial'
                     placeholder='Ingrese Nombre'
-                    value={razonSocial}
-                    onChange={({target}) => setRazonSocial(target.value)}
-                    />
+                    value={name}
+                    onChange={({ target }) => setName(target.value)}
+                />
                 <Form.Control.Feedback >Excelente!</Form.Control.Feedback>
                 <Form.Control.Feedback type='invalid'>Ingrese Razon Social</Form.Control.Feedback>
             </Form.Group>
             <Form.Row>
                 <Form.Group as={Col} controlId='validation02' >
-                <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
                     <Form.Control
                         required
                         type='text'
-                        name='idDocument'
                         placeholder='Ingrese Cedula o RIF'
-                        value={idDocument}
-                        onChange={({target}) => setIdDocument(target.value)}
-                        />
+                        value={document}
+                        onChange={({ target }) => setDocument(target.value)}
+                    />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese CI o RIF</Form.Control.Feedback>
                 </Form.Group>
@@ -59,11 +84,10 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
                     <Form.Control
                         required
                         type='text'
-                        name='zoneLocation'
                         placeholder='Zona donde Vive'
-                        value={zoneLocation}
-                        onChange={({target}) => setZoneLocation(target.value)}
-                        />
+                        value={location}
+                        onChange={({ target }) => setLocation(target.value)}
+                    />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Ubicacion</Form.Control.Feedback>
                 </Form.Group>
@@ -74,11 +98,10 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
                     <Form.Control
                         required
                         type='number'
-                        name='bandwidth'
                         placeholder='bandwidth'
                         value={bandwidth}
-                        onChange={({target}) => setBandwidth(target.value)}
-                        />
+                        onChange={({ target }) => setBandwidth(target.value)}
+                    />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Ancho de Banda</Form.Control.Feedback>
                 </Form.Group>
@@ -87,11 +110,11 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
                     <Form.Control
                         required
                         type='text'
-                        name='ipAddress'
+
                         placeholder='ipAddress'
-                        value={ipAddress}
-                        onChange={({target}) => setIpAddress(target.value)}
-                        />
+                        value={ip}
+                        onChange={({ target }) => setIp(target.value)}
+                    />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Direccion IP</Form.Control.Feedback>
                 </Form.Group>
@@ -99,7 +122,7 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
             <Form.Row>
                 <Form.Group as={Col} controlID='validation06' >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
-                    <Form.Control as='select' value={services} onChange={({target}) => setServices(target.value)} name='services' required custom >
+                    <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
                         <option value='' disabled selected >Elija un Servicio</option>
                         <option value='Residencial' >Residencial</option>
                         <option value='PYMES' >PYMES</option>
@@ -110,7 +133,7 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation07' >
                     <Form.Label className='font-weight-bold text-uppercase' >Estado</Form.Label>
-                    <Form.Control as='select' value={estado} onChange={({target}) => setEstado(target.value)} name='Estado' required custom >
+                    <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
                         <option value='' disabled selected >Elija un Estado</option>
                         <option value='Activo' >Activo</option>
                         <option value='Cancelado' >Cancelado</option>
@@ -122,11 +145,44 @@ const UserForm = ({handleSubmit, variantBtn, textSubmit, data}) => {
             </Form.Row>
             <Row className='text-center'>
                 <Col>
-                    <Button variant={variantBtn} type='submit' >{textSubmit}</Button>
+                    <Button variant='success' type='submit' >{btnText}</Button>
                 </Col>
             </Row>
         </Form>
     )
+
+
+    if (asModal) {
+        return (
+            <Fragment>
+                <Button  disabled={editing ? selection.length !== 1 : false} variant='warning'  onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered size='lg' >
+                    <Modal.Header closeButton >
+                        <Modal.Title className='text-center w-100 text-white' >Test Title</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {formjsx}
+                    </Modal.Body>
+                </Modal>
+            </Fragment>
+        )
+    }
+    else return formjsx
+
 }
 
-export default UserForm
+const MSTP = state => (
+    {
+        user: state.users.selected[0],
+        selection: state.users.selected
+    }
+)
+
+const MDTP = dispatch => (
+    {
+        createUser: (user) => dispatch(createUser(user)),
+        updateUser: (user) => dispatch(updateUser(user))
+    }
+)
+
+export default connect(MSTP, MDTP)(UserForm)

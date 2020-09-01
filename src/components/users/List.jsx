@@ -4,7 +4,6 @@ import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 
 const UsersList = ({list, loading, getUserList, selectRow}) => {
-
     useEffect(() => {
         getUserList()
     }, [])
@@ -31,13 +30,13 @@ const UsersList = ({list, loading, getUserList, selectRow}) => {
                         <tr>
                             <td><FormCheck type='checkbox' onChange={({ target }) => selectRow( target.checked, user )} /></td>
                             <td>{user.id}</td>
-                            <td>{user.razonSocial}</td>
-                            <td>{user.idDocument}</td>
-                            <td>{user.zoneLocation}</td>
+                            <td>{user.name}</td>
+                            <td>{user.document}</td>
+                            <td>{user.location}</td>
                             <td>{user.bandwidth}</td>
-                            <td>{user.ipAddress}</td>
-                            <td>{user.services}</td>
-                            <td><Badge variant={user.estado === 'Activo' ? 'success' : user.estado === 'Suspendido' ? 'warning' : 'danger'} className='text-uppercase'>{user.estado}</Badge></td>
+                            <td>{user.ip}</td>
+                            <td>{user.service}</td>
+                            <td><Badge variant={user.status === 'Activo' ? 'success' : user.status === 'Suspendido' ? 'warning' : 'danger'} className='text-uppercase'>{user.status}</Badge></td>
                         </tr>
                         ))
                     }

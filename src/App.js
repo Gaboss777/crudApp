@@ -9,16 +9,27 @@ import UsersList from './components/users/List';
 import Layout from './components/layout';
 import MainMenu from './components/Navbar';
 import ModalsActions from './components/Modal/ModalsActions';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 function App() {
-  return(
-    <div>
-        <MainMenu />
-        <Layout >
-          <ModalsActions />
-          <UsersList />
-        </Layout>
-    </div>
+  return (
+    <Router>
+      <MainMenu />
+      <Layout >
+        <Switch>
+          <Route path='/users' component={UsersView} />
+        </Switch>
+      </Layout>
+
+    </Router >
+  )
+}
+
+const UsersView = () => {
+  return (
+    <>
+      <ModalsActions />
+      <UsersList />
+    </>
   )
 }
 

@@ -1,33 +1,34 @@
 import Axios from 'axios';
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'http://capi.inversionescerecom.com';
 export const actionCreator = (resource) => {
     return {
-        LIST_REQUESTED:resource.toUpperCase()+'_LIST_REQUESTED',
-        LIST_SUCCEEDED:resource.toUpperCase()+'_LIST_SUCCEEDED',
-        LIST_FAILED:resource.toUpperCase()+'_LIST_FAILED',
-        CREATE_REQUESTED:resource.toUpperCase()+'_CREATE_REQUESTED',
-        CREATE_SUCCEEDED:resource.toUpperCase()+'_CREATE_SUCCEEDED',
-        CREATE_FAILED:resource.toUpperCase()+'_CREATE_FAILED',
-        CHECKED:resource.toUpperCase()+'_CHECKED',
-        DELETE_REQUESTED:resource.toUpperCase()+'_DELETE_REQUESTED',
-        DELETE_SUCCEEDED:resource.toUpperCase()+'_DELETE_SUCCEEDED',
-        DELETE_FAILED:resource.toUpperCase()+'_DELETE_FAILED',
-        UPDATE_REQUESTED:resource.toUpperCase()+'_UPDATE_REQUESTED',
-        UPDATE_SUCCEEDED:resource.toUpperCase()+'_UPDATE_SUCCEEDED',
-        UPDATE_FAILED:resource.toUpperCase()+'_UPDATE_FAILED',
+        LIST_REQUESTED: resource.toUpperCase() + '_LIST_REQUESTED',
+        LIST_SUCCEEDED: resource.toUpperCase() + '_LIST_SUCCEEDED',
+        LIST_FAILED: resource.toUpperCase() + '_LIST_FAILED',
+        CREATE_REQUESTED: resource.toUpperCase() + '_CREATE_REQUESTED',
+        CREATE_SUCCEEDED: resource.toUpperCase() + '_CREATE_SUCCEEDED',
+        CREATE_FAILED: resource.toUpperCase() + '_CREATE_FAILED',
+        CHECKED: resource.toUpperCase() + '_CHECKED',
+        UNCHECKED: resource.toUpperCase() + '_UNCHECKED',
+        DELETE_REQUESTED: resource.toUpperCase() + '_DELETE_REQUESTED',
+        DELETE_SUCCEEDED: resource.toUpperCase() + '_DELETE_SUCCEEDED',
+        DELETE_FAILED: resource.toUpperCase() + '_DELETE_FAILED',
+        UPDATE_REQUESTED: resource.toUpperCase() + '_UPDATE_REQUESTED',
+        UPDATE_SUCCEEDED: resource.toUpperCase() + '_UPDATE_SUCCEEDED',
+        UPDATE_FAILED: resource.toUpperCase() + '_UPDATE_FAILED',
     }
 }
 
-export const SET_SELECTED_USERS = 'SET_SELECTED_USERS';
 
 const ACTIONS = actionCreator('user');
 
 export const getUserList = () => {
     return dispatch => {
         dispatch({ type: ACTIONS.LIST_REQUESTED })
-        Axios.get(apiUrl + '/usersData').then(res => {
-            dispatch({ type: ACTIONS.LIST_SUCCEEDED, payload: res.data })
-        })
+        Axios.get(apiUrl + '/users')
+            .then(res => {
+                dispatch({ type: ACTIONS.LIST_SUCCEEDED, payload: res.data })
+            })
             .catch(err => {
                 dispatch({ type: ACTIONS.LIST_FAILED, payload: err })
             })
@@ -40,33 +41,37 @@ export const getUserList = () => {
 export const createUser = (user) => {
     return dispatch => {
         dispatch({ type: ACTIONS.CREATE_REQUESTED })
-        Axios.post(apiUrl + '/usersData', user).then(res => {
-            dispatch({ type: ACTIONS.CREATE_SUCCEEDED, payload: res.data })
+        Axios.post(apiUrl + '/users', user).then(res => {
+
+            dispatch({ type: ACTIONS.CREATE_SUCCEEDED, payload: res.data.data })
+            getUserList()
         })
             .catch(err => {
+
                 dispatch({ type: ACTIONS.CREATE_FAILED, payload: err })
             })
     }
 }
 
-export const removeUser = (id) => {
+export const removeUser = (selection) => {
+    console.log(selection)
     return dispatch => {
         dispatch({ type: ACTIONS.DELETE_REQUESTED })
-        Axios.delete(apiUrl + `/usersData/${id}`).then(res => {
-            console.log(res.data)
-            dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: id })
+        Axios.delete(apiUrl + '/users',{data:selection}).then(res => {
+    
+            //dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: res.data.data })
         })
             .catch(err => {
-                dispatch({ type: ACTIONS.DELETE_FAILED, payload: err })
+               // dispatch({ type: ACTIONS.DELETE_FAILED, payload: err })
             })
     }
 }
 
-export const updateUser=(id, user)=>{
-    return dispatch=>{
-        dispatch({type:ACTIONS.UPDATE_REQUESTED})
-        Axios.put(apiUrl+`/usersData/${id}`, user).then(res=>{
-            dispatch({type:ACTIONS.UPDATE_SUCCEEDED,payload: res.data})
+export const updateUser = (user) => {
+    return dispatch => {
+        dispatch({ type: ACTIONS.UPDATE_REQUESTED })
+        Axios.put(apiUrl + `/users/${user.id}`, user).then(res => {
+            dispatch({ type: ACTIONS.UPDATE_SUCCEEDED, payload: res.data.data })
         })
             .catch(err => {
                 dispatch({ type: ACTIONS.UPDATE_FAILED, payload: err })
@@ -74,14 +79,14 @@ export const updateUser=(id, user)=>{
     }
 }
 
-export const selectRow =(e, user)=>{
-    if(e) {
-        return dispatch =>{
-            dispatch({type:ACTIONS.CHECKED, payload: user})
+export const selectRow = (e, user) => {
+    if (e) {
+        return dispatch => {
+            dispatch({ type: ACTIONS.CHECKED, payload: user })
         }
     } else {
-        return dispatch =>{
-            dispatch({type:ACTIONS.CHECKED, payload: null})
+        return dispatch => {
+            dispatch({ type: ACTIONS.UNCHECKED, payload: user })
         }
     }
 }
@@ -92,21 +97,17 @@ export const getUserActual = (user) => {
     }
 }
 
-const initialState={
-    list:[],
-    selected: null,
-    loading:false
+const initialState = {
+    list: [],
+    selected: [],
+    loading: false
 }
 
 
 
 export const usersReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case SET_SELECTED_USERS:
-            return{
-              ...state,
-              list:state.list.map(u=>payload.includes(u.id)?{...u,selected:true}:{...u,selected:false})
-            }
+
         case ACTIONS.LIST_REQUESTED:
             return {
                 ...state,
@@ -155,14 +156,19 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         case ACTIONS.UPDATE_SUCCEEDED:
             return {
                 ...state,
-                list: state.list.map(user => user.id === payload.id ? payload: user),
+                list: state.list.map(user => user.id === payload.id ?payload:user),
                 loading: false,
-                selected: null
+                selected: initialState.selected
             }
         case ACTIONS.CHECKED:
-            return{
+            return {
                 ...state,
-                selected: payload
+                selected: [...state.selected, payload]
+            }
+        case ACTIONS.UNCHECKED:
+            return {
+                ...state,
+                selected: [...state.selected.filter(x => x.id !== payload.id)]
             }
         default:
             return state
