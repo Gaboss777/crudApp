@@ -54,14 +54,14 @@ export const createUser = (user) => {
 }
 
 export const removeUser = (selection) => {
-    console.log(selection)
+
     return dispatch => {
         dispatch({ type: ACTIONS.DELETE_REQUESTED })
-        Axios.delete(apiUrl + '/users',{data:selection}).then(res => {
-            //dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: res.data.data })
+        Axios.delete(apiUrl + '/users', { data: selection }).then(res => {
+            dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: selection })
         })
             .catch(err => {
-               // dispatch({ type: ACTIONS.DELETE_FAILED, payload: err })
+                dispatch({ type: ACTIONS.DELETE_FAILED, payload: err.response })
             })
     }
 }
@@ -73,6 +73,7 @@ export const updateUser = (user) => {
             dispatch({ type: ACTIONS.UPDATE_SUCCEEDED, payload: res.data.data })
         })
             .catch(err => {
+                console.log(err)
                 dispatch({ type: ACTIONS.UPDATE_FAILED, payload: err })
             })
     }
@@ -138,24 +139,26 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         case ACTIONS.DELETE_REQUESTED:
             return {
                 ...state,
-                loading: true
+                
             }
         case ACTIONS.DELETE_SUCCEEDED:
+            const users = payload.map(u=>u.id);
+            console.log(users)
             return {
                 ...state,
-                list: state.list.filter(user => user.id !== payload),
+                list: state.list.filter(user =>!users.includes(user.id)),
                 loading: false,
-                selected: null
+                selected: initialState.selected
             }
         case ACTIONS.UPDATE_REQUESTED:
             return {
                 ...state,
-                loading: true
+               
             }
         case ACTIONS.UPDATE_SUCCEEDED:
             return {
                 ...state,
-                list: state.list.map(user => user.id === payload.id ?payload:user),
+                list: [...state.list.map(user => user.id === payload.id ? payload : user)],
                 loading: false,
                 selected: initialState.selected
             }

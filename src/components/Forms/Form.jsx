@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import {  Modal, Form, Row, Col, Button } from 'react-bootstrap';
+import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import { createUser, updateUser } from '../../ducks/users';
 import { connect } from 'react-redux';
 import { faUserPlus, faUserEdit } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +38,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
             setSerial(user.serial)
             setMac(user.mac)
         }
-    }, [user,editing])
+    }, [user, editing])
 
 
     const [valid, setValid] = useState(false)
@@ -48,7 +48,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newUser = { name, document, location, bandwidth, status, service, ip }
+            let newUser = { name, document, location, bandwidth, status, service, ip,mac,email,phone,serial,mensuality }
             if (!user) {
                 createUser(newUser)
                 Alerts.InfoNotify("USUARIO AGREGADO EXITOSAMENTE")
@@ -94,18 +94,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col} controlId='validation02' >
-                    <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese Cedula o RIF'
-                        value={email}
-                        onChange={({ target }) => setEmail(target.value)}
-                    />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese email</Form.Control.Feedback>
-                </Form.Group>
+
                 <Form.Group as={Col} controlID='validation03' >
                     <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
                     <Form.Control
@@ -118,8 +107,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Ubicacion</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
                     <Form.Control
@@ -132,6 +119,9 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Telefono</Form.Control.Feedback>
                 </Form.Group>
+            </Form.Row>
+            <Form.Row>
+
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
@@ -145,8 +135,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Mensualidad</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
                     <Form.Control
@@ -159,6 +147,9 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Ancho de Banda</Form.Control.Feedback>
                 </Form.Group>
+            </Form.Row>
+            <Form.Row>
+
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
                     <Form.Control
@@ -172,8 +163,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Direccion IP</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
                     <Form.Control
@@ -186,6 +175,9 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Serial</Form.Control.Feedback>
                 </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
                     <Form.Control
@@ -198,8 +190,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Mac Address</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation06' >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
                     <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
@@ -211,7 +201,10 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Tipo de Servicio</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} controlID='validation07' >
+            </Form.Row>
+            <Form.Row>
+               
+                <Form.Group as={Col} sm={6} controlID='validation07' >
                     <Form.Label className='font-weight-bold text-uppercase' >Estado</Form.Label>
                     <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
                         <option value='' disabled selected >Elija un Estado</option>
@@ -235,10 +228,10 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
     if (asModal) {
         return (
             <Fragment>
-                <Button  disabled={editing ? selection.length !== 1 : false} variant='warning'  onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
+                <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered size='lg' >
                     <Modal.Header closeButton className='bg-warning' >
-                        <Modal.Title className='text-center w-100 text-white' >{ editing ? 'Editar Usuario' : 'Agregar Usuario' }</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white' >{editing ? 'Editar Usuario' : 'Agregar Usuario'}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {formjsx}

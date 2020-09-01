@@ -11,6 +11,7 @@ const DeleteUser = ({ selection,deleteUser }) => {
 
     const handleClick=()=>{
         deleteUser(selection)
+        setShow(false)
     }
     return (
         <Fragment>
