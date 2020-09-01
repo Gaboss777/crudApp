@@ -1,0 +1,16 @@
+$yellow:#ff9800;
+.hover-table{
+   cursor:pointer;
+   transition:all 0.2s ease-in-out;
+   &:hover{
+      background:$yellow!important;
+      color:white;
+   }
+}
+@media (min-width: 1200px) {
+    .modal-xlg {
+       width: 90%;
+       max-width: 90%;
+    }
+ }
+ 
