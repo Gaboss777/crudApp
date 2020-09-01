@@ -15,9 +15,9 @@ const DeleteUser = ({ selection,deleteUser }) => {
     return (
         <Fragment>
             <Button disabled={selection.length===0} variant='warning'  onClick={() => setShow(true)}><FontAwesomeIcon icon={faTrashAlt} size='lg' /></Button>
-            <Modal show={show} onHide={() => setShow(false)} centered size='lg' >
-                <Modal.Header closeButton >
-                    <Modal.Title className='text-center w-100 text-white' >Test Title</Modal.Title>
+            <Modal show={show} onHide={() => setShow(false)} centered dialogClassName='modal-xlg' >
+                <Modal.Header closeButton className='bg-danger' >
+                    <Modal.Title className='text-center w-100 text-white' >Eliminar Datos</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container >
@@ -25,19 +25,23 @@ const DeleteUser = ({ selection,deleteUser }) => {
                             <Col className='text-center' xs lg='12'>
                                 <FontAwesomeIcon icon={faExclamationTriangle} size="6x" className='my-2 text-danger' />
                                 <p>Seguro que desea eliminar estos datos?</p>
-                               
                             </Col>
                             <Col className='my-2'>
-                                <Table bordered>
+                                <Table bordered size='sm'>
                                     <thead className='bg-danger text-white'>
                                         <tr>
                                             <th>Razon Social</th>
                                             <th>CI/RIF </th>
-                                            <th>LOCALIZACION </th>
+                                            <th>Email</th>
+                                            <th>Localizacion </th>
+                                            <th>Telefono </th>
+                                            <th>Mensualidad</th>
                                             <th>MB</th>
-                                            <th>DIRECCION IP </th>
-                                            <th>SERVICIO</th>
-                                            <th>ESTATUS</th>
+                                            <th>Direccion IP </th>
+                                            <th>Serial </th>
+                                            <th>Direccion MAC </th>
+                                            <th>Servicio</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -45,14 +49,18 @@ const DeleteUser = ({ selection,deleteUser }) => {
                                             <tr key={index}>
                                                 <td>{userData.name}</td>
                                                 <td>{userData.document} </td>
+                                                <td>{userData.email}</td>
                                                 <td>{userData.location} </td>
+                                                <td>{userData.phone}</td>
+                                                <td>{userData.mensualidad}</td>
                                                 <td>{userData.bandwidth}</td>
                                                 <td>{userData.ip} </td>
+                                                <td>{userData.serial}</td>
+                                                <td>{userData.mac}</td>
                                                 <td>{userData.service}</td>
                                                 <td>{userData.status}</td>
                                             </tr>
                                         ))}
-
                                     </tbody>
                                 </Table>
                             </Col>

@@ -58,7 +58,6 @@ export const removeUser = (selection) => {
     return dispatch => {
         dispatch({ type: ACTIONS.DELETE_REQUESTED })
         Axios.delete(apiUrl + '/users',{data:selection}).then(res => {
-    
             //dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: res.data.data })
         })
             .catch(err => {
