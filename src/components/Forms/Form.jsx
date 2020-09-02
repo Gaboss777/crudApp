@@ -100,7 +100,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control
                         required
                         type='text'
-                        placeholder='Zona donde Vive'
+                        placeholder='Indique Ubicacion'
                         value={location}
                         onChange={({ target }) => setLocation(target.value)}
                     />
@@ -135,6 +135,33 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Mensualidad</Form.Control.Feedback>
                 </Form.Group>
+                <Form.Group as={Col} controlID='validation04' >
+                    <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
+                    <Form.Control
+                        required
+                        type='text'
+                        placeholder='Ingrese Telefono'
+                        value={phone}
+                        onChange={({ target }) => setPhone(target.value)}
+                    />
+                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Ingrese Telefono</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} controlID='validation05' >
+                    <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
+                    <Form.Control
+                        required
+                        type='text'
+
+                        placeholder='Ingrese Mensualidad'
+                        value={mensuality}
+                        onChange={({ target }) => setMensuality(target.value)}
+                    />
+                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Ingrese Mensualidad</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
                     <Form.Control

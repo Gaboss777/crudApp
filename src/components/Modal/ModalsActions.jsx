@@ -9,7 +9,7 @@ const UsersActions = ({ userSelected }) => {
         <Fragment >
             <ButtonGroup className='mb-3' >
                 <UserForm btnText='Crear Nuevo Usuario' asModal={true} editing={false} />
-                <UserForm btnText='Editar Usuario' asModal={true} editing={true} />
+                <UserForm btnText='Guardar Cambios' asModal={true} editing={true} />
                 <DeleteUser />
             </ButtonGroup>
         </Fragment>

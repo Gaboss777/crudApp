@@ -4,6 +4,7 @@ import {Button, Modal, Row, Col, Table, Container} from 'react-bootstrap';
 import { removeUser } from '../../ducks/users';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import Alerts from '../Alerts/alerts';
 
 
 const DeleteUser = ({ selection,deleteUser }) => {

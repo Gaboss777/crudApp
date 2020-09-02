@@ -54,7 +54,6 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
         </>
     )
 }
-
 const MSTP = state => (
     {
         list: state.users.list,
@@ -62,12 +61,10 @@ const MSTP = state => (
         selected:state.users.selected
     }
 )
-
 const MDTP = dispatch => (
     {
         getUserList: () => dispatch(getUserList()),
         selectRow: (e, user) => dispatch(selectRow(e, user))
     }
 )
-
 export default connect(MSTP, MDTP)(UsersList)
