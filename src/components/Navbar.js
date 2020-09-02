@@ -10,7 +10,7 @@ const MainMenu =()=> {
             <img src={Logo} alt='Logo' />
         </Navbar.Brand>
         <Nav >
-            <Link to="/dashboard" >INICIO</Link>
+            <Link to="/" >INICIO</Link>
         </Nav>
     </Navbar>
     )

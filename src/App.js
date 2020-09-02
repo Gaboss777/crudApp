@@ -16,8 +16,8 @@ function App() {
       <MainMenu />
       <Layout >
         <Switch>
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/users' component={UsersView} />
+          <Route exact path='/' component={Dashboard} />
+          <Route exact path='/users' component={UsersView} />
         </Switch>
       </Layout>
 
