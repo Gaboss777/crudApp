@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import Logo from '../img/LOGO.png';
+import { Link } from 'react-router-dom';
 
 const MainMenu =()=> {
     return(
@@ -9,8 +10,7 @@ const MainMenu =()=> {
             <img src={Logo} alt='Logo' />
         </Navbar.Brand>
         <Nav >
-            <Nav.Link>LISTA</Nav.Link>
-            <Nav.Link>PAGOS</Nav.Link>
+            <Link to="/dashboard" >INICIO</Link>
         </Nav>
     </Navbar>
     )

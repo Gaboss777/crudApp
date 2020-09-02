@@ -58,7 +58,7 @@ export const removeUser = (selection) => {
     return dispatch => {
         dispatch({ type: ACTIONS.DELETE_REQUESTED })
         Axios.delete(apiUrl + '/users',{data:selection}).then(res => {
-    
+
             //dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: res.data.data })
         })
             .catch(err => {
@@ -146,7 +146,7 @@ export const usersReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 list: state.list.filter(user => user.id !== payload),
                 loading: false,
-                selected: null
+                selected: initialState.selected
             }
         case ACTIONS.UPDATE_REQUESTED:
             return {

@@ -1,0 +1,62 @@
+@media (min-width: 1200px) {
+   .modal-xlg {
+      width: 90%;
+      max-width: 90%;
+   }
+}
+
+/* Botones Dashboard */
+
+.btn-dash-size {
+   width: fit-content;
+   min-width: 11rem;
+   height: 10rem;
+   max-height: 10rem;
+   margin: 0 10px ;
+}
+
+.btn-dash-style {
+   background: rgb(255, 166, 0);
+   color: #fff;
+   font-size: 20px;
+   font-weight: bold;
+   border: solid 2px transparent;
+   transition: border 0.2s ease-in-out;
+}
+
+.btn-dash-style:hover {
+   background: rgb(255, 255, 255);
+   color: rgb(255, 166, 0);
+   border: 2px inset rgb(255, 166, 0)
+}
+
+.btn-dash-style:focus {
+   background: rgb(196, 129, 5);
+   color: rgb(255, 255, 255);
+   border: 3px inset rgb(148, 97, 4)
+}
+
+.btn-dash-style:focus:hover {
+   background: rgb(255, 166, 0);
+   color: rgb(255, 255, 255);
+   border: 3px inset rgb(148, 97, 4)
+}
+
+.btn-dash-style:active {
+   background: rgb(196, 129, 5) !important;
+   color: rgb(255, 255, 255) !important;
+   border: 3px inset rgb(148, 97, 4) !important
+}
+
+.btn-dash-position {
+   top: 40%;
+   left: 26%;
+   position: absolute;
+   margin: 0;
+   width: 50%
+}
+
+.dashboard-container {
+   position: relative;
+   height: 70vh;
+}
