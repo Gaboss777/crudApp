@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Table, FormCheck, Badge } from 'react-bootstrap';
+import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
 
     return (
         <>
-        {!loading && list.length > 0 &&
+        {!loading && list.length > 0 ?
             <Table size='sm'>
                 <thead className='bg-warning text-white text-center text-uppercase'>
                     <tr>
@@ -50,6 +50,12 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
                     }
                 </tbody>
             </Table>
+            :
+            <> 
+            <Spinner variant='warning' animation='grow' className='ml-4' />
+            <Spinner variant='warning' animation='grow' className='mx-1' />
+            <Spinner variant='warning' animation='grow' />
+            </>
         }
         </>
     )

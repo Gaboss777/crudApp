@@ -13,6 +13,7 @@ const DeleteUser = ({ selection,deleteUser }) => {
     const handleClick=()=>{
         deleteUser(selection)
         setShow(false)
+        Alerts.RemoveNotify("DATOS ELIMINADOS EXITOSAMENTE")
     }
     return (
         <Fragment>
