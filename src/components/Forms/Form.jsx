@@ -48,7 +48,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newUser = { name, document, location, bandwidth, status, service, ip,mac,email,phone,serial,mensuality }
+            let newUser = { name, document, location, bandwidth, status, service, ip, mac, email, phone, serial, mensuality }
             if (!user) {
                 createUser(newUser)
                 Alerts.InfoNotify("USUARIO AGREGADO EXITOSAMENTE")
@@ -59,9 +59,8 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 Alerts.EditNotify("USUARIO EDITADO EXITOSAMENTE")
 
             }
-
+            setShowModal(false)
         }
-        setShowModal(false)
         setValid(true)
     }
 
@@ -108,26 +107,24 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback type='invalid'>Ingrese Ubicacion</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation04' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
                     <Form.Control
                         required
-                        type='text'
-                        placeholder='Ingrese Telefono'
-                        value={phone}
-                        onChange={({ target }) => setPhone(target.value)}
+                        type='email'
+                        placeholder='Ingrese email'
+                        value={email}
+                        onChange={({ target }) => setEmail(target.value)}
                     />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Telefono</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Ingrese Email</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
                         required
                         type='text'
-
                         placeholder='Ingrese Mensualidad'
                         value={mensuality}
                         onChange={({ target }) => setMensuality(target.value)}
@@ -146,19 +143,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Telefono</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} controlID='validation05' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-
-                        placeholder='Ingrese Mensualidad'
-                        value={mensuality}
-                        onChange={({ target }) => setMensuality(target.value)}
-                    />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Mensualidad</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -174,21 +158,31 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Ancho de Banda</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
-
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
                     <Form.Control
                         required
                         type='text'
-
                         placeholder='Ingrese Direccion IP'
                         value={ip}
                         onChange={({ target }) => setIp(target.value)}
                     />
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Direccion IP</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} controlID='validation05' >
+                    <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
+                    <Form.Control
+                        required
+                        type='text'
+                        placeholder='Ingrese MAC Address'
+                        value={mac}
+                        onChange={({ target }) => setMac(target.value)}
+                    />
+                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Ingrese Mac Address</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
@@ -204,19 +198,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-              
-                <Form.Group as={Col} controlID='validation05' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese MAC Address'
-                        value={mac}
-                        onChange={({ target }) => setMac(target.value)}
-                    />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Mac Address</Form.Control.Feedback>
-                </Form.Group>
                 <Form.Group as={Col} controlID='validation06' >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
                     <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
@@ -228,19 +209,16 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
                     <Form.Control.Feedback type='invalid'>Ingrese Tipo de Servicio</Form.Control.Feedback>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
-               
                 <Form.Group as={Col} sm={6} controlID='validation07' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Estado</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase' >Status</Form.Label>
                     <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
-                        <option value='' disabled selected >Elija un Estado</option>
+                        <option value='' disabled selected >Elija un Status</option>
                         <option value='Activo' >Activo</option>
                         <option value='Cancelado' >Cancelado</option>
                         <option value='Suspendido' >Suspendido</option>
                     </Form.Control>
                     <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Estado del Servicio</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Ingrese Status</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Row className='text-center'>

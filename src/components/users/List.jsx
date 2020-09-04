@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Table, FormCheck, Badge } from 'react-bootstrap';
+import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
 
     return (
         <>
-        {!loading && list.length > 0 &&
+        {!loading && list.length > 0 ?
             <Table size='sm'>
                 <thead className='bg-warning text-white text-center text-uppercase'>
                     <tr>
@@ -32,13 +32,13 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
                 <tbody className='text-center' >
                     { list.map(user => (
                         <tr className='hover-table' onClick={()=>selectRow(!document.getElementById('select_row_'+user.id).checked,user)} >
-                            <td><FormCheck checked={selected.find(x=>x.id===user.id)} id={'select_row_'+user.id} type='checkbox' onChange={({ target }) => selectRow( target.checked, user )} /></td>
+                            <td><FormCheck checked={selected.find(x=>x.id===user.id)} id={'select_row_'+user.id} type='checkbox' onChange={({ target }) => selectRow( target.checked, user )}/></td>
                             <td>{user.name}</td>
                             <td>{user.document} </td>
                             <td>{user.email}</td>
                             <td>{user.location} </td>
                             <td>{user.phone}</td>
-                            <td>{user.mensualidad}</td>
+                            <td>{user.mensuality}</td>
                             <td>{user.bandwidth}</td>
                             <td>{user.ip} </td>
                             <td>{user.serial}</td>
@@ -50,6 +50,12 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
                     }
                 </tbody>
             </Table>
+            :
+            <> 
+            <Spinner variant='warning' animation='grow' className='ml-4' />
+            <Spinner variant='warning' animation='grow' className='mx-1' />
+            <Spinner variant='warning' animation='grow' />
+            </>
         }
         </>
     )
