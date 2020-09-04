@@ -48,7 +48,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newUser = { name, document, location, bandwidth, status, service, ip,mac,email,phone,serial,mensuality }
+            let newUser = { name, document, location, bandwidth, status, service, ip, mac, email, phone, serial, mensuality }
             if (!user) {
                 createUser(newUser)
                 Alerts.InfoNotify("USUARIO AGREGADO EXITOSAMENTE")
@@ -59,9 +59,8 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 Alerts.EditNotify("USUARIO EDITADO EXITOSAMENTE")
 
             }
-
+            setShowModal(false)
         }
-        setShowModal(false)
         setValid(true)
     }
 
@@ -110,6 +109,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
                     <Form.Control
+                        required
                         type='email'
                         placeholder='Ingrese email'
                         value={email}
@@ -123,6 +123,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Ingrese Mensualidad'
                         value={mensuality}
@@ -134,6 +135,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Ingrese Telefono'
                         value={phone}
@@ -173,6 +175,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Ingrese MAC Address'
                         value={mac}
@@ -184,6 +187,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Ingrese Serial'
                         value={serial}

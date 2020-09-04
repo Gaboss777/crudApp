@@ -32,13 +32,13 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
                 <tbody className='text-center' >
                     { list.map(user => (
                         <tr className='hover-table' onClick={()=>selectRow(!document.getElementById('select_row_'+user.id).checked,user)} >
-                            <td><FormCheck checked={selected.find(x=>x.id===user.id)} id={'select_row_'+user.id} type='checkbox' onChange={({ target }) => selectRow( target.checked, user )} /></td>
+                            <td><FormCheck checked={selected.find(x=>x.id===user.id)} id={'select_row_'+user.id} type='checkbox' onChange={({ target }) => selectRow( target.checked, user )}/></td>
                             <td>{user.name}</td>
                             <td>{user.document} </td>
                             <td>{user.email}</td>
                             <td>{user.location} </td>
                             <td>{user.phone}</td>
-                            <td>{user.mensualidad}</td>
+                            <td>{user.mensuality}</td>
                             <td>{user.bandwidth}</td>
                             <td>{user.ip} </td>
                             <td>{user.serial}</td>
