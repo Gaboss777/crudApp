@@ -12,12 +12,16 @@ const DropdownClient = ({list, getClient, getUsers}) => {
         getUsers()
     }, [])
 
+    const handleClientSelection =(selection)=>{
+           getClient(selection)
+    }
+
     return (
         <Fragment>
             <Form.Group as={Row} className='mx-2' >
                 <Form.Label column sm={1} className='text-center' >CLIENTE</Form.Label>
                 <Col sm={4}  >
-                <Typeahead id='client-list' labelKey='name' options={list} onChange={( selected )=>getClient(selected)} placeholder='Elija un cliente... ' clearButton className='pl-2' />
+                <Typeahead id='client-list' labelKey='name' options={list} onChange={( selected )=>handleClientSelection(selected)} placeholder='Elija un cliente... ' clearButton className='pl-2' />
                 </Col>
             </Form.Group>
         </Fragment>

@@ -3,17 +3,17 @@ import React, { Fragment, useState } from 'react';
 import {  Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Alerts from '../../Alerts/alerts';
-import { getPayment } from '../../../ducks/payment';
+import { createPayment } from '../../../ducks/payment';
 
 //crear componente
-const PayForm = ({client, getPayment, asModal, month}) => {
+const PayForm = ({client, createPayment, asModal, month,disabled}) => {
 
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const [reference, setReference] = useState('')
     const [date, setDate] = useState('')
-    const [coment, setComent] = useState('')
+    const [comment, setComment] = useState('')
     const [currency, setCurrency] = useState('')
     const [bank, setBank] = useState('')
 
@@ -21,21 +21,22 @@ const PayForm = ({client, getPayment, asModal, month}) => {
 
     const [valid, setValid] = useState(false)
     const onSubmit = (event) => {
+        let nowDate = new Date().getFullYear()
         event.preventDefault()
         const form = event.currentTarget
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
             setName(client.name)
-            let newPayment = { name, amount, method, reference, date, coment, currency, bank }
+            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate }
             console.log(newPayment)
-            getPayment(newPayment)
+            createPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
             setAmount('')
             setMethod('')
             setReference('')
             setDate('')
-            setComent('')
+            setComment('')
             setCurrency('')
             setBank('')
             setShowModal(false)
@@ -45,11 +46,12 @@ const PayForm = ({client, getPayment, asModal, month}) => {
 
     const formPay = (
         <Col>
+      
             <Form onSubmit={onSubmit} noValidate validated={valid} >
                 <Form.Group as={Row} controlId='validation01' >
                     <Form.Label column sm={4}>Razon Social: </Form.Label>
                     <Col sm={8} >
-                        <Form.Control required type='text' value={client.length === 1 ? client[0].name : ''} placeholder='Razon Social' readOnly className='client-payment pl-2' />
+                        <Form.Control required type='text' value={client.name} placeholder='Razon Social' readOnly className='client-payment pl-2' />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId='validation04'>
@@ -105,7 +107,7 @@ const PayForm = ({client, getPayment, asModal, month}) => {
                 <Form.Group as={Row} controlId='validation05'>
                     <Form.Label column sm={4}>Comentarios: </Form.Label>
                     <Col sm={8} >
-                        <Form.Control required as='textarea' value={coment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComent(target.value)} />
+                        <Form.Control required as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
                     </Col>
                 </Form.Group>
                 <Col className='text-center'>
@@ -118,7 +120,7 @@ const PayForm = ({client, getPayment, asModal, month}) => {
     if (asModal) {
         return (
             <Fragment>
-                <Button size='sm' variant='success' onClick={() => setShowModal(true)} className='ml-2' >AGREGAR PAGO</Button>
+                <Button size='sm' variant='success' onClick={() => setShowModal(true)} className='ml-2' disabled={disabled}>AGREGAR PAGO</Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered >
                     <Modal.Header closeButton className='bg-warning' >
                         <Modal.Title className='text-center w-100 text-white' >AGREGAR PAGO</Modal.Title>
@@ -141,7 +143,7 @@ const MSTP = state => (
 
 const MDTP = dispatch => (
     {
-        getPayment: (data) => dispatch(getPayment(data))
+        createPayment: (data) => dispatch(createPayment(data))
     }
 )
 

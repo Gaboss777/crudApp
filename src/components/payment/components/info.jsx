@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 
-const InfoModal = ({title}) => {
-
+const InfoModal = ({month,payments}) => {
     const [showModal, setShowModal] = useState(false)
-
-    const payment = []
 
     return (
         <>
             <Button variant='dark' onClick={() => setShowModal(true)} size='sm' >Ver Pagos</Button>
             <Modal show={showModal} onHide={()=> setShowModal(false)} dialogClassName='modal-xlg' >
                 <Modal.Header closeButton className='bg-warning' >
-                    <Modal.Title className=' text-center w-100 text-uppercase text-white'> PAGOS REALIZADOS EN {title}</Modal.Title>
+                    <Modal.Title className=' text-center w-100 text-uppercase text-white'> PAGOS REALIZADOS EN {month.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                     <Table >
@@ -27,9 +24,9 @@ const InfoModal = ({title}) => {
                             </tr>
                         </thead>
                         <tbody>
-                        { payment.length > 0 ?
+                        { payments.length > 0 ?
                             <>
-                            { payment.map(pay =>
+                            { payments.filter(x=>x.period===month.id+'-2020').map(pay =>
                                 <tr>
                                     <td>{pay.date}</td>
                                     <td>{pay.amount}</td>
