@@ -17,7 +17,7 @@ export const getPayment = (data) => {
 }
 
 const initialState = {
-    client: null,
+    client: [],
     pago: []
 }
 

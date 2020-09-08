@@ -4,22 +4,18 @@ import {  Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Alerts from '../../Alerts/alerts';
 import { getPayment } from '../../../ducks/payment';
-import { faCommentDollar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //crear componente
-const PayForm = ({client, getPayment, asModal}) => {
+const PayForm = ({client, getPayment, asModal, month}) => {
 
-    const initialState = ''
-    const [name, setName] = useState(initialState)
-    const [amount, setAmount] = useState(initialState)
-    const [method, setMethod] = useState(initialState)
-    const [reference, setReference] = useState(initialState)
-    const [date, setDate] = useState(initialState)
-    const [coment, setComent] = useState(initialState)
-    const [currency, setCurrency] = useState(initialState)
-    const [bank, setBank] = useState(initialState)
-    const [status, setStatus] = useState(false)
+    const [name, setName] = useState('')
+    const [amount, setAmount] = useState('')
+    const [method, setMethod] = useState('')
+    const [reference, setReference] = useState('')
+    const [date, setDate] = useState('')
+    const [coment, setComent] = useState('')
+    const [currency, setCurrency] = useState('')
+    const [bank, setBank] = useState('')
 
     const [showModal, setShowModal] = useState(false)
 
@@ -30,19 +26,19 @@ const PayForm = ({client, getPayment, asModal}) => {
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            setStatus(true)
-            let newPayment = { amount, method, reference, date, coment, currency, bank, status }
+            setName(client.name)
+            let newPayment = { name, amount, method, reference, date, coment, currency, bank }
             console.log(newPayment)
             getPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
-            setAmount(initialState)
-            setMethod(initialState)
-            setReference(initialState)
-            setDate(initialState)
-            setComent(initialState)
-            setCurrency(initialState)
-            setBank(initialState)
-            setStatus(false)
+            setAmount('')
+            setMethod('')
+            setReference('')
+            setDate('')
+            setComent('')
+            setCurrency('')
+            setBank('')
+            setShowModal(false)
         }
         setValid(true)
     }
@@ -53,7 +49,13 @@ const PayForm = ({client, getPayment, asModal}) => {
                 <Form.Group as={Row} controlId='validation01' >
                     <Form.Label column sm={4}>Razon Social: </Form.Label>
                     <Col sm={8} >
-                        <Form.Control required type='text' value={client ? client : name} placeholder='Razon Social' readOnly />
+                        <Form.Control required type='text' value={client.length === 1 ? client[0].name : ''} placeholder='Razon Social' readOnly className='client-payment pl-2' />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} controlId='validation04'>
+                    <Form.Label column sm={4}>Mes: </Form.Label>
+                    <Col sm={8}>
+                        <Form.Control required type='text' value={month.name} placeholder='MES' readOnly className='client-payment pl-2 text-uppercase' />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId='validation02' >
@@ -116,10 +118,10 @@ const PayForm = ({client, getPayment, asModal}) => {
     if (asModal) {
         return (
             <Fragment>
-                <Button disabled={client ? false : true } variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faCommentDollar} size='lg' className='mr-2' />AGREGAR PAGO</Button>
+                <Button size='sm' variant='success' onClick={() => setShowModal(true)} className='ml-2' >AGREGAR PAGO</Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered >
                     <Modal.Header closeButton className='bg-warning' >
-                        <Modal.Title className='text-center w-100 text-white' >Agregar Pago</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white' >AGREGAR PAGO</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {formPay}

@@ -114,20 +114,35 @@ $white: #ffffff;
     resize: none;
  }
 
-//  .modal.left .modal-dialog,
-// 	.modal.right .modal-dialog {
-// 		position: fixed;
-// 		margin: auto;
-// 		height: 100%;
-// 	}
+ .client-payment {
+    background-color: rgba(192, 192, 192, 0.3) !important;
+ }
 
-// 	.modal.left .modal-content,
-// 	.modal.right .modal-content {
-// 		height: 100%;
-// 		overflow-y: auto;
-// 	}
-
-// 	.modal.left .modal-body,
-// 	.modal.right .modal-body {
-// 		padding: 15px 15px 80px;
-// 	}
+ textarea,
+ textarea.form-control,
+ input.form-control,
+ input[type=text],
+ input[type=password],
+ input[type=email],
+ input[type=number],
+ [type=text].form-control,
+ [type=password].form-control,
+ [type=email].form-control,
+ [type=tel].form-control,
+ [contenteditable].form-control {
+   padding-left: 0.5rem;
+   box-shadow: inset 0 -1px 0 rgba(255, 152, 0, 0.60);
+   &:focus {
+     box-shadow: inset 0 -3px 0 $yellow;
+   }
+ }
+ 
+ select,
+ select.form-control {
+   padding-left: 0.5rem;
+   box-shadow: inset 0 -1px 0 rgba(255, 152, 0, 0.60);
+   &:focus {
+     box-shadow: inset 0 -2px 0 $yellow;
+   }
+ }
+ 
