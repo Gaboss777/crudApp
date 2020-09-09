@@ -91,11 +91,6 @@ export const selectRow = (e, user) => {
     }
 }
 
-export const getUserActual = (user) => {
-    return dispatch => {
-        dispatch({ type: ACTIONS.INFO_SELECTED, payload: user })
-    }
-}
 
 const initialState = {
     list: [],
@@ -139,7 +134,6 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         case ACTIONS.DELETE_REQUESTED:
             return {
                 ...state,
-                
             }
         case ACTIONS.DELETE_SUCCEEDED:
             const users = payload.map(u=>u.id);
@@ -153,7 +147,6 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         case ACTIONS.UPDATE_REQUESTED:
             return {
                 ...state,
-               
             }
         case ACTIONS.UPDATE_SUCCEEDED:
             return {

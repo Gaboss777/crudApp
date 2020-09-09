@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const MainMenu =()=> {
     return(
-    <Navbar expand="lg" bg='light' className='mb-3' >
+    <Navbar expand="lg" bg='white' className='mb-3 py-1' >
         <Navbar.Brand href="#home">
             <img src={Logo} alt='Logo' />
         </Navbar.Brand>

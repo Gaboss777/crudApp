@@ -60,6 +60,18 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
 
             }
             setShowModal(false)
+            setName('')
+            setDocument('')
+            setLocation('')
+            setBandwidth('')
+            setStatus('')
+            setService('')
+            setIp('')
+            setEmail('')
+            setPhone('')
+            setMensuality('')
+            setSerial('')
+            setMac('')
         }
         setValid(true)
     }
@@ -76,8 +88,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={name}
                         onChange={({ target }) => setName(target.value)}
                     />
-                    <Form.Control.Feedback >Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Razon Social</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlId='validation02' >
                     <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
@@ -88,8 +98,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={document}
                         onChange={({ target }) => setDocument(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese CI o RIF</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -103,8 +111,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={location}
                         onChange={({ target }) => setLocation(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Ubicacion</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
@@ -115,8 +121,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={email}
                         onChange={({ target }) => setEmail(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Email</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -129,8 +133,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={mensuality}
                         onChange={({ target }) => setMensuality(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Mensualidad</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
@@ -141,8 +143,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={phone}
                         onChange={({ target }) => setPhone(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Telefono</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -155,8 +155,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={bandwidth}
                         onChange={({ target }) => setBandwidth(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Ancho de Banda</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
@@ -167,8 +165,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={ip}
                         onChange={({ target }) => setIp(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Direccion IP</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -181,8 +177,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={mac}
                         onChange={({ target }) => setMac(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Mac Address</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation04' >
                     <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
@@ -193,8 +187,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={serial}
                         onChange={({ target }) => setSerial(target.value)}
                     />
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Serial</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -206,8 +198,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         <option value='PYMES' >PYMES</option>
                         <option value='Dedicado '>Dedicado</option>
                     </Form.Control>
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Tipo de Servicio</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm={6} controlID='validation07' >
                     <Form.Label className='font-weight-bold text-uppercase' >Status</Form.Label>
@@ -217,8 +207,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         <option value='Cancelado' >Cancelado</option>
                         <option value='Suspendido' >Suspendido</option>
                     </Form.Control>
-                    <Form.Control.Feedback>Excelente!</Form.Control.Feedback>
-                    <Form.Control.Feedback type='invalid'>Ingrese Status</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
             <Row className='text-center'>

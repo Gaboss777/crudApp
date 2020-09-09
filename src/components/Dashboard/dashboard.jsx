@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThList, faFileInvoiceDollar, faInfo } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -10,8 +10,7 @@ const Dashboard = () => {
             <Row className='justify-content-center dashboard-container'>
                 <Col className='text-center btn-dash-position '>
                     <Link to='/users'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>
-                    <Link to='/pagos'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
-                    <Link to='/info'><ButtonDashboard textBtn='INFORMACION' icon={faInfo} /></Link>
+                    <Link to='/payment'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
                 </Col>
             </Row>
         </Container>
