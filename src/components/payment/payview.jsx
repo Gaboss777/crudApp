@@ -1,7 +1,7 @@
 
 import React, { Fragment } from 'react';
-import Calendar from './components/calendar';
-import DropdownClient from './components/client-list';
+import Calendar from './components/Calendar';
+import DropdownClient from './components/DropdownClient';
 
 const PayView = () => {
     return (

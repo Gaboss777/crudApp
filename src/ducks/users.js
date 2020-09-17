@@ -16,9 +16,9 @@ export const actionCreator = (resource) => {
         UPDATE_REQUESTED: resource.toUpperCase() + '_UPDATE_REQUESTED',
         UPDATE_SUCCEEDED: resource.toUpperCase() + '_UPDATE_SUCCEEDED',
         UPDATE_FAILED: resource.toUpperCase() + '_UPDATE_FAILED',
+        SEARCH: resource.toUpperCase() + '_SEARCH',
     }
 }
-
 
 const ACTIONS = actionCreator('user');
 
@@ -35,16 +35,12 @@ export const getUserList = () => {
     }
 }
 
-
-
-
 export const createUser = (user) => {
     return dispatch => {
         dispatch({ type: ACTIONS.CREATE_REQUESTED })
         Axios.post(apiUrl + '/users', user).then(res => {
 
             dispatch({ type: ACTIONS.CREATE_SUCCEEDED, payload: res.data.data })
-            getUserList()
         })
             .catch(err => {
 
@@ -91,6 +87,12 @@ export const selectRow = (e, user) => {
     }
 }
 
+export const searchData = (data) => {
+    return dispatch => {
+        dispatch({ type: ACTIONS.SEARCH, payload: data})
+    }
+}
+
 
 const initialState = {
     list: [],
@@ -106,7 +108,6 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         case ACTIONS.LIST_REQUESTED:
             return {
                 ...state,
-                list: [],
                 loading: true
             }
         case ACTIONS.LIST_FAILED:
@@ -137,7 +138,6 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             }
         case ACTIONS.DELETE_SUCCEEDED:
             const users = payload.map(u=>u.id);
-            console.log(users)
             return {
                 ...state,
                 list: state.list.filter(user =>!users.includes(user.id)),
@@ -164,6 +164,11 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 selected: [...state.selected.filter(x => x.id !== payload.id)]
+            }
+        case ACTIONS.SEARCH:
+            return {
+                ...state,
+                list: [...state.list.filter(user => user.name.toLowerCase().includes(payload) || user.document.toLowerCase().includes(payload) || user.location.toLowerCase().includes(payload) || user.ip.toLowerCase().includes(payload) || user.service.toLowerCase().includes(payload) || user.status.toLowerCase().includes(payload))]
             }
         default:
             return state

@@ -8,7 +8,6 @@ import { createPayment } from '../../../ducks/payment';
 //crear componente
 const PayForm = ({client, createPayment, asModal, month,disabled}) => {
 
-    const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const [reference, setReference] = useState('')
@@ -27,9 +26,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            setName(client.name)
             let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate }
-            console.log(newPayment)
             createPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
             setAmount('')
@@ -46,7 +43,6 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
 
     const formPay = (
         <Col>
-      
             <Form onSubmit={onSubmit} noValidate validated={valid} >
                 <Form.Group as={Row} controlId='validation01' >
                     <Form.Label column sm={4}>Razon Social: </Form.Label>

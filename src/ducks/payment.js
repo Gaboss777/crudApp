@@ -15,7 +15,6 @@ export const getClient = (user) => {
         else{
             dispatch({ type: CLIENT_SELECTED, payload: null })
         }
-       
     }
 }
 
@@ -24,12 +23,10 @@ export const createPayment = (data) => {
         Axios.post(apiUrl+'/payments',data).then(res=>{
             console.log(res.data.data)
             dispatch({ type: CLIENT_SELECTED, payload: res.data.data })
-           
         })
         .catch(err=>{
             console.log(err)
         })
-        
     }
 }
 

@@ -112,18 +112,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         onChange={({ target }) => setLocation(target.value)}
                     />
                 </Form.Group>
-                <Form.Group as={Col} controlID='validation04' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
-                    <Form.Control
-                        required
-                        type='email'
-                        placeholder='Ingrese email'
-                        value={email}
-                        onChange={({ target }) => setEmail(target.value)}
-                    />
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
@@ -132,16 +120,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         placeholder='Ingrese Mensualidad'
                         value={mensuality}
                         onChange={({ target }) => setMensuality(target.value)}
-                    />
-                </Form.Group>
-                <Form.Group as={Col} controlID='validation04' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese Telefono'
-                        value={phone}
-                        onChange={({ target }) => setPhone(target.value)}
                     />
                 </Form.Group>
             </Form.Row>
@@ -168,28 +146,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col} controlID='validation05' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese MAC Address'
-                        value={mac}
-                        onChange={({ target }) => setMac(target.value)}
-                    />
-                </Form.Group>
-                <Form.Group as={Col} controlID='validation04' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese Serial'
-                        value={serial}
-                        onChange={({ target }) => setSerial(target.value)}
-                    />
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
                 <Form.Group as={Col} controlID='validation06' >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
                     <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
@@ -209,6 +165,54 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     </Form.Control>
                 </Form.Group>
             </Form.Row>
+            { editing && 
+                <>
+                <Form.Row>
+                    <Form.Group as={Col} controlID='validation04' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
+                        <Form.Control
+                            required
+                            type='email'
+                            placeholder='Ingrese email'
+                            value={email}
+                            onChange={({ target }) => setEmail(target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} controlID='validation04' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
+                        <Form.Control
+                            required
+                            type='text'
+                            placeholder='Ingrese Telefono'
+                            value={phone}
+                            onChange={({ target }) => setPhone(target.value)}
+                        />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlID='validation05' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
+                        <Form.Control
+                            required
+                            type='text'
+                            placeholder='Ingrese MAC Address'
+                            value={mac}
+                            onChange={({ target }) => setMac(target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} controlID='validation04' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
+                        <Form.Control
+                            required
+                            type='text'
+                            placeholder='Ingrese Serial'
+                            value={serial}
+                            onChange={({ target }) => setSerial(target.value)}
+                        />
+                    </Form.Group>
+                </Form.Row>
+                </>
+            }
             <Row className='text-center'>
                 <Col>
                     <Button variant='success' type='submit' >{btnText}</Button>

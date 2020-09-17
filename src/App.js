@@ -5,11 +5,11 @@ import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.scss';
 import UsersList from './components/users/List';
-import Layout from './components/layout';
+import Layout from './components/Layout';
 import MainMenu from './components/Navbar';
-import ModalsActions from './components/Modal/ModalsActions';
+import UsersActions from './components/Actions/UsersActions';
 import Dashboard from './components/Dashboard/dashboard';
-import PayView from './components/payment/payview';
+import PayView from './components/payment/PayView';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
 const UsersView = () => {
   return (
     <>
-      <ModalsActions />
+      <UsersActions />
       <UsersList />
     </>
   )

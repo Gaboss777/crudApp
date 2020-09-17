@@ -3,10 +3,12 @@ import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 
-const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
+const UsersList = ({list, loading, getUserList, selectRow, selected}) => {
     useEffect(() => {
         getUserList()
     }, [])
+
+    console.log(list)
 
     return (
         <>
@@ -51,7 +53,7 @@ const UsersList = ({list, loading, getUserList, selectRow,selected}) => {
                 </tbody>
             </Table>
             :
-            <> 
+            <>
             <Spinner variant='warning' animation='grow' className='ml-4' />
             <Spinner variant='warning' animation='grow' className='mx-1' />
             <Spinner variant='warning' animation='grow' />
