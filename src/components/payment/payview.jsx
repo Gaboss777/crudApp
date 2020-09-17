@@ -1,6 +1,6 @@
 
 import React, { Fragment } from 'react';
-import Calendar from './components/Calendar';
+import Calendar from './components/calendar';
 import DropdownClient from './components/DropdownClient';
 
 const PayView = () => {

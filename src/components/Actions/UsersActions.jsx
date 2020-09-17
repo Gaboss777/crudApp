@@ -5,7 +5,7 @@ import DeleteUser from '../DeleteUser/deleteUser';
 import UserForm from '../Forms/Form';
 import SearchData from '../SearchData';
 
-const UsersActions = ({ userSelected }) => {
+const UsersActions = ({ userSelected,criteria,setCriteria }) => {
     return (
         <Fragment >
             <Row>
@@ -17,7 +17,7 @@ const UsersActions = ({ userSelected }) => {
                 </ButtonGroup>
                 </Col>
                 <Col>
-                    <SearchData />
+                    <SearchData criteria={criteria} setCriteria={setCriteria} />
                 </Col>
             </Row>
         </Fragment>

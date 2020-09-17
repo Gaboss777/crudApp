@@ -4,23 +4,16 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { searchData, getUserList } from '../ducks/users';
 
-const SearchData = ({searchData, getUserList}) => {
+const SearchData = ({criteria,setCriteria}) => {
 
-    const onChange = (data) => {
-        if(data) {
-            searchData(data)
-        } else {
-            getUserList()
-        }
-    }
-
+  
     return (
         <Fragment>
         <Form >
             <Form.Group as={Row} >
                 <Form.Label column sm lg={1} >Buscador: </Form.Label>
                 <Col sm lg={3} >
-                    <Form.Control type='text' onChange={({ target }) => onChange(target.value)} />
+                    <Form.Control type='text' value={criteria} onChange={({ target }) => setCriteria(target.value)} />
                 </Col>
             </Form.Group>
         </Form>
@@ -30,8 +23,7 @@ const SearchData = ({searchData, getUserList}) => {
 
 const MDTP = dispatch => (
     {
-        searchData: (data) => dispatch(searchData(data)),
-        getUserList: () => dispatch(getUserList())
+        
     }
 )
 
