@@ -1,6 +1,6 @@
 //import librerias
 import React, { useEffect, Fragment } from 'react';
-import { Form, Row, Col } from 'react-bootstrap'; 
+import { InputGroup } from 'react-bootstrap'; 
 import { connect } from 'react-redux';
 import { getClient } from '../../../ducks/payment';
 import { getUserList } from '../../../ducks/users';
@@ -17,14 +17,12 @@ const DropdownClient = ({list, getClient, getUsers}) => {
     }
 
     return (
-        <Fragment>
-            <Form.Group as={Row} className='mx-2' >
-                <Form.Label column sm={1} className='text-center' >CLIENTE</Form.Label>
-                <Col sm={4}  >
-                <Typeahead id='client-list' labelKey='name' options={list} onChange={( selected )=>handleClientSelection(selected)} placeholder='Elija un cliente... ' clearButton className='pl-2' />
-                </Col>
-            </Form.Group>
-        </Fragment>
+        <InputGroup className='my-2'>
+            <InputGroup.Prepend className='bg-warning rounded-left text-uppercase' >
+                <InputGroup.Text className='text-white px-2 font-weight-bold' >CLIENTE</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Typeahead id='client-list' labelKey='name' options={list} onChange={( selected )=>handleClientSelection(selected)} placeholder='Elija un cliente... ' clearButton />
+        </InputGroup>
     )
 }
 

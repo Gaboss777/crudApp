@@ -17,6 +17,7 @@ const InfoModal = ({month,payments}) => {
                             <tr>
                                 <th>FECHA</th>
                                 <th>MONTO</th>
+                                <th>MONEDA</th>
                                 <th>METODO</th>
                                 <th>BANCO</th>
                                 <th># REFERENCIA</th>
@@ -30,10 +31,11 @@ const InfoModal = ({month,payments}) => {
                                 <tr>
                                     <td>{pay.date}</td>
                                     <td>{pay.amount}</td>
+                                    <td>{pay.currency}</td>
                                     <td>{pay.method}</td>
                                     <td>{pay.bank}</td>
                                     <td>{pay.reference}</td>
-                                    <td>{pay.coment}</td>
+                                    <td>{pay.comment}</td>
                                 </tr>
                             )}
                             </>

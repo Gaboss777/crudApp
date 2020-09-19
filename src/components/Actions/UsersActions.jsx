@@ -16,7 +16,7 @@ const UsersActions = ({ userSelected,criteria,setCriteria }) => {
                     <DeleteUser />
                 </ButtonGroup>
                 </Col>
-                <Col>
+                <Col sm lg={3}>
                     <SearchData criteria={criteria} setCriteria={setCriteria} />
                 </Col>
             </Row>

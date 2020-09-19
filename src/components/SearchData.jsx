@@ -1,23 +1,18 @@
 //import librerias
-import React, { Fragment } from 'react'; 
-import { Col, Form, Row } from 'react-bootstrap';
+import React from 'react'; 
+import { FormControl, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { searchData, getUserList } from '../ducks/users';
 
 const SearchData = ({criteria,setCriteria}) => {
 
   
     return (
-        <Fragment>
-        <Form >
-            <Form.Group as={Row} >
-                <Form.Label column sm lg={1} >Buscador: </Form.Label>
-                <Col sm lg={3} >
-                    <Form.Control type='text' value={criteria} onChange={({ target }) => setCriteria(target.value)} />
-                </Col>
-            </Form.Group>
-        </Form>
-        </Fragment>
+        <InputGroup className='my-2'>
+            <InputGroup.Prepend className='bg-warning rounded-left text-uppercase'>
+                <InputGroup.Text className='text-white px-2 font-weight-bold'>Buscador</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl type='text' placeholder='Buscando...' value={criteria} onChange={({ target }) => setCriteria(target.value)} />
+        </InputGroup>
     )
 }
 

@@ -4,7 +4,7 @@ import { ToastContainer, Slide } from 'react-toastify';
 
 const Layout =({ children })=> {
     return(
-        <Container fluid>
+        <Container fluid className='h-100'>
             <Row>
                 <Col xs lg={12} >
                     { children }

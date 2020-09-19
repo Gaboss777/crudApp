@@ -10,18 +10,15 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
 
     const filteredList = () => {
         let c = criteria.toLowerCase()
-      
         let result = [];
         if (criteria) {
             result = 
                 list.filter(user => user.name.toLowerCase().includes(criteria.toLowerCase()) ||
                     user.document.toLowerCase().includes(c) || user.location.toLowerCase().includes(c) || user.ip.toLowerCase().includes(c) || user.service.toLowerCase().includes(c) || user.status.toLowerCase().includes(c))
-            
         }
         else{
             result=list
         }
-      
         return result
     }
 

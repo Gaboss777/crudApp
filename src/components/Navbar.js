@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const MainMenu =()=> {
     return(
-    <Navbar expand="lg" bg='white' className='mb-3 py-1' >
+    <Navbar expand="lg" bg='white' className='py-1 shadow-none border-bottom border-warning' >
         <Navbar.Brand href="#home">
             <img src={Logo} alt='Logo' />
         </Navbar.Brand>

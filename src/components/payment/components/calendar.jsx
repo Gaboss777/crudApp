@@ -9,7 +9,7 @@ const Calendar = ({ client }) => {
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
 
-  
+    console.log(client)
 
     return (
         <Container fluid >
@@ -17,15 +17,16 @@ const Calendar = ({ client }) => {
                 {client &&
                     <>
                         {months.map(month => {
-                            let isPayed = client.payments.filter(x=>x.period===month.id+'-2020').reduce(function (a,b) { console.log(a); return a + b.amount; }, 0)>=client.mensuality
+                            let isPayed = client.payments.filter(x=>x.period===month.id+'-2020').reduce(function (a,b) { console.log(a); return a + b.amount; }, 0)
                             return (
                                 <Col sm={3} className='px-1 my-1' >
                                     <Card border='warning'>
                                         <Card.Body className='px-0 pt-0'>
                                             <Card.Title className='bg-warning py-2 text-white text-uppercase text-center'>{month.name}</Card.Title>
                                             <Card.Text className='p-3 text-center'>
-                                                <p>PAGO: <Badge variant={isPayed?'success':'danger'}>{isPayed?"CANCELADO":"PENDIENTE"}</Badge></p>
+                                                <p>PAGO: <Badge variant={isPayed >=client.mensuality ? 'success':'danger'}>{isPayed >=client.mensuality ?"CANCELADO":"PENDIENTE"}</Badge></p>
                                                 <p>MENSUALIDAD: {client.mensuality}</p>
+                                                <p>TOTAL PAGADO: {isPayed}</p>
                                                 <InfoModal month={month} payments={client.payments} />
                                                 <PayForm asModal={true} month={month} disabled={isPayed} />
                                             </Card.Text>

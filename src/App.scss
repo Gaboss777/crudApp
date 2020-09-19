@@ -146,3 +146,17 @@ $white: #ffffff;
    }
  }
  
+.sidebar-payment {
+   height: 100%;
+   min-height: 85.6vh;
+   .nav-link {
+      font-size: 15px;
+      color: $white;
+      font-weight: bold;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      &:hover {
+         background-color: #000;
+      }
+   }
+}

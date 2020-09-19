@@ -17,7 +17,7 @@ const Dashboard = () => {
     )
 }
 
-const ButtonDashboard =({textBtn, icon})=> {
+export const ButtonDashboard =({textBtn, icon})=> {
     return(
         <Button className='btn-dash-size btn-dash-style btn-dash-vertical mt-3' ><FontAwesomeIcon icon={icon} size='2x' className='mt-3' /><p className='mt-2'>{textBtn}</p></Button>
     )

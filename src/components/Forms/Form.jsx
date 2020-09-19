@@ -101,16 +101,14 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-
-                <Form.Group as={Col} controlID='validation03' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Indique Ubicacion'
-                        value={location}
-                        onChange={({ target }) => setLocation(target.value)}
-                    />
+                <Form.Group as={Col} controlID='validation06' >
+                    <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
+                    <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
+                        <option value='' disabled selected >Elija un Servicio</option>
+                        <option value='Residencial' >Residencial</option>
+                        <option value='PYMES' >PYMES</option>
+                        <option value='Dedicado '>Dedicado</option>
+                    </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
@@ -123,48 +121,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     />
                 </Form.Group>
             </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} controlID='validation04' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
-                    <Form.Control
-                        required
-                        type='number'
-                        placeholder='Ingrese Ancho de Banda'
-                        value={bandwidth}
-                        onChange={({ target }) => setBandwidth(target.value)}
-                    />
-                </Form.Group>
-                <Form.Group as={Col} controlID='validation05' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
-                    <Form.Control
-                        required
-                        type='text'
-                        placeholder='Ingrese Direccion IP'
-                        value={ip}
-                        onChange={({ target }) => setIp(target.value)}
-                    />
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} controlID='validation06' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
-                    <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
-                        <option value='' disabled selected >Elija un Servicio</option>
-                        <option value='Residencial' >Residencial</option>
-                        <option value='PYMES' >PYMES</option>
-                        <option value='Dedicado '>Dedicado</option>
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group as={Col} sm={6} controlID='validation07' >
-                    <Form.Label className='font-weight-bold text-uppercase' >Status</Form.Label>
-                    <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
-                        <option value='' disabled selected >Elija un Status</option>
-                        <option value='Activo' >Activo</option>
-                        <option value='Cancelado' >Cancelado</option>
-                        <option value='Suspendido' >Suspendido</option>
-                    </Form.Control>
-                </Form.Group>
-            </Form.Row>
+
             { editing && 
                 <>
                 <Form.Row>
@@ -190,6 +147,28 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
+                    <Form.Group as={Col} controlID='validation04' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
+                        <Form.Control
+                            required
+                            type='number'
+                            placeholder='Ingrese Ancho de Banda'
+                            value={bandwidth}
+                            onChange={({ target }) => setBandwidth(target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} controlID='validation05' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
+                        <Form.Control
+                            required
+                            type='text'
+                            placeholder='Ingrese Direccion IP'
+                            value={ip}
+                            onChange={({ target }) => setIp(target.value)}
+                        />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
                     <Form.Group as={Col} controlID='validation05' >
                         <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
                         <Form.Control
@@ -209,6 +188,27 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                             value={serial}
                             onChange={({ target }) => setSerial(target.value)}
                         />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                <Form.Group as={Col} controlID='validation03' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
+                        <Form.Control
+                            required
+                            type='text'
+                            placeholder='Indique Ubicacion'
+                            value={location}
+                            onChange={({ target }) => setLocation(target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} sm={6} controlID='validation07' >
+                        <Form.Label className='font-weight-bold text-uppercase' >Status</Form.Label>
+                        <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
+                            <option value='' disabled selected >Elija un Status</option>
+                            <option value='Activo' >Activo</option>
+                            <option value='Cancelado' >Cancelado</option>
+                            <option value='Suspendido' >Suspendido</option>
+                        </Form.Control>
                     </Form.Group>
                 </Form.Row>
                 </>
