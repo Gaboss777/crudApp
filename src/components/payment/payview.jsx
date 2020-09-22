@@ -1,7 +1,7 @@
 
 import React from 'react';
 import SideBar from '../Sidebar';
-import Calendar from './components/Calendar';
+import Calendar from './components/calendar';
 import DropdownClient from './components/DropdownClient';
 import { Col, Container, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

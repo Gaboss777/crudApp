@@ -5,7 +5,7 @@ import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.scss';
 import UsersList from './components/users/List';
-import Layout from './components/Layout';
+import Layout from './components/layout';
 import MainMenu from './components/Navbar';
 import UsersActions from './components/Actions/UsersActions';
 import Dashboard from './components/Dashboard/dashboard';
