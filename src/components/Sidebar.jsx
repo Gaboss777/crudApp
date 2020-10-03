@@ -1,17 +1,17 @@
-import { faCashRegister, faFileAlt, faFileInvoice, faMoneyCheckAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const SideBar = () => {
+    const [key, setKey] = useState('0')
+
     return (
         <Fragment>
-            <Nav className='flex-column sidebar-payment bg-warning' >
-                <Nav.Link as={Link} to='/payment/client'><FontAwesomeIcon icon={faCashRegister} className='mr-2' />Pago Clientes</Nav.Link>
-                <Nav.Link as={Link} to='/payment/provider'><FontAwesomeIcon icon={faMoneyCheckAlt} className='mr-2' />Proveedores</Nav.Link>
-                <Nav.Link as={Link} to='/payment/accountStatus'><FontAwesomeIcon icon={faFileInvoice} className='mr-2' />Estados de Cuentas</Nav.Link>
-                <Nav.Link as={Link} to='/payment/reports'><FontAwesomeIcon icon={faFileAlt} className='mr-2' />Reportes</Nav.Link>
+            <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column sidebar-payment bg-warning' >
+                <Nav.Link eventKey='1' as={Link} to='/payment/client' className='side-link'>Pago Clientes</Nav.Link>
+                <Nav.Link eventKey='2' as={Link} to='/payment/provider' className='side-link' >Pago Proveedores</Nav.Link>
+                <Nav.Link eventKey='3' as={Link} to='/payment/accountStatus' className='side-link' >Estados de Cuentas</Nav.Link>
+                <Nav.Link eventKey='4' as={Link} to='/payment/reports' className='side-link' >Reportes</Nav.Link>
             </Nav>
         </Fragment>
     )

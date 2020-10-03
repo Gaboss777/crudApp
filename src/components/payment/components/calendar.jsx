@@ -21,14 +21,17 @@ const Calendar = ({ client }) => {
                             return (
                                 <Col sm={3} className='px-1 my-1' >
                                     <Card border='warning'>
+                                        <Card.Header className='bg-warning text-white text-uppercase text-center'>{month.name}</Card.Header>
                                         <Card.Body className='px-0 pt-0'>
-                                            <Card.Title className='bg-warning py-2 text-white text-uppercase text-center'>{month.name}</Card.Title>
                                             <Card.Text className='p-3 text-center'>
-                                                <p>PAGO: <Badge variant={isPayed >=client.mensuality ? 'success':'danger'}>{isPayed >=client.mensuality ?"CANCELADO":"PENDIENTE"}</Badge></p>
+                                                <p>PAGO: <Badge variant={isPayed >=client.mensuality ? 'success':'danger'}>{isPayed >= client.mensuality ?"CANCELADO":"PENDIENTE"}</Badge></p>
                                                 <p>MENSUALIDAD: {client.mensuality}</p>
+                                                { client.discount &&
+                                                    <p>DESCUENTO: {client.discount}</p>
+                                                }
                                                 <p>TOTAL PAGADO: {isPayed}</p>
                                                 <InfoModal month={month} payments={client.payments} />
-                                                <PayForm asModal={true} month={month} disabled={isPayed} />
+                                                <PayForm asModal={true} month={month} disabled={isPayed + client.discount === client.mensuality ? true : false } />
                                             </Card.Text>
                                         </Card.Body>
                                     </Card>

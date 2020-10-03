@@ -226,7 +226,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
         return (
             <Fragment>
                 <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered size='lg' >
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered >
                     <Modal.Header closeButton className='bg-warning' >
                         <Modal.Title className='text-center w-100 text-white' >{editing ? 'Editar Usuario' : 'Agregar Usuario'}</Modal.Title>
                     </Modal.Header>

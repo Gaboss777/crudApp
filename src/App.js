@@ -5,7 +5,7 @@ import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.scss';
 import UsersList from './components/users/List';
-import Layout from './components/layout';
+import Layout from './components/Layout';
 import MainMenu from './components/Navbar';
 import UsersActions from './components/Actions/UsersActions';
 import Dashboard from './components/Dashboard/dashboard';
@@ -23,7 +23,6 @@ function App() {
           <Route exact path='/payment' component={PayView} />
         </Switch>
       </Layout>
-
     </Router >
   )
 }
@@ -32,6 +31,7 @@ const UsersView = () => {
   const [criteria,setCriteria]=useState("");
   return (
     <>
+      <h1 className='text-center text-warning mt-2'>CLIENTES</h1>
       <UsersActions criteria={criteria} setCriteria={setCriteria} />
       <UsersList criteria={criteria} />
     </>

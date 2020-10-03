@@ -1,5 +1,5 @@
 //import librerias
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import { InputGroup } from 'react-bootstrap'; 
 import { connect } from 'react-redux';
 import { getClient } from '../../../ducks/payment';

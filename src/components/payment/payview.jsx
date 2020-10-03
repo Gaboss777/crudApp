@@ -5,6 +5,7 @@ import Calendar from './components/calendar';
 import DropdownClient from './components/DropdownClient';
 import { Col, Container, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ProviderView from '../providers/ProvidersView';
 
 const PayView = () => {
     return (
@@ -16,8 +17,8 @@ const PayView = () => {
                     </Col>
                     <Col sm lg='10'>
                         <Switch>
-                            <Route exact path='/payment'  />
                             <Route exact path='/payment/client' component={PayUsers} />
+                            <Route exact path='/payment/provider' component={ProviderView} />
                             <Route exact path='/payment/accountStatus' />
                             <Route exact path='/payment/reports' />
                         </Switch>
@@ -42,6 +43,5 @@ const PayUsers = () => {
         </Container>
     )
 }
-
 
 export default PayView;

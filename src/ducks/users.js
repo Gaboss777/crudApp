@@ -16,7 +16,6 @@ export const actionCreator = (resource) => {
         UPDATE_REQUESTED: resource.toUpperCase() + '_UPDATE_REQUESTED',
         UPDATE_SUCCEEDED: resource.toUpperCase() + '_UPDATE_SUCCEEDED',
         UPDATE_FAILED: resource.toUpperCase() + '_UPDATE_FAILED',
-        SEARCH: resource.toUpperCase() + '_SEARCH',
     }
 }
 
@@ -86,13 +85,6 @@ export const selectRow = (e, user) => {
         }
     }
 }
-
-export const searchData = (data) => {
-    return dispatch => {
-        dispatch({ type: ACTIONS.SEARCH, payload: data})
-    }
-}
-
 
 const initialState = {
     list: [],
@@ -164,11 +156,6 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 selected: [...state.selected.filter(x => x.id !== payload.id)]
-            }
-        case ACTIONS.SEARCH:
-            return {
-                ...state,
-                list: [...state.list.filter(user => user.name.toLowerCase().includes(payload) || user.document.toLowerCase().includes(payload) || user.location.toLowerCase().includes(payload) || user.ip.toLowerCase().includes(payload) || user.service.toLowerCase().includes(payload) || user.status.toLowerCase().includes(payload))]
             }
         default:
             return state

@@ -15,6 +15,9 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
     const [comment, setComment] = useState('')
     const [currency, setCurrency] = useState('')
     const [bank, setBank] = useState('')
+    const [percent, setPercent] = useState(0)
+    const [check, setCheck] = useState(false)
+    const [file, setFile] = useState('')
 
     const [showModal, setShowModal] = useState(false)
 
@@ -26,7 +29,12 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate }
+            if(check & percent > 0) {
+                const discount = (amount * percent) / 100
+                const totalAmount = amount - discount
+                setAmount(totalAmount)
+            }
+            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate, file }
             createPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
             setAmount('')
@@ -36,36 +44,43 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
             setComment('')
             setCurrency('')
             setBank('')
+            setFile('')
+            setPercent(0)
             setShowModal(false)
         }
         setValid(true)
     }
 
+    console.log(file)
+
     const formPay = (
         <Col>
             <Form onSubmit={onSubmit} noValidate validated={valid} >
-                <Form.Group as={Row} controlId='validation01' >
-                    <Form.Label column sm={4}>Razon Social: </Form.Label>
-                    <Col sm={8} >
-                        <Form.Control required type='text' value={client.name} placeholder='Razon Social' readOnly className='client-payment pl-2' />
-                    </Col>
+            <Form.Row>
+                <Form.Group as={Col} sm lg={8} controlId='validation01' >
+                    <Form.Label>Razon Social: </Form.Label>
+                    <Form.Control required type='text' value={client.name} placeholder='Razon Social' plaintext readOnly className='client-payment pl-2' />
                 </Form.Group>
-                <Form.Group as={Row} controlId='validation04'>
-                    <Form.Label column sm={4}>Mes: </Form.Label>
-                    <Col sm={8}>
-                        <Form.Control required type='text' value={month.name} placeholder='MES' readOnly className='client-payment pl-2 text-uppercase' />
-                    </Col>
+                <Form.Group as={Col} sm lg={4} controlId='validation04'>
+                    <Form.Label>Mes: </Form.Label>
+                    <Form.Control required type='text' value={month.name} placeholder='MES' plaintext readOnly className='client-payment pl-2 text-uppercase' />
                 </Form.Group>
-                <Form.Group as={Row} controlId='validation02' >
-                    <Form.Label column sm={4}>Monto: </Form.Label>
-                    <Col sm={6}>
-                        <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.value)} />
-                    </Col>
-                    <Col sm={2}>
-                        <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
-                        <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
-                    </Col>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} sm lg={6} controlId='validation02' >
+                    <Form.Label>Monto: </Form.Label>
+                    <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.value)} />
                 </Form.Group>
+                <Form.Group as={Col} sm lg={3} controlId='validation11'>
+                    <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
+                    <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
+                    <Form.Check type='checkbox' label='Descuento' name='checkDiscount' id='checkForm3' onChange={({target}) => setCheck(target.checked)} />
+                </Form.Group>
+                <Form.Group as={Col} sm lg={3} controlId='validation10'  >
+                    <Form.Label >Descuento %: </Form.Label>
+                    <Form.Control required type='number' value={percent} onChange={({ target }) => setPercent(target.value)} disabled={check ? false : true} className={!check ? 'client-payment' : '' } />
+                </Form.Group>
+            </Form.Row>
                 <Form.Group as={Row} controlId='validation03' >
                     <Form.Label column sm={4}>Metodo de Pago: </Form.Label>
                     <Col sm={8}>
@@ -104,6 +119,12 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
                     <Form.Label column sm={4}>Comentarios: </Form.Label>
                     <Col sm={8} >
                         <Form.Control required as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                    <Form.Label column sm={4}>Archivo Adjunto: </Form.Label>
+                    <Col sm={8}>
+                        <Form.File label='Elija un archivo' onChange={({target}) => setFile(target.value)} />
                     </Col>
                 </Form.Group>
                 <Col className='text-center'>
