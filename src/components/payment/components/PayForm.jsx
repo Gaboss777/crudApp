@@ -51,8 +51,6 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
         setValid(true)
     }
 
-    console.log(file)
-
     const formPay = (
         <Col>
             <Form onSubmit={onSubmit} noValidate validated={valid} >
@@ -71,7 +69,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
                     <Form.Label>Monto: </Form.Label>
                     <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.value)} />
                 </Form.Group>
-                <Form.Group as={Col} sm lg={3} controlId='validation11'>
+                <Form.Group as={Col} sm lg={3} controlId='validation11' className='p-3'>
                     <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
                     <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
                     <Form.Check type='checkbox' label='Descuento' name='checkDiscount' id='checkForm3' onChange={({target}) => setCheck(target.checked)} />

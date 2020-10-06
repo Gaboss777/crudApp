@@ -191,7 +191,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                <Form.Group as={Col} controlID='validation03' >
+                    <Form.Group as={Col} controlID='validation03' >
                         <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
                         <Form.Control
                             required

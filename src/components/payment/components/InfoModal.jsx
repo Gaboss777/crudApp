@@ -41,7 +41,7 @@ const InfoModal = ({month,payments}) => {
                                 </tr>
                             )}
                             </>
-                            : <tr><td colSpan={7} className='text-center'>NO HAY PAGOS REALIZADOS</td></tr>
+                            : <tr><td colSpan={8} className='text-center'>NO HAY PAGOS REALIZADOS</td></tr>
                         }
                         </tbody>
                     </Table>
