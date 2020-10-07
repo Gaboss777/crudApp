@@ -9,7 +9,7 @@ import NewProvider from './NewProvides';
 const PaymentForm = ({ providers, createBill, isModal, month }) => {
 
     const [provider, setProvider] = useState('')
-    const [billNumber, setBillNumber] = useState('')
+    const [billnumber, setBillnumber] = useState('')
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const [date, setDate] = useState('')
@@ -25,11 +25,12 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: provider, billNumber, amount, method, date, comment, period:month.id+'-'+newYear}
+            let newBill = {provider_id: provider, billnumber, amount, method, date, comment, period:month.id+'-'+newYear}
             createBill(newBill)
             setProvider('')
-            setBillNumber('')
+            setBillnumber('')
             setAmount('')
+            setMethod('')
             setDate('')
             setComment('')
             setShowModal(false)
@@ -37,6 +38,8 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         }
         setValid(true)
     }
+    
+    console.log(valid)
 
     const billform = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
@@ -58,7 +61,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
             <Form.Group as={Row}  controlId='validation02'>
                 <Form.Label column sm lg={3} ># de Factura: </Form.Label>
                 <Col sm lg={7}>
-                    <Form.Control required type='text' value={billNumber} placeholder='Ingrese numero de factura' onChange={({target}) => setBillNumber(target.value)} />
+                    <Form.Control required type='number' value={billnumber} placeholder='Ingrese numero de factura' onChange={({target}) => setBillnumber(target.value)} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row}  controlId='validation03'>

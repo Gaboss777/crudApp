@@ -40,7 +40,6 @@ export const createBill = (data) => {
         Axios.post(apiUrl+ `/bills`, data)
             .then(res => {
                 dispatch({ type: CREATE_BILL_SUCCESS, payload: data})
-                console.log(res.data)
             })
             .catch(err => {
                 dispatch({type: CREATE_BILL_FAILED, payload: err})

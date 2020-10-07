@@ -39,11 +39,12 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
                         <>
                             { bills.filter(x=>x.period === month.id+'-2020').map(bill => 
                             {
-                                let providerName = providers.filter(x => x.id === bill.provider_id)
+                                let providerName = providers.filter(x => x.id === bill.provider_id).map(x => {return x.name})
+                                console.log(providerName)
                                 return (
                                 <tr>
                                     <td>{bill.date}</td>
-                                    <td>{providerName[0].name}</td>
+                                    <td>{providerName}</td>
                                     <td>{bill.billnumber}</td>
                                     <td>{bill.amount}</td>
                                     <td>{bill.method}</td>
