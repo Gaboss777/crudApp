@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
+import { Table, FormCheck, Badge, Spinner, FormControl, Row, Col } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 import PaginationList from '../PaginationList';
@@ -7,7 +7,7 @@ import PaginationList from '../PaginationList';
 const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }) => {
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [usersPerPage] = useState(10)
+    const [usersPerPage, setUsersPerPage] = useState(10)
 
     useEffect(() => {
         getUserList()
@@ -35,8 +35,6 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-    console.log(newList)
-    console.log(currentPage)
     return (
         <>
             {!loading && filteredList ?
@@ -70,7 +68,19 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                         }
                     </tbody>
                 </Table>
-                <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} paginate={paginate} currentPage={currentPage} />
+                <Row>
+                    <Col sm lg={1}>
+                        <FormControl as='select' value={usersPerPage} onChange={({target}) => setUsersPerPage(target.value)} >
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={30}>30</option>
+                            <option value={list.length}>TODOS</option> 
+                        </FormControl>
+                    </Col>
+                    <Col sm lg={1}>
+                        <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} paginate={paginate} currentPage={currentPage} />
+                    </Col>
+                </Row>
                 </>
                 :
                 <>

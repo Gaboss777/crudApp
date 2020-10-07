@@ -4,8 +4,8 @@ import SideBar from '../Sidebar';
 import { Col, Container, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProviderView from '../providers/ProvidersView';
-import StatemensView from '../Statements/StatementsView';
 import PayUsers from './components/PayUsers'
+import EmployeeView from '../employee/EmployeeView';
 
 const PayView = () => {
     return (
@@ -19,9 +19,9 @@ const PayView = () => {
                         <Switch>
                             <Route exact path='/payment/client' component={PayUsers} />
                             <Route exact path='/payment/provider' component={ProviderView} />
-                            <Route exact path='/payment/accountStatus' component={StatemensView} />
+                            <Route exact path='/payment/accountStatus' />
                             <Route exact path='/payment/reports' />
-                            <Route exact path='/payment/employee' />
+                            <Route exact path='/payment/employee' component={EmployeeView} />
                         </Switch>
                     </Col>
                 </Row>

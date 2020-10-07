@@ -8,7 +8,7 @@ const PaginationList = ({ usersPerPage, totalUsers, paginate, currentPage }) => 
     }
 
     return (
-        <Pagination  className='pagination-cerecom' >
+        <Pagination  className='pagination-cerecom mb-0 my-2' >
             {pageNumbers.map(number => (
                 <Pagination.Item onClick={() => paginate(number)} key={number} active={number === currentPage} >
                     {number}

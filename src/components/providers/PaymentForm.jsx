@@ -7,6 +7,7 @@ import NewProvider from './NewProvides';
 
 //crear componente
 const PaymentForm = ({ providers, createBill, isModal, month }) => {
+
     const [provider, setProvider] = useState('')
     const [billNumber, setBillNumber] = useState('')
     const [amount, setAmount] = useState('')
@@ -24,7 +25,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider, billNumber, amount, method, date, comment, period:month.id+'-'+newYear}
+            let newBill = {provider_id: provider.id, billNumber, amount, method, date, comment, period:month.id+'-'+newYear}
             createBill(newBill)
             setProvider('')
             setBillNumber('')
@@ -37,6 +38,8 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         setValid(true)
     }
 
+    
+    console.log(providers)
 
     const billform = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
@@ -69,7 +72,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
             </Form.Group>
             <Form.Group as={Row} controlId='validation03' >
                     <Form.Label column sm={3}>Metodo de Pago: </Form.Label>
-                    <Col sm={8}>
+                    <Col sm={7}>
                         <Form.Control  required as='select' value={method} onChange={({ target }) => setMethod(target.value)} >
                             <option value='' disabled selected hidden >Elegir metodo de pago</option>
                             <option value='Efectivo' >Efectivo</option>

@@ -1,9 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Tab, Table, Tabs } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { getProviders } from '../../ducks/provider';
 import PaymentForm from './PaymentForm';
 
-const ListBills = ({bills}) => {
+const ListBills = ({bills, getProviders }) => {
+
+    useEffect(() => {
+        getProviders()
+    }, [])
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
     const initialMonth = months[0]
@@ -60,4 +65,10 @@ const MSTP = state => (
     }
 )
 
-export default connect(MSTP, null)(ListBills)
+const MDTP = dispatch => (
+    {
+        getProviders:() => dispatch(getProviders())
+    }
+)
+
+export default connect(MSTP, MDTP)(ListBills)
