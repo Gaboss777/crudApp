@@ -1,19 +1,19 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Tab, Table, Tabs } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getProviders } from '../../ducks/provider';
+import { getBills, getProviders } from '../../ducks/provider';
 import PaymentForm from './PaymentForm';
 
-const ListBills = ({bills, getProviders }) => {
+const ListBills = ({bills, getProviders, getBills, providers }) => {
 
     useEffect(() => {
         getProviders()
+        getBills()
     }, [])
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
     const initialMonth = months[0]
     const [key, setKey] = useState(initialMonth.id)
-    console.log(initialMonth.id)
 
     console.log(bills)
 
@@ -38,14 +38,18 @@ const ListBills = ({bills, getProviders }) => {
                         {bills.length > 0 ?
                         <>
                             { bills.filter(x=>x.period === month.id+'-2020').map(bill => 
+                            {
+                                let providerName = providers.filter(x => x.id === bill.provider_id)
+                                return (
                                 <tr>
                                     <td>{bill.date}</td>
-                                    <td>{bill.provider}</td>
-                                    <td>{bill.billNumber}</td>
+                                    <td>{providerName[0].name}</td>
+                                    <td>{bill.billnumber}</td>
                                     <td>{bill.amount}</td>
                                     <td>{bill.method}</td>
                                     <td>{bill.comment}</td>
                                 </tr>
+                                )}
                             )}
                         </>
                             : <tr><td colSpan={6} className='text-center'>NO HAY PAGOS REGISTRADOS</td></tr>
@@ -61,13 +65,15 @@ const ListBills = ({bills, getProviders }) => {
 
 const MSTP = state => (
     {
-        bills: state.providers.bills
+        bills: state.providers.bills,
+        providers: state.providers.providers
     }
 )
 
 const MDTP = dispatch => (
     {
-        getProviders:() => dispatch(getProviders())
+        getProviders:() => dispatch(getProviders()),
+        getBills:() => dispatch(getBills())
     }
 )
 

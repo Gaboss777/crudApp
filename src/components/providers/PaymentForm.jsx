@@ -25,7 +25,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: provider.id, billNumber, amount, method, date, comment, period:month.id+'-'+newYear}
+            let newBill = {provider_id: provider, billNumber, amount, method, date, comment, period:month.id+'-'+newYear}
             createBill(newBill)
             setProvider('')
             setBillNumber('')
@@ -38,9 +38,6 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         setValid(true)
     }
 
-    
-    console.log(providers)
-
     const billform = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
             <Form.Group as={Row}  controlId='validation01' >
@@ -49,7 +46,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
                     <Form.Control required as='select' value={provider} onChange={({target}) => setProvider(target.value)} >
                         <option value='' disabled selected >Elija un proveedor</option>
                         {providers.map(x => (
-                            <option value={x.name} >{x.name}</option>
+                            <option value={x.id} >{x.name}</option>
                             )
                         )}
                     </Form.Control>

@@ -34,7 +34,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled}) => {
                 const totalAmount = amount - discount
                 setAmount(totalAmount)
             }
-            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate, file }
+            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+nowDate, percent, file }
             createPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
             setAmount('')
