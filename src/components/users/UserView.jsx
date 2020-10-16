@@ -5,7 +5,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Button, Modal, Col, Container, Row, Card } from 'react-bootstrap';
 
 
-const UserView = ({ user, selection }) => {
+const UserInfo = ({ user, selection }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -68,4 +68,4 @@ const MSTP = state => (
     }
 )
 
-export default connect(MSTP, null)(UserView)
+export default connect(MSTP, null)(UserInfo)

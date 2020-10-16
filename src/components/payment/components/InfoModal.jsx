@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 
-const InfoModal = ({month,payments}) => {
+const InfoModal = ({month,payments, year}) => {
     const [showModal, setShowModal] = useState(false)
 
     return (
@@ -28,7 +28,7 @@ const InfoModal = ({month,payments}) => {
                         <tbody>
                         { payments.length > 0 ?
                             <>
-                            { payments.filter(x=>x.period===month.id+'-2020').map(pay =>
+                            { payments.filter(x=>x.period===month.id+'-'+year).map(pay =>
                                 <tr>
                                     <td>{pay.date}</td>
                                     <td>{pay.amount}</td>

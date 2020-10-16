@@ -88,6 +88,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={name}
                         onChange={({ target }) => setName(target.value)}
                     />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} controlId='validation02' >
                     <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
@@ -98,6 +99,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={document}
                         onChange={({ target }) => setDocument(target.value)}
                     />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -109,6 +111,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         <option value='PYMES' >PYMES</option>
                         <option value='Dedicado '>Dedicado</option>
                     </Form.Control>
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
@@ -119,6 +122,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                         value={mensuality}
                         onChange={({ target }) => setMensuality(target.value)}
                     />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
 
@@ -226,7 +230,7 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
         return (
             <Fragment>
                 <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered >
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} >
                     <Modal.Header closeButton className='bg-warning' >
                         <Modal.Title className='text-center w-100 text-white' >{editing ? 'Editar Usuario' : 'Agregar Usuario'}</Modal.Title>
                     </Modal.Header>

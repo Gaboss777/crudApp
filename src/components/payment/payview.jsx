@@ -5,7 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProviderView from '../providers/ProvidersView';
 import PayUsers from './components/PayUsers'
-import EmployeeView from '../employee/EmployeeView';
+import EmployeeView from '../employee/View';
 
 const PayView = () => {
     return (

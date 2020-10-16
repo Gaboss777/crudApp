@@ -3,17 +3,18 @@ import React, { useState, Fragment } from 'react';
 import { Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { createBill, createProvider } from '../../ducks/provider';
-import NewProvider from './NewProvides';
+import CreateProvider from './CreateProvider';
 
 //crear componente
 const PaymentForm = ({ providers, createBill, isModal, month }) => {
 
-    const [provider, setProvider] = useState('')
+    const [provider, setProvider] = useState()
     const [billnumber, setBillnumber] = useState('')
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const [date, setDate] = useState('')
     const [comment, setComment] = useState('')
+    const [currency, setCurrency] = useState('')
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
@@ -25,7 +26,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: provider, billnumber, amount, method, date, comment, period:month.id+'-'+newYear}
+            let newBill = {provider_id: provider, billnumber, amount, currency, method, date, comment, period:month.id+'-'+newYear}
             createBill(newBill)
             setProvider('')
             setBillnumber('')
@@ -33,13 +34,12 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
             setMethod('')
             setDate('')
             setComment('')
+            setCurrency('')
             setShowModal(false)
             console.log(newBill)
         }
         setValid(true)
     }
-    
-    console.log(valid)
 
     const billform = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
@@ -55,7 +55,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
                     </Form.Control>
                 </Col>
                 <Col sm lg={2} >
-                    <NewProvider isModal={true} />
+                    <CreateProvider isModal={true} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row}  controlId='validation02'>
@@ -66,8 +66,12 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
             </Form.Group>
             <Form.Group as={Row}  controlId='validation03'>
                 <Form.Label column sm lg={3}>Monto: </Form.Label>
-                <Col sm lg={7}>
+                <Col sm lg={5}>
                     <Form.Control required type='number' value={amount} placeholder='Ingrese monto' onChange={({target}) => setAmount(target.value)} />
+                </Col>
+                <Col sm lg={2} >
+                    <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
+                    <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row} controlId='validation03' >

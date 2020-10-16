@@ -4,6 +4,10 @@ $darkessyellow: #946104;
 $white: #ffffff;
 $black: #000000;
 
+.bg-warning {
+   background-color: $yellow !important;
+}
+
 .hover-table{
    cursor:pointer;
    transition:all 0.2s ease-in-out;
@@ -17,9 +21,9 @@ $black: #000000;
        width: 90%;
        max-width: 90%;
     }
-    .modal-mlg {
-       width: 70%;
-       max-width: 70%;
+    .modal-m-sm {
+       width: 50%;
+       max-width: 50%;
     }
  }
 
@@ -136,7 +140,7 @@ $black: #000000;
  [type=tel].form-control,
  [contenteditable].form-control {
    padding-left: 0.5rem;
-   box-shadow: inset 0 -2px 0 rgba(255, 152, 0, 0.60);
+   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.60);
    &:focus {
      box-shadow: inset 0 -4px 0 $yellow;
    }
@@ -145,7 +149,7 @@ $black: #000000;
  select,
  select.form-control {
    padding-left: 0.5rem;
-   box-shadow: inset 0 -1px 0 rgba(255, 152, 0, 0.60);
+   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.60);
    &:focus {
      box-shadow: inset 0 -2px 0 $yellow;
    }
@@ -194,41 +198,49 @@ $black: #000000;
 }
 
 .tab-payment {
-   background-color: $yellow;
-   border-right: solid 3px $darkessyellow;
    .nav-link {
+      background-color: $white;
       font-size: 15px;
       color: $black;
       font-weight: bold;
-      box-shadow: inset 0 -3px $yellow;
-      border-radius: 0px;
-      border-left: solid 3px $darkessyellow;
+      box-shadow: none;
+      border: solid 2px $yellow;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
       &.active{
          background-color: $black;
          color: $white;
          box-shadow: none;
-         border-left: solid 3px $black;
+         border: solid 2px $black;
          &:focus{
             color: $white;
             box-shadow: none;
+            border: solid 2px $black;
+            &:hover {
+               border: solid 2px $black;
+               color: $yellow;
+            }
          }
          &:hover{
             color: $white;
             background-color: $black;
             box-shadow: none;
+            border: solid 2px $black;
          }
          &:active{
-            color: $white
+            color: $white;
          }
       }
       &:hover{
          color: $white;
          box-shadow: none;
-         background-color: $darkyellow;
+         background-color: $yellow;
+         border: solid 2px $darkyellow;
       }
       &:active{
          color: $white;
          background-color: $darkessyellow;
+         border: solid 2px $black;
       }
    }
 }
@@ -255,4 +267,12 @@ $black: #000000;
          }
       }
    }
+}
+
+.center-img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: 75%;
+   height: 100%;
 }

@@ -16,12 +16,13 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
     const [key, setKey] = useState(initialMonth.id)
 
     console.log(bills)
+    console.log(providers)
 
     return (
     <Fragment>
-        <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill tab-payment' variant='pills'>
+        <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill tab-payment border-bottom border-dark'>
             {months.map(month => 
-                <Tab eventKey={month.id} title={month.name}>
+                <Tab eventKey={month.id} title={month.name} >
                 <PaymentForm isModal={true} month={month} />
                     <Table className='mt-2'>
                         <thead className='bg-warning text-white'>
@@ -30,6 +31,7 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
                                 <th>PROVEEDOR</th>
                                 <th># FACTURA</th>
                                 <th>MONTO</th>
+                                <th>MONEDA</th>
                                 <th>METODO</th>
                                 <th>COMENTARIO</th>
                             </tr>
@@ -39,14 +41,16 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
                         <>
                             { bills.filter(x=>x.period === month.id+'-2020').map(bill => 
                             {
-                                let providerName = providers.filter(x => x.id === bill.provider_id).map(x => {return x.name})
+                                let providerName = providers.filter(x => x.id == bill.provider_id).map(x => {return x.name})
                                 console.log(providerName)
+                                console.log(bill)
                                 return (
                                 <tr>
                                     <td>{bill.date}</td>
                                     <td>{providerName}</td>
                                     <td>{bill.billnumber}</td>
                                     <td>{bill.amount}</td>
+                                    <td>{bill.currency}</td>
                                     <td>{bill.method}</td>
                                     <td>{bill.comment}</td>
                                 </tr>

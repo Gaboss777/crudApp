@@ -47,7 +47,7 @@ const DeleteUser = ({ selection,deleteUser }) => {
                                             <th>STATUS</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className='text-center'>
                                         {selection.map((userData, index) => (
                                             <tr key={index}>
                                                 <td>{userData.name}</td>
@@ -55,7 +55,7 @@ const DeleteUser = ({ selection,deleteUser }) => {
                                                 <td>{userData.email}</td>
                                                 <td>{userData.location} </td>
                                                 <td>{userData.phone}</td>
-                                                <td>{userData.mensualidad}</td>
+                                                <td>{userData.mensuality}</td>
                                                 <td>{userData.bandwidth}</td>
                                                 <td>{userData.ip} </td>
                                                 <td>{userData.serial}</td>

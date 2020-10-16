@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThList, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faFileInvoiceDollar, faFileContract } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -11,6 +11,7 @@ const Dashboard = () => {
                 <Col className='text-center btn-dash-position '>
                     <Link to='/users'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>
                     <Link to='/payment'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
+                    <Link to='/reports'><ButtonDashboard textBtn='REPORTES' icon={faFileContract} /></Link>
                 </Col>
             </Row>
         </Container>

@@ -1,14 +1,25 @@
 //import librerias
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import SelectionYear from '../SelectionYear';
 import ListBills from './ListBills';
 
 //crear componente
 const ProviderView = () => {
     return (
-        <Fragment >
-            <h3 className='text-center my-3'>PAGOS PROVEEDORES</h3>
-            <ListBills />
-        </Fragment>
+        <Container fluid className='mt-2'>
+            <Row>
+                <Col sm lg={2}>
+                    <SelectionYear />
+                </Col>
+                <Col sm lg={8}>
+                    <h3 className='text-center my-3'>PAGOS PROVEEDORES</h3>
+                </Col>
+                <Col sm lg={12}>
+                    <ListBills />
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

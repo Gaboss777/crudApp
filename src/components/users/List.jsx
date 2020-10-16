@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table, FormCheck, Badge, Spinner, FormControl, Row, Col } from 'react-bootstrap';
+import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 import PaginationList from '../PaginationList';
@@ -9,17 +9,23 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10)
 
+    const userDefault = { id: '0'}
+
     useEffect(() => {
         getUserList()
+        if(selected.length > 0) {
+            selectRow(false, userDefault )
+        }
     }, [])
+
+    console.log(selected)
 
     const filteredList = () => {
         let c = criteria.toLowerCase()
         let result = [];
         if (criteria) {
             result =
-                list.filter(user => user.name.toLowerCase().includes(criteria.toLowerCase()) ||
-                    user.document.toLowerCase().includes(c) || user.location.toLowerCase().includes(c) || user.ip.toLowerCase().includes(c) || user.service.toLowerCase().includes(c) || user.status.toLowerCase().includes(c))
+                list.filter(user => user.name.toLowerCase().includes(criteria.toLowerCase()) || user.location.toLowerCase().includes(c) || user.ip.toLowerCase().includes(c) || user.service.toLowerCase().includes(c) || user.status.toLowerCase().includes(c))
         }
         else{
             result=list
@@ -68,19 +74,7 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                         }
                     </tbody>
                 </Table>
-                <Row>
-                    <Col sm lg={1}>
-                        <FormControl as='select' value={usersPerPage} onChange={({target}) => setUsersPerPage(target.value)} >
-                            <option value={10}>10</option>
-                            <option value={20}>20</option>
-                            <option value={30}>30</option>
-                            <option value={list.length}>TODOS</option> 
-                        </FormControl>
-                    </Col>
-                    <Col sm lg={1}>
-                        <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} paginate={paginate} currentPage={currentPage} />
-                    </Col>
-                </Row>
+                <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} paginate={paginate} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} />
                 </>
                 :
                 <>

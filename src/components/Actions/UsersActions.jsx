@@ -4,7 +4,7 @@ import DeleteUser from '../DeleteUser/deleteUser';
 
 import UserForm from '../Forms/Form';
 import SearchData from '../SearchData';
-import UserView from '../users/UserView';
+import UserInfo from '../users/UserView';
 
 const UsersActions = ({ userSelected,criteria,setCriteria }) => {
     return (
@@ -15,7 +15,7 @@ const UsersActions = ({ userSelected,criteria,setCriteria }) => {
                     <UserForm btnText='Crear Nuevo Usuario' asModal={true} editing={false} />
                     <UserForm btnText='Guardar Cambios' asModal={true} editing={true} />
                     <DeleteUser />
-                    <UserView editing={false} />
+                    <UserInfo editing={false} />
                 </ButtonGroup>
                 </Col>
                 <Col sm lg={3}>
