@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.scss';
-import Layout from './components/Layout';
+import Layout from './components/layout';
 import MainMenu from './components/Navbar';
 import Dashboard from './components/Dashboard/dashboard';
 import PayView from './components/payment/payview';

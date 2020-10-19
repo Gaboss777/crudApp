@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getBills, getProviders } from '../../ducks/provider';
 import PaymentForm from './PaymentForm';
 
-const ListBills = ({bills, getProviders, getBills, providers }) => {
+const ListBills = ({bills, getProviders, getBills, providers, year }) => {
 
     useEffect(() => {
         getProviders()
@@ -39,7 +39,7 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
                         <tbody>
                         {bills.length > 0 ?
                         <>
-                            { bills.filter(x=>x.period === month.id+'-2020').map(bill => 
+                            { bills.filter(x=>x.period === month.id+'-'+year).map(bill => 
                             {
                                 let providerName = providers.filter(x => x.id == bill.provider_id).map(x => {return x.name})
                                 console.log(providerName)
@@ -71,7 +71,8 @@ const ListBills = ({bills, getProviders, getBills, providers }) => {
 const MSTP = state => (
     {
         bills: state.providers.bills,
-        providers: state.providers.providers
+        providers: state.providers.providers,
+        year: state.dates.year
     }
 )
 

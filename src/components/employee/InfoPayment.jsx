@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, FormControl, InputGroup, Modal, Tab, Table, Tabs, Row, Col } from 'react-bootstrap'
+import { Button, Modal, Tab, Table, Tabs, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import SelectionYear from '../SelectionYear';
 import PaymentForm from './Forms/PaymentForm';
@@ -24,16 +24,6 @@ const InfoPayment = ({user, payment, year }) => {
             <Modal.Body>
                 <Row>
                     <Col sm lg='2'>
-                        {/* <InputGroup>
-                            <InputGroup.Prepend className='bg-warning rounded-left text-uppercase'>
-                                <InputGroup.Text className='text-white px-2 font-weight-bold'>ANO</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl as='select' value={year} onChange={({target}) => setYear(target.value)}>
-                                {years.map(y =>
-                                    <option value={y}>{y}</option>
-                                )}
-                            </FormControl>
-                        </InputGroup> */}
                         <SelectionYear />
                     </Col>
                     <Col sm lg={2}>

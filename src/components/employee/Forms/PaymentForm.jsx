@@ -40,7 +40,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     const onSubmit = (e) => {
         e.preventDefault()
         let form = e.currentTarget
-        if(form.CheckValidity() === false) {
+        if(form.checkValidity() === false) {
             e.stopPropagation()
         } else {
             setCount(id)
@@ -56,7 +56,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     }
 
     const formjsx = (
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit} notValidate validated={valid}>
             <Form.Row>
                 <Form.Group as={Col} sm lg={6}>
                     <Form.Label>EMPLEADO</Form.Label>
@@ -140,7 +140,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     if(isModal) {
         return (
             <>
-            <Button variant='success' onClick={() => setShow(true)} className='mr-2'>Pago</Button>
+            <Button variant='success' onClick={() => setShow(true)} className='mr-2' disabled={year ? false : true}>Pago</Button>
             <Modal show={show} dialogClassName='modal-m-sm' onHide={() => setShow(false)} centered onExit={() => setValid(false)} >
                 <Modal.Header closeButton className='bg-success'>
                     <Modal.Title className='text-center w-100 text-white' >AGREGAR PAGO</Modal.Title>

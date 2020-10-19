@@ -6,7 +6,7 @@ import { createBill, createProvider } from '../../ducks/provider';
 import CreateProvider from './CreateProvider';
 
 //crear componente
-const PaymentForm = ({ providers, createBill, isModal, month }) => {
+const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
 
     const [provider, setProvider] = useState()
     const [billnumber, setBillnumber] = useState('')
@@ -15,6 +15,8 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
     const [date, setDate] = useState('')
     const [comment, setComment] = useState('')
     const [currency, setCurrency] = useState('')
+    const [bank, setBank] = useState("")
+    const [reference, setReference] = useState("")
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
@@ -22,11 +24,10 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
     const onSubmit = (event) => {
         event.preventDefault()
         let form = event.currentTarget
-        let newYear = new Date().getFullYear()
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: provider, billnumber, amount, currency, method, date, comment, period:month.id+'-'+newYear}
+            let newBill = {provider_id: provider, billnumber, amount, currency, method, bank, reference, date, comment, period:month.id+'-'+year}
             createBill(newBill)
             setProvider('')
             setBillnumber('')
@@ -35,6 +36,8 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
             setDate('')
             setComment('')
             setCurrency('')
+            setBank("")
+            setReference("")
             setShowModal(false)
             console.log(newBill)
         }
@@ -75,16 +78,35 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
                 </Col>
             </Form.Group>
             <Form.Group as={Row} controlId='validation03' >
-                    <Form.Label column sm={3}>Metodo de Pago: </Form.Label>
-                    <Col sm={7}>
-                        <Form.Control  required as='select' value={method} onChange={({ target }) => setMethod(target.value)} >
-                            <option value='' disabled selected hidden >Elegir metodo de pago</option>
-                            <option value='Efectivo' >Efectivo</option>
-                            <option value='Transferencia Bancaria' >Transferencia Bancaria</option>
-                            <option value='Zelle' >Zelle</option>
+                <Form.Label column sm={3}>Metodo de Pago: </Form.Label>
+                <Col sm={7}>
+                    <Form.Control  required as='select' value={method} onChange={({ target }) => setMethod(target.value)} >
+                        <option value='' disabled selected hidden >Elegir metodo de pago</option>
+                        <option value='Efectivo' >Efectivo</option>
+                        <option value='Transferencia Bancaria' >Transferencia Bancaria</option>
+                        <option value='Zelle' >Zelle</option>
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+            {method === "Transferencia Bancaria" &&
+            <>
+                <Form.Group as={Row} >
+                    <Form.Label column sm lg={3}>Banco</Form.Label>
+                    <Col sm lg={7} >
+                        <Form.Control required as="select" value={bank} onChange={({target}) => setBank(target.value)} >
+                            <option value="" selected disabled>Elija una opcion</option>
+                            <option value="BNC">BNC - Banco Nacional de Credito</option>
                         </Form.Control>
                     </Col>
                 </Form.Group>
+                <Form.Group as={Row}>
+                    <Form.Label column sm lg={3}># de Referencia</Form.Label>
+                    <Col sm lg={7}>
+                        <Form.Control required type="number" value={reference} placeholder="Numero de referencia" onChange={({target}) => setReference(target.value)} />
+                    </Col>
+                </Form.Group>
+            </>
+            }
             <Form.Group as={Row}  controlId='validation04'>
                 <Form.Label column sm lg={3}>Fecha: </Form.Label>
                 <Col sm lg={7}>
@@ -108,7 +130,7 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
     if(isModal){
         return (
             <Fragment>
-                <Button variant='success' size='sm' onClick={() => setShowModal(true)} className='mt-3 mb-1'  >Agregar Pago</Button>
+                <Button variant='success' size='sm' onClick={() => setShowModal(true)} className='mt-3 mb-1' disabled={year ? false : true} >Agregar Pago</Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered >
                     <Modal.Header closeButton className='bg-warning' >
                         <Modal.Title className='text-center w-100 text-white' >CREAR FACTURA</Modal.Title>
@@ -124,7 +146,8 @@ const PaymentForm = ({ providers, createBill, isModal, month }) => {
 
 const MSTP = state => (
     {
-        providers: state.providers.providers
+        providers: state.providers.providers,
+        year: state.dates.year
     }
 )
 

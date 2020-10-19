@@ -7,7 +7,7 @@ import InfoModal from './InfoModal';
 import DropdownClient from './DropdownClient';
 import SelectionYear from '../../SelectionYear';
 
-const PayUsers = ({client}) => {
+const PayUsers = ({client, year}) => {
     return (
         <Container fluid>
             <Row >
@@ -22,10 +22,12 @@ const PayUsers = ({client}) => {
                     <Col sm lg={2} className='my-2'>
                         <SelectionYear />
                     </Col>
+                    { year && 
                     <Col sm lg={12} className='pl-0 mt-2'>
                         <h4 className='text-center'>CALENDARIO DE PAGOS</h4>
-                        <Calendar client={client} />
+                        <Calendar client={client} year={year} />
                     </Col>
+                    }
                 </>
                 }
             </Row>
@@ -43,9 +45,11 @@ export const Calendar = ({client, year}) => {
     <Container fluid >
         <Row>
             {months.map(month => {
-                let isPayed = client.payments.filter(x=>x.period===month.id+'-'+year).reduce(function (a,b) { console.log(a); return a + b.amount; }, 0)
+                let isPayed = client.payments.filter(x=>x.period===month.id+'-'+year).reduce(function (a,b) { return a + b.amount; }, 0)
                 let percent = client.payments.filter(x=>x.period===month.id+'-'+year).map(x => {return x.discount})
                 let amountDiscount = (percent * 100) / client.mensuality
+
+                console.log(isPayed)
                 return(
                 <Col sm lg={3} className='px-1 my-1'>
                     <Card border='dark' className='shadow-none'>
