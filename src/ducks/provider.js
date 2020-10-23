@@ -37,9 +37,9 @@ export const createProvider = (data) => {
 export const createBill = (data) => {
     return dispatch => {
         dispatch({type: CREATE_BILL_REQUEST})
-        Axios.post(apiUrl+ `/bills`, data)
+        Axios.post(apiUrl+ '/bills', data)
             .then(res => {
-                dispatch({ type: CREATE_BILL_SUCCESS, payload: data})
+                dispatch({ type: CREATE_BILL_SUCCESS, payload: res.data.data})
             })
             .catch(err => {
                 dispatch({type: CREATE_BILL_FAILED, payload: err})
@@ -53,7 +53,6 @@ export const getProviders = () => {
         Axios.get(apiUrl+'/providers')
             .then(res => {
                 dispatch({type: LIST_PROVIDERS_SUCCESS, payload: res.data.data })
-                console.log(res.data.data)
             })
             .catch(err => {
                 dispatch({type: LIST_PROVIDERS_FAILED, payload: err})
@@ -67,7 +66,6 @@ export const getBills = () => {
         Axios.get(apiUrl+'/bills')
             .then(res => {
                 dispatch({type: LIST_BILLS_SUCCESS, payload: res.data.data})
-                console.log(res.data.data)
             })
             .catch(err => {
                 dispatch({type: LIST_BILLS_FAILED, payload: err})

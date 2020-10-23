@@ -1,18 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { Nav } from 'react-bootstrap'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const SideBar = ({ path }) => {
-
-    const location = useLocation()
-    const history = useHistory()
-    console.log(location)
-    console.log(history)
-
     const [key, setKey] = useState()
-
-
-
     return (
         <Fragment>
             <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column sidebar-payment bg-warning border-right border-dark' >

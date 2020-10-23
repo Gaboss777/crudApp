@@ -2,15 +2,16 @@ import Axios from 'axios';
 const apiUrl = 'http://capi.inversionescerecom.com';
 
 const CLIENT_SELECTED = "CLIENT_SELECTED";
-const PAYMENT_INFO = "PAYMENT_INFO";
+const PAYMENT_LIST = 'PAYMENT_LIST';
+const CREATE_PAYMENT = "CREATE_PAYMENT";
+const FILE_UPLOAD = "FILE_UPLOAD";
+const FILES_LIST = "FILES_LIST";
 
 export const getClient = (user) => {
     let u = user[0];
     return dispatch => {
         if(u){
-            Axios.get(apiUrl + '/users/' + u.id).then(res => {
-                dispatch({ type: CLIENT_SELECTED, payload: res.data.data })
-            })
+            dispatch({type: CLIENT_SELECTED, payload: u})
         }
         else{
             dispatch({ type: CLIENT_SELECTED, payload: null })
@@ -18,11 +19,21 @@ export const getClient = (user) => {
     }
 }
 
+export const getPayments = () => {
+    return dispatch => {
+        Axios.get(apiUrl + '/payments' )
+            .then(res => {
+                dispatch({type: PAYMENT_LIST, payload: res.data.data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
 export const createPayment = (data) => {
     return dispatch => {
-        Axios.post(apiUrl+'/payments',data).then(res=>{
-            console.log(res.data.data)
-            dispatch({ type: CLIENT_SELECTED, payload: res.data.data })
+        Axios.post(apiUrl+'/payments',data)
+        .then(res=>{
+            dispatch({ type: CREATE_PAYMENT, payload: res.data.data })
         })
         .catch(err=>{
             console.log(err)
@@ -30,9 +41,30 @@ export const createPayment = (data) => {
     }
 }
 
+export const uploadFile = (data) => {
+    return dispatch => {
+        Axios.post(apiUrl + '/files', data)
+        .then(res => {
+            dispatch({type: FILE_UPLOAD, payload: res.data.data})
+        })
+        .catch(err => console.log(err))
+    }
+}
+
+export const getFiles = () => {
+    return dispatch => {
+        Axios.get(apiUrl + '/files')
+            .then(res => {
+                dispatch({type: FILES_LIST, payload: res.data.data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
 const initialState = {
     client: null,
-    pago: []
+    payments: [],
+    files: []
 }
 
 export const paymentReducer = (state = initialState, { type, payload }) => {
@@ -42,10 +74,25 @@ export const paymentReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 client: payload
             }
-        case PAYMENT_INFO:
+        case PAYMENT_LIST:
             return {
                 ...state,
-                pago: [...state.pago, payload]
+                payments: payload
+            }
+        case CREATE_PAYMENT:
+            return {
+                ...state,
+                payments: [...state.payments, payload]
+            }
+        case FILE_UPLOAD:
+            return {
+                ...state,
+                files: [...state.files, payload]
+            }
+        case FILES_LIST:
+            return {
+                ...state,
+                files: payload
             }
         default:
             return state

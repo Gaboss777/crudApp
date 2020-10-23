@@ -3,8 +3,9 @@ import { Button, Modal, Tab, Table, Tabs, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import SelectionYear from '../SelectionYear';
 import PaymentForm from './Forms/PaymentForm';
+import moment from 'moment';
 
-const InfoPayment = ({user, payment, year }) => {
+const InfoPayment = ({user, salaries, year }) => {
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
 
@@ -12,7 +13,7 @@ const InfoPayment = ({user, payment, year }) => {
     const initialMonth = months[0]
     const [key, setKey] = useState(initialMonth.id)
 
-    const completeName = user.firstName.toUpperCase()+' '+user.secondName.toUpperCase()+' '+user.lastName.toUpperCase()+' '+user.secondSurname.toUpperCase()
+    const completeName = user.firstname.toUpperCase()+' '+user.secondname.toUpperCase()+' '+user.lastname.toUpperCase()+' '+user.secondsurname.toUpperCase()
 
     return (
     <>
@@ -21,7 +22,7 @@ const InfoPayment = ({user, payment, year }) => {
             <Modal.Header closeButton className='bg-dark'>
                 <Modal.Title className='text-center w-100 text-white' >PAGOS DE {completeName}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='m-body'>
                 <Row>
                     <Col sm lg='2'>
                         <SelectionYear />
@@ -33,7 +34,7 @@ const InfoPayment = ({user, payment, year }) => {
                 <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill mt-2 tab-payment border-bottom border-dark' >
                 {months.map(m =>
                     <Tab eventKey={m.id} title={m.name} className='mb-2'>
-                        <Table>
+                        <Table className='mt-2'>
                             <thead className='bg-dark text-white'>
                                 <tr>
                                     <th>FECHA</th>
@@ -46,17 +47,17 @@ const InfoPayment = ({user, payment, year }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                            { payment.length > 0 ?
+                            { salaries.length > 0 ?
                             <>
-                                { payment.filter(x => x.period === m.id+'-'+year).map(pay => 
+                                { salaries.filter(x => x.period === m.id+'-'+year && x.user_id === user.id).map(s => 
                                     <tr>
-                                        <td>{pay.date}</td>
-                                        <td>{pay.concept}</td>
-                                        <td>{pay.amount}</td>
-                                        <td>{pay.currency}</td>
-                                        <td>{pay.method}</td>
-                                        <td>{pay.bank}</td>
-                                        <td>{pay.reference}</td>
+                                        <td>{moment(s.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
+                                        <td>{s.concept}</td>
+                                        <td>{s.amount}</td>
+                                        <td>{s.currency}</td>
+                                        <td>{s.method}</td>
+                                        <td>{s.bank}</td>
+                                        <td>{s.reference}</td>
                                     </tr>
                                 )}
                             </>
@@ -75,7 +76,7 @@ const InfoPayment = ({user, payment, year }) => {
 
 const MSTP = state => (
     {
-        payment: state.rrhh.payment,
+        salaries: state.rrhh.salaries,
         year: state.dates.year
     }
 )

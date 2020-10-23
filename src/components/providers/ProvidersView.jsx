@@ -9,11 +9,11 @@ const ProviderView = () => {
     return (
         <Container fluid className='mt-2'>
             <Row>
-                <Col sm lg={2}>
-                    <SelectionYear />
+                <Col sm lg={12}>
+                    <h3 className='text-center my-2'>REGISTRO PAGOS PROVEEDORES</h3>
                 </Col>
-                <Col sm lg={8}>
-                    <h3 className='text-center my-3'>PAGOS PROVEEDORES</h3>
+                <Col sm lg={2} className='my-2'>
+                    <SelectionYear />
                 </Col>
                 <Col sm lg={12}>
                     <ListBills />

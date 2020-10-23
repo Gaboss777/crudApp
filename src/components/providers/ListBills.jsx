@@ -15,14 +15,11 @@ const ListBills = ({bills, getProviders, getBills, providers, year }) => {
     const initialMonth = months[0]
     const [key, setKey] = useState(initialMonth.id)
 
-    console.log(bills)
-    console.log(providers)
-
     return (
     <Fragment>
-        <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill tab-payment border-bottom border-dark'>
+        <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill tab-payment'>
             {months.map(month => 
-                <Tab eventKey={month.id} title={month.name} >
+                <Tab eventKey={month.id} title={month.name} className={month.id === "01" ? 'ml-0' : month.id === "12" ? 'mr-0' : ''} >
                 <PaymentForm isModal={true} month={month} />
                     <Table className='mt-2'>
                         <thead className='bg-warning text-white'>
@@ -33,6 +30,8 @@ const ListBills = ({bills, getProviders, getBills, providers, year }) => {
                                 <th>MONTO</th>
                                 <th>MONEDA</th>
                                 <th>METODO</th>
+                                <th>BANCO</th>
+                                <th>REFERENCIA</th>
                                 <th>COMENTARIO</th>
                             </tr>
                         </thead>
@@ -42,8 +41,6 @@ const ListBills = ({bills, getProviders, getBills, providers, year }) => {
                             { bills.filter(x=>x.period === month.id+'-'+year).map(bill => 
                             {
                                 let providerName = providers.filter(x => x.id == bill.provider_id).map(x => {return x.name})
-                                console.log(providerName)
-                                console.log(bill)
                                 return (
                                 <tr>
                                     <td>{bill.date}</td>
@@ -52,12 +49,14 @@ const ListBills = ({bills, getProviders, getBills, providers, year }) => {
                                     <td>{bill.amount}</td>
                                     <td>{bill.currency}</td>
                                     <td>{bill.method}</td>
+                                    <td>{bill.bank}</td>
+                                    <td>{bill.reference}</td>
                                     <td>{bill.comment}</td>
                                 </tr>
                                 )}
                             )}
                         </>
-                            : <tr><td colSpan={6} className='text-center'>NO HAY PAGOS REGISTRADOS</td></tr>
+                            : <tr><td colSpan={8} className='text-center'>NO HAY PAGOS REGISTRADOS</td></tr>
                         }
                         </tbody>
                     </Table>

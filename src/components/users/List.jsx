@@ -18,8 +18,6 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
         }
     }, [])
 
-    console.log(selected)
-
     const filteredList = () => {
         let c = criteria.toLowerCase()
         let result = [];

@@ -117,10 +117,10 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
                         required
-                        type='text'
+                        type='number'
                         placeholder='Ingrese Mensualidad'
                         value={mensuality}
-                        onChange={({ target }) => setMensuality(target.value)}
+                        onChange={({ target }) => setMensuality(target.valueAsNumber)}
                     />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
@@ -132,7 +132,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
                         <Form.Control
-                            required
                             type='email'
                             placeholder='Ingrese email'
                             value={email}
@@ -142,7 +141,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Ingrese Telefono'
                             value={phone}
@@ -154,17 +152,15 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
                         <Form.Control
-                            required
                             type='number'
                             placeholder='Ingrese Ancho de Banda'
                             value={bandwidth}
-                            onChange={({ target }) => setBandwidth(target.value)}
+                            onChange={({ target }) => setBandwidth(target.valueAsNumber)}
                         />
                     </Form.Group>
                     <Form.Group as={Col} controlID='validation05' >
                         <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Ingrese Direccion IP'
                             value={ip}
@@ -176,7 +172,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation05' >
                         <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Ingrese MAC Address'
                             value={mac}
@@ -186,7 +181,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Ingrese Serial'
                             value={serial}
@@ -198,7 +192,6 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
                     <Form.Group as={Col} controlID='validation03' >
                         <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
                         <Form.Control
-                            required
                             type='text'
                             placeholder='Indique Ubicacion'
                             value={location}

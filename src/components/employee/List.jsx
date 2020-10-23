@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { Badge, FormCheck, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { selectRow } from '../../ducks/rrhh';
+import { getEmployies, getSalaries, selectRow } from '../../ducks/rrhh';
 import InfoPayment from './InfoPayment';
+import moment from 'moment'
 
-const EmployeeList = ({employies, selectRow, selected, criteria}) => {
+const EmployeeList = ({employies, selectRow, selected, criteria, getEmployies, getSalaries}) => {
 
     const userDefault = { id: '0'}
     useEffect(() => {
+        getEmployies()
+        getSalaries()
         if(selected.length > 0) {
             selectRow(false, userDefault )
         }
@@ -18,7 +21,7 @@ const EmployeeList = ({employies, selectRow, selected, criteria}) => {
         let result = [];
         if (criteria) {
             result =
-                employies.filter(user => user.firstName.toLowerCase().includes(criteria.toLowerCase()) || user.secondName.toLowerCase().includes(c) || user.lastName.toLowerCase().includes(c) || user.secondSurname.toLowerCase().includes(c) || user.document.toLowerCase().includes(c) || user.ocupation.toLowerCase().includes(c))
+                employies.filter(user => user.firstname.toLowerCase().includes(criteria.toLowerCase()) || user.secondname.toLowerCase().includes(c) || user.lastname.toLowerCase().includes(c) || user.secondsurname.toLowerCase().includes(c) || user.document.toLowerCase().includes(c) || user.occupation.toLowerCase().includes(c))
         }
         else{
             result=employies
@@ -27,9 +30,6 @@ const EmployeeList = ({employies, selectRow, selected, criteria}) => {
     }
 
     const newList = filteredList();
-
-    console.log(employies)
-    console.log(selected)
     return(
         <Table>
             <thead className='bg-warning text-white'>
@@ -49,15 +49,15 @@ const EmployeeList = ({employies, selectRow, selected, criteria}) => {
             {employies.length > 0 ?
             <>
                 {newList.map(e =>
-                    <tr className='hover-table' >
+                    <tr className='hover-table' onClick={() => selectRow(!document.getElementById('select_row_' + e.id).checked, e)} >
                         <td><FormCheck type='checkbox' checked={selected.find(x => x.id === e.id)} onChange={({ target }) => selectRow(target.checked, e)} id={'select_row_' + e.id} /> </td>
-                        <td>{e.firstName} {e.secondName}</td>
-                        <td>{e.lastName} {e.secondSurname}</td>
+                        <td>{e.firstname} {e.secondname}</td>
+                        <td>{e.lastname} {e.secondsurname}</td>
                         <td>{e.document}</td>
-                        <td>{e.ocupation}</td>
-                        <td>{e.initialDate}</td>
-                        <td>{e.lastDate}</td>
-                        <td><Badge variant={e.lastDate === '' ? 'success' : 'danger'}>{e.lastDate === '' ? 'ACTIVO' : 'DESPEDIDO'}</Badge></td>
+                        <td>{e.ocupation_id}</td>
+                        <td>{moment(e.initialdate, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
+                        <td>{e.lastdate ? moment(e.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD') : 'ACTUALMENTE'}</td>
+                        <td><Badge variant={!e.lastdate ? 'success' : 'danger'}>{!e.lastdate ? 'ACTIVO' : 'DESPEDIDO'}</Badge></td>
                         <td>
                             <InfoPayment user={e}/>
                         </td>
@@ -79,7 +79,9 @@ const MSTP = state => (
 
 const MDTP = dispatch => (
     {
-        selectRow: (e, data) => dispatch(selectRow(e, data))
+        selectRow: (e, data) => dispatch(selectRow(e, data)),
+        getEmployies: () => dispatch(getEmployies()),
+        getSalaries: () => dispatch(getSalaries())
     }
 )
 

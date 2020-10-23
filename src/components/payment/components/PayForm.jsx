@@ -6,7 +6,7 @@ import Alerts from '../../Alerts/alerts';
 import { createPayment } from '../../../ducks/payment';
 
 //crear componente
-const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
+const PayForm = ({client, createPayment, asModal, month, disabled, year}) => {
 
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
@@ -23,10 +23,23 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
     const [preview, setPreview] = useState()
 
     const [showModal, setShowModal] = useState(false)
-
     const [valid, setValid] = useState(false)
+    const [days, setDays] = useState()
 
     useEffect(() => {
+
+        if(month.id === '01' || month.id === '03' || month.id === '05' || month.id === '07' || month.id === '08' || month.id === '10' || month.id === '12' ) {
+            setDays(31)
+        } if(month.id === '04' || month.id === '06' || month.id === '09' || month.id === '11') {
+            setDays(30)
+        } if(month.id === '02') {
+            if((year - 2016) % 4 === 0 ) {
+                setDays(29)
+            } else {
+                setDays(28)
+            }
+        }
+
         if (!imgUrl){
             setPreview(undefined)
             return
@@ -35,7 +48,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
         const objectUrl = URL.createObjectURL(imgUrl)
         setPreview(objectUrl)
         return () => URL.revokeObjectURL(objectUrl)
-    }, [imgUrl])
+    }, [imgUrl, month])
 
     const onSubmit = (event) => {
         event.preventDefault()
@@ -43,7 +56,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+year, discount, imgUrl, concept }
+            let newPayment = { user_id:client.id, amount, method, reference, date, comment, currency, bank,period:month.id+'-'+year, discount, concept }
             createPayment(newPayment)
             Alerts.InfoNotify("PAGO AGREGADO")
             setAmount('')
@@ -58,16 +71,23 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
             setConcept('')
             setShowModal(false)
             setCheck(false)
+            console.log(newPayment)
         }
         setValid(true)
     }
 
-    const handlerImage = (event) => {
+    const onFileUpload = (event) => {
+        const file =  event.target.files[0]
+        console.log(event)
         if( !event.target.files || event.target.length === 0) {
             setImgUrl(undefined)
             return
         }
-        setImgUrl(event.target.files[0])
+        if (file.size > 2097152) {
+            Alerts.RemoveNotify('Tamano de archivo mayor a 2 MB')
+        } else {
+            setImgUrl(file)
+        }
     }
 
     const formPay = (
@@ -88,7 +108,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
             <Form.Row>
                 <Form.Group as={Col} sm lg={6} controlId='validation02' >
                     <Form.Label>Monto: </Form.Label>
-                    <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.value)} />
+                    <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.valueAsNumber)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3} controlId='validation11'>
@@ -100,7 +120,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3} controlId='validation10'  >
                     <Form.Label >Descuento %: </Form.Label>
-                    <Form.Control required type='number' value={discount} onChange={({ target }) => setDiscount(target.value)} disabled={check ? false : true} className={!check ? 'client-payment' : '' } />
+                    <Form.Control required type='number' value={discount} onChange={({ target }) => setDiscount(target.valueAsNumber)} disabled={check ? false : true} className={!check ? 'client-payment' : '' } />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
@@ -144,7 +164,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
                     <Form.Group as={Row} controlId='validation07'>
                         <Form.Label column sm={4}># de Referencia: </Form.Label>
                         <Col sm={8}>
-                            <Form.Control required type='number' value={reference} placeholder='Numero de Referencia' onChange={({ target }) => setReference(target.value) } />
+                            <Form.Control required type='number' value={reference} placeholder='Numero de Referencia' onChange={({ target }) => setReference(target.valueAsNumber) } />
                             <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                         </Col>
                     </Form.Group>
@@ -153,7 +173,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
                 <Form.Group as={Row} controlId='validation04'>
                     <Form.Label column sm={4}>Fecha de Pago: </Form.Label>
                     <Col sm={8}>
-                        <Form.Control required type='date' value={date} placeholder='Indique fecha' onChange={({ target }) => setDate(target.value)} />
+                        <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`}  value={date} placeholder='Indique fecha' onChange={({ target }) => setDate(target.value)} />
                         <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                     </Col>
                 </Form.Group>
@@ -163,10 +183,11 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
                         <Form.Control as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
                     </Col>
                 </Form.Group>
-                <Form.Group as={Row}>
+                {/* <Form.Group as={Row}>
                     <Form.Label column sm={4}>Archivo Adjunto: </Form.Label>
                     <Col sm={8}>
-                        <Form.File label='Elija un archivo' onChange={handlerImage} custom data-browse='Agregar' accept='image/*' />
+                        <Form.File label='Elija un archivo' onChange={onFileUpload} custom data-browse='Agregar' accept='image/*' />
+                        <Form.Text className='text-muted'>Maximo: 2Mb</Form.Text>
                     </Col>
                 </Form.Group>
                 { imgUrl &&
@@ -177,7 +198,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
                         <img src={preview} alt='factura' height='350' className='center-img' />
                     </div>
                 </>
-                }
+                } */}
                 <Col className='text-center'>
                     <Button variant='success' type='submit' className='mr-2' >Crear Pago</Button>
                 </Col>
@@ -205,8 +226,7 @@ const PayForm = ({client, createPayment, asModal, month,disabled, year}) => {
 
 const MSTP = state => (
     {
-        client: state.payment.client,
-        year: state.dates.year
+        client: state.payment.client
     }
 )
 

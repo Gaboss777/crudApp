@@ -5,13 +5,14 @@ import { Button, Col, Modal, Row, Table, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { deleteEmployee } from '../../ducks/rrhh';
 import Alerts from '../Alerts/alerts';
+import moment from 'moment';
 
-const DeleteUser = ({selection, deleteUser}) => {
+const DeleteUser = ({selection, deleteEmployees}) => {
 
     const [show, setShow] = useState(false)
 
     const handleClick = () => {
-        deleteUser(selection)
+        deleteEmployees(selection)
         setShow(false)
         Alerts.RemoveNotify('DATOS ELIMINADOS')
     }
@@ -42,15 +43,15 @@ const DeleteUser = ({selection, deleteUser}) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                { selection.map ((data, index) => 
+                                { selection.map ((data, index) =>
                                     <tr key={index}>
-                                        <td>{data.firstName} {data.secondName}</td>
-                                        <td>{data.lastName} {data.secondSurname}</td>
+                                        <td>{data.firstname} {data.secondname}</td>
+                                        <td>{data.lastname} {data.secondsurname}</td>
                                         <td>{data.document}</td>
                                         <td>{data.ocupation}</td>
                                         <td>{data.salary}</td>
-                                        <td>{data.initialDate}</td>
-                                        <td>{data.lastDate}</td>
+                                        <td>{moment(data.initialdate, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
+                                        <td>{data.lastdate ? moment(data.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD') : 'ACTUALMENTE'}</td>
                                     </tr>
                                 )}
                                 </tbody>
@@ -77,7 +78,7 @@ const MSTP = state => (
 
 const MDTP = dispatch => (
     {
-        deleteUser: (data) => dispatch(deleteEmployee(data))
+        deleteEmployees: (data) => dispatch(deleteEmployee(data))
     }
 )
 

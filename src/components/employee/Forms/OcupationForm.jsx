@@ -27,7 +27,6 @@ const OcupationForm = ({isModal, createOcupation}) => {
             setArea('')
             setGerency('')
             setShowModal(false)
-            console.log(newOcupation)
         }
         setValid(true)
     }
@@ -65,10 +64,10 @@ const OcupationForm = ({isModal, createOcupation}) => {
     if(isModal) {
         return (
             <Fragment>
-                <Button variant='primary' onClick={() => setShowModal(true)} className='my-2' ><FontAwesomeIcon icon={faPlusSquare} size='lg' className='mr-2' />Ocupacion</Button>
+                <Button variant='primary' onClick={() => setShowModal(true)} className='my-2' ><FontAwesomeIcon icon={faPlusSquare} size='lg' /></Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} >
                 <Modal.Header closeButton className='bg-primary' >
-                    <Modal.Title className='text-center w-100 text-white' >CREAR OCUPACION</Modal.Title>
+                    <Modal.Title className='text-center w-100 text-white' >CREAR CARGO</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {formOcupation}

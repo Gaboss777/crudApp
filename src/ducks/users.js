@@ -26,7 +26,7 @@ export const getUserList = () => {
         dispatch({ type: ACTIONS.LIST_REQUESTED })
         Axios.get(apiUrl + '/users')
             .then(res => {
-                dispatch({ type: ACTIONS.LIST_SUCCEEDED, payload: res.data })
+                dispatch({ type: ACTIONS.LIST_SUCCEEDED, payload: res.data.data })
             })
             .catch(err => {
                 dispatch({ type: ACTIONS.LIST_FAILED, payload: err })
@@ -49,11 +49,11 @@ export const createUser = (user) => {
 }
 
 export const removeUser = (selection) => {
-
+    let id = selection.map(s => s.id)
     return dispatch => {
         dispatch({ type: ACTIONS.DELETE_REQUESTED })
-        Axios.delete(apiUrl + '/users', { data: selection }).then(res => {
-            dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: selection })
+        Axios.delete(apiUrl + '/users', { data: id }).then(res => {
+            dispatch({ type: ACTIONS.DELETE_SUCCEEDED, payload: id })
         })
             .catch(err => {
                 dispatch({ type: ACTIONS.DELETE_FAILED, payload: err.response })
@@ -62,6 +62,7 @@ export const removeUser = (selection) => {
 }
 
 export const updateUser = (user) => {
+    console.log(user)
     return dispatch => {
         dispatch({ type: ACTIONS.UPDATE_REQUESTED })
         Axios.put(apiUrl + `/users/${user.id}`, user).then(res => {
@@ -129,10 +130,9 @@ export const usersReducer = (state = initialState, { type, payload }) => {
                 ...state,
             }
         case ACTIONS.DELETE_SUCCEEDED:
-            const users = payload.map(u=>u.id);
             return {
                 ...state,
-                list: state.list.filter(user =>!users.includes(user.id)),
+                list: state.list.filter(user =>!payload.includes(user.id)),
                 loading: false,
                 selected: initialState.selected
             }

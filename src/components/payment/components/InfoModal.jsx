@@ -23,22 +23,28 @@ const InfoModal = ({month,payments, year}) => {
                                 <th>BANCO</th>
                                 <th># REFERENCIA</th>
                                 <th>COMENTARIOS</th>
+                                <th>IMAGEN</th>
                             </tr>
                         </thead>
                         <tbody>
                         { payments.length > 0 ?
                             <>
-                            { payments.filter(x=>x.period===month.id+'-'+year).map(pay =>
-                                <tr>
-                                    <td>{pay.date}</td>
-                                    <td>{pay.amount}</td>
-                                    <td>{pay.currency}</td>
-                                    <td>{pay.discount}</td>
-                                    <td>{pay.method}</td>
-                                    <td>{pay.bank}</td>
-                                    <td>{pay.reference}</td>
-                                    <td>{pay.comment}</td>
-                                </tr>
+                            { payments.filter(x=>x.period===month.id+'-'+year).map(pay =>{
+                                let img = pay.imgUrl
+
+                                return(
+                                    <tr>
+                                        <td>{pay.date}</td>
+                                        <td>{pay.amount}</td>
+                                        <td>{pay.currency}</td>
+                                        <td>{pay.discount}</td>
+                                        <td>{pay.method}</td>
+                                        <td>{pay.bank}</td>
+                                        <td>{pay.reference}</td>
+                                        <td>{pay.comment}</td>
+                                        <td>{img ? URL.createObjectURL(img) : 'NO HAY IMAGEN'}</td>
+                                    </tr>
+                                )}
                             )}
                             </>
                             : <tr><td colSpan={8} className='text-center'>NO HAY PAGOS REALIZADOS</td></tr>
@@ -53,5 +59,6 @@ const InfoModal = ({month,payments, year}) => {
         </>
     )
 }
+
 
 export default InfoModal

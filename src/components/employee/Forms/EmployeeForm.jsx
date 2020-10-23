@@ -3,94 +3,100 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { createEmployee, updateEmployee } from '../../../ducks/rrhh';
+import { createEmployee, getOcupationsList, updateEmployee } from '../../../ducks/rrhh';
 import Alerts from '../../Alerts/alerts';
+import moment from 'moment';
 
-const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, selection, updateEmployee }) => {
+const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, selection, updateEmployee, getOcupationsList }) => {
 
-    const [firstName, setFirstName] = useState(user ? user.firstName : '')
-    const [secondName, setSecondName] = useState(user ? user.secondName : '')
-    const [lastName, setLastName] = useState(user ? user.lastName : '')
-    const [secondSurname, setSecondSurname] = useState(user ? user.secondSurname : '')
-    const [document, setDocument] = useState(user ? user.document : '')
-    const [initialDate, setInitialDate] = useState(user ? user.initialDate : '')
-    const [lastDate, setLastDate] = useState(user ? user.lastDate : '')
-    const [salary, setSalary] = useState(user ? user.salary : '')
-    const [ocupation, setOcupation] = useState(user ? user.ocupation : '')
-    const [count, setCount] = useState(0)
+    const [firstname, setFirstname] = useState('')
+    const [secondname, setSecondname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [secondsurname, setSecondsurname] = useState('')
+    const [document, setDocument] = useState('')
+    const [initialdate, setInitialdate] = useState('')
+    const [lastdate, setLastdate] = useState('')
+    const [salary, setSalary] = useState('')
+    const [ocupation, setOcupation] = useState('')
 
     const [check, setCheck] = useState(false)
     const [show, setShow] = useState(false)
     const [valid, setValid] = useState(false)
 
     useEffect(() => {
+        getOcupationsList()
         if (user && editing) {
-            setFirstName(user.firstName)
-            setSecondName(user.secondName)
-            setLastName(user.lastName)
-            setSecondSurname(user.secondSurname)
+            setFirstname(user.firstname)
+            setSecondname(user.secondname)
+            setLastname(user.lastname)
+            setSecondsurname(user.secondsurname)
             setDocument(user.document)
-            setInitialDate(user.initialDate)
-            setLastDate(user.lastDate)
+            setInitialdate(moment(user.initialdate, 'YYYY-MM-DD').format('YYYY-MM-DD'))
+            setLastdate(user.lastdate === null ? '' : moment(user.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD'))
             setSalary(user.salary)
-            setOcupation(user.ocupation)
+            setOcupation(user.ocupation_id)
         }
     }, [user, editing])
+
+    const handleCheck = (e) => {
+        setCheck(e.target.checked)
+        if(check) {
+            setLastdate(null)
+            setCheck(false)
+        }
+    }
 
     const onSubmit = (event) => {
         event.preventDefault()
         let form = event.currentTarget
-        const id = count + 1
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            setCount(id)
-            let newEmployee = { id: count, firstName, secondName, lastName, secondSurname, document, initialDate, lastDate, salary, ocupation }
-            console.log(newEmployee)
+            let newEmployee = { firstname, secondname, lastname, secondsurname, document, initialdate, lastdate, salary, ocupation_id: ocupation }
             if(!user){
                 createEmployee(newEmployee)
                 Alerts.InfoNotify('EMPLEADO CREADO')
             } else {
-                updateEmployee(newEmployee)
+                updateEmployee({...newEmployee, id: user.id})
                 Alerts.EditNotify('DATOS ACTUALIZADOS')
             }
             setShow(false)
-            setFirstName('')
-            setSecondName('')
-            setLastName('')
-            setSecondSurname('')
+            setFirstname('')
+            setSecondname('')
+            setLastname('')
+            setSecondsurname('')
             setDocument('')
-            setInitialDate('')
-            setLastDate('')
+            setInitialdate('')
+            setLastdate('')
             setSalary('')
             setOcupation('')
             setCheck(false)
         }
         setValid(true)
     }
-
-    console.log(ocupations)
+    console.log(lastdate)
+    console.log(check)
 
     const formEmploye = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
         <Form.Row>
             <Form.Group as={Col} controlId='validation01'>
                 <Form.Label>Primer Nombre *</Form.Label>
-                <Form.Control required type='text' value={firstName} placeholder='Indique Primer nombre...' onChange={({target}) => setFirstName(target.value)} />
+                <Form.Control required type='text' value={firstname} placeholder='Indique Primer nombre...' onChange={({target}) => setFirstname(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} >
                 <Form.Label>Segundo Nombre</Form.Label>
-                <Form.Control type='text' value={secondName} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondName(target.value)} />
+                <Form.Control type='text' value={secondname} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondname(target.value)} />
             </Form.Group>
             <Form.Group as={Col} controlId='validation02'>
                 <Form.Label>Primer Apellido *</Form.Label>
-                <Form.Control required type='text' value={lastName} placeholder='Ingrese Primer apellido..' onChange={({target}) => setLastName(target.value)} />
+                <Form.Control required type='text' value={lastname} placeholder='Ingrese Primer apellido..' onChange={({target}) => setLastname(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col}>
                 <Form.Label>Segundo Apellido</Form.Label>
-                <Form.Control type='text' value={secondSurname} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondSurname(target.value)} />
+                <Form.Control type='text' value={secondsurname} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondsurname(target.value)} />
             </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -101,15 +107,15 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
             </Form.Group>
             <Form.Group as={Col} controlId='validation04'>
                 <Form.Label>Fecha de Ingreso *</Form.Label>
-                <Form.Control required type='date' value={initialDate} onChange={({target}) => setInitialDate(target.value)} />
+                <Form.Control required type='date' value={initialdate} onChange={({target}) => setInitialdate(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} controlId='validation07'>
                 <Row>
                     <Col sm lg={6}><Form.Label>Fecha de Egreso:</Form.Label></Col>
-                    <Col sm lg={6}><Form.Check className='w-50' type='checkbox' label='Actualmente' name='checkForm' id='checkForm1' onChange={({target}) => setCheck(target.checked)} /></Col>
+                    <Col sm lg={6}><Form.Check className='w-50' type='checkbox' label='Actualmente' name='checkForm' id='checkForm1' onChange={handleCheck} /></Col>
                 </Row>
-                <Form.Control type='date' value={lastDate} onChange={({target}) => setLastDate(target.value)} disabled={check ? true : false } />
+                <Form.Control type='date' value={lastdate} onChange={({target}) => setLastdate(target.value)} disabled={check ? true : false} />
             </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -125,7 +131,7 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
             </Form.Group>
             <Form.Group as={Col} controlId='validation06'>
                 <Form.Label>Salario *</Form.Label>
-                <Form.Control required type='number' value={salary} placeholder='Ingrese Salario...' onChange={({target}) => setSalary(target.value)} />
+                <Form.Control required type='number' value={salary} placeholder='Ingrese Salario...' onChange={({target}) => setSalary(target.valueAsNumber)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
         </Form.Row>
@@ -166,7 +172,8 @@ const MSTP = state => (
 const MDTP = dispatch => (
     {
         createEmployee: (data) => dispatch(createEmployee(data)),
-        updateEmployee: (data) => dispatch(updateEmployee(data))
+        updateEmployee: (data) => dispatch(updateEmployee(data)),
+        getOcupationsList: () => dispatch(getOcupationsList())
     }
 )
 

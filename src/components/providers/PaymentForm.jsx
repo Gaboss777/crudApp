@@ -1,5 +1,5 @@
 
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { createBill, createProvider } from '../../ducks/provider';
@@ -9,17 +9,32 @@ import CreateProvider from './CreateProvider';
 const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
 
     const [provider, setProvider] = useState()
-    const [billnumber, setBillnumber] = useState('')
-    const [amount, setAmount] = useState('')
+    const [billNumber, setBillNumber] = useState()
+    const [amount, setAmount] = useState()
     const [method, setMethod] = useState('')
     const [date, setDate] = useState('')
     const [comment, setComment] = useState('')
-    const [currency, setCurrency] = useState('')
+    const [currency, setCurrency] = useState()
     const [bank, setBank] = useState("")
-    const [reference, setReference] = useState("")
+    const [reference, setReference] = useState()
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
+    const [days, setDays] = useState()
+
+    useEffect(() => {
+        if(month.id === '01' || month.id === '03' || month.id === '05' || month.id === '07' || month.id === '08' || month.id === '10' || month.id === '12' ) {
+            setDays(31)
+        } if(month.id === '04' || month.id === '06' || month.id === '09' || month.id === '11') {
+            setDays(30)
+        } if(month.id === '02') {
+            if((year - 2016) % 4 === 0 ) {
+                setDays(29)
+            } else {
+                setDays(28)
+            }
+        }
+    }, [month])
 
     const onSubmit = (event) => {
         event.preventDefault()
@@ -27,10 +42,10 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: provider, billnumber, amount, currency, method, bank, reference, date, comment, period:month.id+'-'+year}
+            let newBill = {provider_id: provider, billNumber, amount, currency, method, bank, reference, date, comment, period:month.id+'-'+year}
             createBill(newBill)
             setProvider('')
-            setBillnumber('')
+            setBillNumber('')
             setAmount('')
             setMethod('')
             setDate('')
@@ -64,13 +79,13 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
             <Form.Group as={Row}  controlId='validation02'>
                 <Form.Label column sm lg={3} ># de Factura: </Form.Label>
                 <Col sm lg={7}>
-                    <Form.Control required type='number' value={billnumber} placeholder='Ingrese numero de factura' onChange={({target}) => setBillnumber(target.value)} />
+                    <Form.Control required type='number' value={billNumber} placeholder='Ingrese numero de factura' onChange={({target}) => setBillNumber(target.valueAsNumber)} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row}  controlId='validation03'>
                 <Form.Label column sm lg={3}>Monto: </Form.Label>
                 <Col sm lg={5}>
-                    <Form.Control required type='number' value={amount} placeholder='Ingrese monto' onChange={({target}) => setAmount(target.value)} />
+                    <Form.Control required type='number' value={amount} placeholder='Ingrese monto' onChange={({target}) => setAmount(target.valueAsNumber)} />
                 </Col>
                 <Col sm lg={2} >
                     <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
@@ -102,7 +117,7 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
                 <Form.Group as={Row}>
                     <Form.Label column sm lg={3}># de Referencia</Form.Label>
                     <Col sm lg={7}>
-                        <Form.Control required type="number" value={reference} placeholder="Numero de referencia" onChange={({target}) => setReference(target.value)} />
+                        <Form.Control required type="number" value={reference} placeholder="Numero de referencia" onChange={({target}) => setReference(target.valueAsNumber)} />
                     </Col>
                 </Form.Group>
             </>
@@ -110,7 +125,7 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
             <Form.Group as={Row}  controlId='validation04'>
                 <Form.Label column sm lg={3}>Fecha: </Form.Label>
                 <Col sm lg={7}>
-                    <Form.Control required type='date' value={date} onChange={({target}) => setDate(target.value)} />
+                    <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`} value={date} onChange={({target}) => setDate(target.value)} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row}  controlId='validation05' >

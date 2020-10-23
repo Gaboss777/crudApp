@@ -1,52 +1,146 @@
+import Axios from 'axios';
+const apiUrl = 'http://capi.inversionescerecom.com';
+
+const LIST_EMPLOYIES_REQUEST = 'LIST_EMPLOYIES_REQUEST'
 const LIST_EMPLOYIES_SUCCESS = 'LIST_EMPLOYIES_SUCCESS'
+const LIST_EMPLOYIES_FAILED = 'LIST_EMPLOYIES_FAILED'
 
+const CREATE_EMPLOYEE_REQUEST = 'CREATE_EMPLOYEE_REQUEST'
 const CREATE_EMPLOYEE_SUCCESS = 'CREATE_EMPLOYEE_SUCCESS'
+const CREATE_EMPLOYEE_FAILED = 'CREATE_EMPLOYEE_FAILED'
 
+const LIST_OCUPATIONS_REQUEST = 'LIST_OCUPATIONS_REQUEST'
+const LIST_OCUPATIONS_SUCCESS = 'LIST_OCUPATIONS_SUCCESS'
+const LIST_OCUPATIONS_FAILED = 'LIST_OCUPATIONS_FAILED'
+
+const CREATE_OCUPATION_REQUEST = 'CREATE_OCUPATION_REQUEST'
 const CREATE_OCUPATION_SUCCESS = 'CREATE_OCUPATION_SUCCESS'
+const CREATE_OCUPATION_FAILED = 'CREATE_OCUPATION_FAILED'
 
+const DELETE_EMPLOYEE_REQUEST = 'DELETE_EMPLOYEE_REQUEST'
 const DELETE_EMPLOYEE_SUCCESS = 'DELETE_EMPLOYEE_SUCCESS'
+const DELETE_EMPLOYEE_FAILED = 'DELETE_EMPLOYEE_FAILED'
 
+const UPDATE_EMPLOYEE_REQUEST = 'UPDATE_EMPLOYEE_REQUEST'
 const UPDATE_EMPLOYEE_SUCCESS = 'UPDATE_EMPLOYEE_SUCCESS'
+const UPDATE_EMPLOYEE_FAILED = 'UPDATE_EMPLOYEE_FAILED'
 
-const CREATE_PAYMENT = 'CREATE_PAYMENT'
+const CREATE_PAYMENT_REQUEST = 'CREATE_PAYMENT_REQUEST'
+const CREATE_PAYMENT_SUCCESS = 'CREATE_PAYMENT_SUCCESS'
+const CREATE_PAYMENT_FAILED = 'CREATE_PAYMENT_FAILED'
+
+const LIST_SALARIES_REQUEST ='LIST_SALARIES_REQUEST'
+const LIST_SALARIES_SUCCESS ='LIST_SALARIES_SUCCESS'
 
 const CHECKED = 'CHECKED'
 const UNCHECKED = 'UNCHECKED'
 
 export const getEmployies = () => {
     return dispatch => {
-        dispatch({type: LIST_EMPLOYIES_SUCCESS})
+        dispatch({type: LIST_EMPLOYIES_REQUEST})
+        Axios.get(apiUrl + '/employees')
+            .then(res => {
+                dispatch({type: LIST_EMPLOYIES_SUCCESS, payload: res.data.data})
+            })
+            .catch(err => {
+                dispatch({type: LIST_EMPLOYIES_FAILED, payload: err})
+            })
     }
 }
 
 export const createEmployee = (data) => {
     return dispatch => {
-        dispatch({type: CREATE_EMPLOYEE_SUCCESS, payload: data})
+        dispatch({type: CREATE_EMPLOYEE_REQUEST})
+        Axios.post(apiUrl + '/employees', data)
+        .then(res => {
+            dispatch({type: CREATE_EMPLOYEE_SUCCESS, payload: res.data.data})
+        })
+        .catch(err => {
+            dispatch({type: CREATE_EMPLOYEE_FAILED, payload: err})
+        })
     }
 }
 
 export const createOcupation = (data) => {
     return dispatch => {
-        dispatch({type: CREATE_OCUPATION_SUCCESS, payload: data})
-        console.log(data)
+        dispatch({type: CREATE_OCUPATION_REQUEST})
+        Axios.post(apiUrl + '/occupations', data)
+            .then(res => {
+                dispatch({type: CREATE_OCUPATION_SUCCESS, payload: res.data.data})
+            })
+            .catch(err => {
+                dispatch({type: CREATE_OCUPATION_FAILED, payload: err})
+                console.log(err)
+            })
     }
 }
 
-export const deleteEmployee = (data) => {
+export const getOcupationsList = () => {
     return dispatch => {
-        dispatch({type: DELETE_EMPLOYEE_SUCCESS, payload: data})
+        dispatch({type: LIST_OCUPATIONS_REQUEST})
+        Axios.get(apiUrl + '/occupations')
+            .then(res => {
+                dispatch({type: LIST_OCUPATIONS_SUCCESS, payload: res.data.data})
+            })
+            .catch(err => {
+                dispatch({type: LIST_OCUPATIONS_FAILED, payload: err})
+            })
     }
 }
 
-export const updateEmployee = (data) => {
+export const deleteEmployee = (selection) => {
+    let id = selection.map(s => s.id)
+    console.log(id)
     return dispatch => {
-        dispatch({type: UPDATE_EMPLOYEE_SUCCESS, payload: data})
+        dispatch({type: DELETE_EMPLOYEE_REQUEST})
+        Axios.delete(apiUrl + '/employees', {data: id})
+            .then(res => {
+                dispatch({type: DELETE_EMPLOYEE_SUCCESS, payload: id})
+                console.log(res.data)
+            })
+            .catch(err => {
+                dispatch({type: DELETE_EMPLOYEE_FAILED, payload: err})
+            })
+    }
+}
+
+export const updateEmployee = (user) => {
+    return dispatch => {
+        dispatch({type: UPDATE_EMPLOYEE_REQUEST})
+        Axios.put(apiUrl + `/employees/${user.id}`, user)
+            .then(res => {
+                dispatch({type: UPDATE_EMPLOYEE_SUCCESS, payload: user})
+            })
+            .catch(err => {
+                dispatch({type: UPDATE_EMPLOYEE_FAILED, payload: err})
+                console.log(err.data)
+            })
     }
 }
 
 export const createPayment = (data) => {
     return dispatch => {
-        dispatch({type: CREATE_PAYMENT, payload: data})
+        dispatch({type: CREATE_PAYMENT_REQUEST})
+        Axios.post(apiUrl + '/salaries', data)
+            .then(res => {
+                dispatch({type: CREATE_PAYMENT_SUCCESS, payload: res.data.data})
+                console.log(res.data.data)
+                console.log(data)
+            })
+            .catch(err => {
+                dispatch({type: CREATE_PAYMENT_FAILED, payload: err})
+            })
+    }
+}
+
+export const getSalaries = () => {
+    return dispatch => {
+        dispatch({type: LIST_SALARIES_REQUEST})
+        Axios.get(apiUrl + '/salaries')
+            .then(res  => {
+                dispatch({type: LIST_SALARIES_SUCCESS, payload: res.data.data})
+            })
+            .catch(err => console.log(err))
     }
 }
 
@@ -67,15 +161,34 @@ const initialState = {
     employies: [],
     ocupations: [],
     selected: [],
-    payment: []
+    salaries: [],
+    loading: false
 }
 
 export const employiesReducer = (state = initialState, { type, payload} ) => {
     switch (type) {
+        case LIST_EMPLOYIES_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case LIST_EMPLOYIES_SUCCESS:
+            return {
+                ...state,
+                employies: payload,
+                loading: false
+            }
         case CREATE_EMPLOYEE_SUCCESS:
             return {
                 ...state,
                 employies: [...state.employies, payload]
+            }
+        case LIST_OCUPATIONS_SUCCESS:
+            console.log(payload)
+            return {
+                ...state,
+                ocupations: payload,
+                loading: false
             }
         case CREATE_OCUPATION_SUCCESS:
             return {
@@ -83,10 +196,9 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
                 ocupations: [...state.ocupations, payload]
             }
         case DELETE_EMPLOYEE_SUCCESS:
-            const users = payload.map(u => u.id)
             return {
                 ...state,
-                employies: state.employies.filter(x => !users.includes(x.id)),
+                employies: state.employies.filter(x => !payload.includes(x.id)),
                 selected: initialState.selected
             }
         case UPDATE_EMPLOYEE_SUCCESS:
@@ -105,10 +217,15 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
                 ...state,
                 selected: [...state.selected.filter(x => x.id !== payload.id)]
             }
-        case CREATE_PAYMENT:
+        case CREATE_PAYMENT_SUCCESS:
             return {
                 ...state,
-                payment: [...state.payment, payload]
+                salaries: [...state.salaries, payload]
+            }
+        case LIST_SALARIES_SUCCESS:
+            return {
+                ...state,
+                salaries: payload
             }
         default:
             return state

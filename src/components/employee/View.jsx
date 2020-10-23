@@ -5,6 +5,7 @@ import EmployeeForm from './Forms/EmployeeForm';
 import OcupationForm from './Forms/OcupationForm';
 import DeleteUser from './removeUsers';
 import SearchData from '../SearchData';
+import OcupationList from './OcupationList';
 
 const EmployeeView = () => {
 
@@ -13,6 +14,9 @@ const EmployeeView = () => {
     return (
         <Container fluid>
             <Row>
+                <Col sm lg={12}>
+                    <h3 className='text-center my-3'>REGISTRO PAGO EMPLEADOS</h3>
+                </Col>
                 <Col sm lg={2}>
                     <ButtonGroup>
                         <EmployeeForm isModal={true} editing={false} />
@@ -21,9 +25,12 @@ const EmployeeView = () => {
                     </ButtonGroup>
                 </Col>
                 <Col sm lg={2}>
-                    <OcupationForm isModal={true} />
+                    <ButtonGroup>
+                        <OcupationForm isModal={true} />
+                        <OcupationList />
+                    </ButtonGroup>
                 </Col>
-                <Col sm lg={3} className='my-2'>
+                <Col sm lg={4} className='my-2'>
                     <SearchData criteria={criteria} setCriteria={setCriteria}  />
                 </Col>
                 <Col sm lg={12}>

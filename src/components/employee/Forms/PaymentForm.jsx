@@ -7,7 +7,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
 
     const [month, setMonth] = useState('')
     const [concept, setConcept] = useState('')
-    const [amount, setAmount] = useState('')
+    const [amount, setAmount] = useState()
     const [currency, setCurrency] = useState('')
     const [date, setDate] = useState('')
     const [method, setMethod] = useState('')
@@ -18,9 +18,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     const [valid, setValid] = useState(false)
     const [days, setDays] = useState(0)
 
-    const [count, setCount] = useState()
-    const id = count + 1
-    const completeName = user.firstName.toUpperCase()+' '+user.secondName.toUpperCase()+' '+user.lastName.toUpperCase()+' '+user.secondSurname.toUpperCase()
+    const completeName = user.firstname.toUpperCase() +' '+ user.secondname.toUpperCase() +' '+ user.lastname.toUpperCase() +' '+ user.secondsurname.toUpperCase()
 
     const handlerDays = (id) => {
         setMonth(id)
@@ -43,13 +41,15 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
         if(form.checkValidity() === false) {
             e.stopPropagation()
         } else {
-            setCount(id)
-            let newPayment = { id: count, user_id: user.id, concept, amount, date, currency, method, bank, reference, period: month+'-'+year }
+            let newPayment = { user_id: user.id, concept, amount, date, currency, method, bank, reference, period: month+'-'+year }
             createPayment(newPayment)
             setConcept('')
             setAmount('')
             setCurrency('')
             setDate('')
+            setReference('')
+            setBank('')
+            setMethod('')
             setShow(false)
         }
         setValid(true)
@@ -74,7 +74,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label>FECHA DE PAGO</Form.Label>
-                    <Form.Control required type='date' value={date} min={`${year}-${month}-01`} max={`${year}-${month}-${days}`} onChange={({target}) => setDate(target.value)} disabled={month ? false : true} pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' />
+                    <Form.Control required type='date' value={date} min={`${year}-${month}-01`} max={`${year}-${month}-${days}`} onChange={({target}) => setDate(target.value)} disabled={month ? false : true} />
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -93,7 +93,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label>MONTO</Form.Label>
-                    <Form.Control required type='number' value={amount} onChange={({target}) => setAmount(target.value)} />
+                    <Form.Control required type='number' value={amount} onChange={({target}) => setAmount(target.valueAsNumber)} />
                 </Form.Group>
                 <Form.Group as={Col} sm lg={1}>
                     <Form.Label>MONEDA</Form.Label>
@@ -123,7 +123,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label># DE REFERENCIA</Form.Label>
-                        <Form.Control required={method === 'transferencia' ? true : false} type='text' value={reference} placeholder='Numero de referencia' onChange={({target}) => setReference(target.value)} />
+                        <Form.Control required={method === 'transferencia' ? true : false} type='number' value={reference} placeholder='Numero de referencia' onChange={({target}) => setReference(target.valueAsNumber)} />
                     </Form.Group>
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Row>

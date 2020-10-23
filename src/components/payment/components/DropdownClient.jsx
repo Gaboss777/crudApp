@@ -2,25 +2,24 @@
 import React, { useEffect, useState } from 'react';
 import { InputGroup, Col, Row, Badge, Card } from 'react-bootstrap'; 
 import { connect } from 'react-redux';
-import { getClient } from '../../../ducks/payment';
+import { getClient, getPayments } from '../../../ducks/payment';
 import { getUserList } from '../../../ducks/users';
 import { Typeahead } from 'react-bootstrap-typeahead';
 
-const DropdownClient = ({list, getClient, getUsers, client}) => {
+const DropdownClient = ({list, getClient, getUsers, client, payments, getPayments}) => {
     const [selection] = useState('')
 
     useEffect(() => {
         getUsers()
+        getPayments()
         if(client) {
-            handleClientSelection(selection)
+            handlerSelection(selection)
         }
     }, [])
 
-    const handleClientSelection =(selected)=>{
-           getClient(selected)
+    const handlerSelection = (selection) => {
+        getClient(selection)
     }
-
-    console.log(client)
 
     return (
     <Row>
@@ -29,7 +28,7 @@ const DropdownClient = ({list, getClient, getUsers, client}) => {
                 <InputGroup.Prepend className='bg-warning rounded-left text-uppercase' >
                     <InputGroup.Text className='text-white px-2 font-weight-bold' >CLIENTE</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Typeahead id='client-list' defaultSelected={selection} labelKey='name' options={list} onChange={( selected )=>handleClientSelection(selected)} placeholder='Elija un cliente... ' clearButton />
+                <Typeahead id='client-list' defaultSelected={selection} labelKey='name' options={list} onChange={( selected )=>handlerSelection(selected)} placeholder='Elija un cliente... ' clearButton />
             </InputGroup>
         </Col>
         { client &&
@@ -64,7 +63,8 @@ const MSTP = state => (
 const MDTP = dispatch => (
     {
         getClient: (client) => dispatch(getClient(client)),
-        getUsers: () => dispatch(getUserList())
+        getUsers: () => dispatch(getUserList()),
+        getPayments: (client) => dispatch(getPayments(client))
     }
 )
 
