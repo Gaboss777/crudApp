@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { Button, Modal, Table } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import {toast} from 'react-toastify'
+import DeleteAlert from '../Alerts/DeleteAlert'
 
-const OcupationList = ({ocupations}) => {
+const OcupationList = ({ocupations, removeOcupation}) => {
 
     const [show, setShow] = useState(false)
+
+    const handleDelete = (data) => {
+        toast(<DeleteAlert action={() => removeOcupation(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
+    }
 
     return(
         <>
@@ -17,19 +22,17 @@ const OcupationList = ({ocupations}) => {
                     <Table>
                         <thead className='bg-primary text-white text-center'>
                             <tr>
-                                <th>ID</th>
                                 <th>CARGO</th>
-                                <th>AREA</th>
                                 <th>GERENCIA</th>
+                                <th>ACCION</th>
                             </tr>
                         </thead>
                         <tbody>
                         {ocupations.map(ocu =>
                             <tr className='text-center'>
-                                <td>{ocu.id}</td>
                                 <td>{ocu.name}</td>
-                                <td>{ocu.area}</td>
                                 <td>{ocu.gerency}</td>
+                                <td><Button variant='danger' size='sm' onClick={() => handleDelete(ocu.id)} >Eliminar</Button> </td>
                             </tr>
                         )}
                         </tbody>
@@ -40,10 +43,4 @@ const OcupationList = ({ocupations}) => {
     )
 }
 
-const MSTP = state => (
-    {
-        ocupations: state.rrhh.ocupations
-    }
-)
-
-export default connect(MSTP, null)(OcupationList)
+export default OcupationList

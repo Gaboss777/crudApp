@@ -6,6 +6,7 @@ const PAYMENT_LIST = 'PAYMENT_LIST';
 const CREATE_PAYMENT = "CREATE_PAYMENT";
 const FILE_UPLOAD = "FILE_UPLOAD";
 const FILES_LIST = "FILES_LIST";
+const PAYMENT_REMOVE = "PAYMENT_REMOVE"
 
 export const getClient = (user) => {
     let u = user[0];
@@ -33,7 +34,9 @@ export const createPayment = (data) => {
     return dispatch => {
         Axios.post(apiUrl+'/payments',data)
         .then(res=>{
-            dispatch({ type: CREATE_PAYMENT, payload: res.data.data })
+            dispatch({ type: CREATE_PAYMENT, payload: data })
+            console.log(res.data.data)
+            console.log(data)
         })
         .catch(err=>{
             console.log(err)
@@ -56,6 +59,16 @@ export const getFiles = () => {
         Axios.get(apiUrl + '/files')
             .then(res => {
                 dispatch({type: FILES_LIST, payload: res.data.data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const removePayment = (id) => {
+    return dispatch => {
+        Axios.delete(apiUrl + `/payments/${id}`)
+            .then(res => {
+                dispatch({type: PAYMENT_REMOVE, payload: id})
             })
             .catch(err => console.log(err))
     }
@@ -93,6 +106,11 @@ export const paymentReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 files: payload
+            }
+        case PAYMENT_REMOVE:
+            return {
+                ...state,
+                payments: state.payments.filter(p => p.id !== payload)
             }
         default:
             return state

@@ -1,10 +1,9 @@
 import React, { useState, Fragment } from 'react'
 import { Button, Form, Row, Modal, Col } from 'react-bootstrap'
-import { createProvider } from '../../ducks/provider'
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { connect } from 'react-redux';
+import Alerts from '../Alerts/alerts'
 
 const NewProvider = ({isModal, createProvider}) => {
 
@@ -22,6 +21,7 @@ const NewProvider = ({isModal, createProvider}) => {
         } else {
             let newProvider = {name, service}
             createProvider(newProvider)
+            Alerts.InfoNotify('PROVEEDOR CREADO CON EXITO')
             setName('')
             setService('')
             setShowModal(false)
@@ -34,15 +34,16 @@ const NewProvider = ({isModal, createProvider}) => {
             <Form.Group>
                 <Form.Label>NOMBRE: </Form.Label>
                 <Form.Control required type='text' value={name} placeholder='Indique nombre...' onChange={({target}) => setName(target.value)} />
+                <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group>
                 <Form.Label>SERVICIO: </Form.Label>
-                <Form.Control required type='text' value={service} placeholder='Indique Servicio' onChange={({target}) => setService(target.value)} />
+                <Form.Control type='text' value={service} placeholder='Indique Servicio' onChange={({target}) => setService(target.value)} />
             </Form.Group>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' size='sm' variant='success' className='mr-2'>Crear</Button>
-                    <Button type='submit' size='sm' variant='danger' onClick={() => setShowModal(false)}>Cancelar</Button>
+                    <Button type='submit' variant='success' className='mr-2'>Crear</Button>
+                    <Button type='submit' variant='danger' onClick={() => setShowModal(false)}>Cancelar</Button>
                 </Col>
             </Row>
         </Form>
@@ -51,7 +52,7 @@ const NewProvider = ({isModal, createProvider}) => {
     if(isModal) {
         return(
             <Fragment>
-                <Button variant='primary' onClick={() => setShowModal(true)} className='mb-3'  ><FontAwesomeIcon icon={faPlus} /></Button>
+                <Button variant='primary' onClick={() => setShowModal(true)} className='my-2'  ><FontAwesomeIcon icon={faPlusSquare} size='lg' /></Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered size='sm'  >
                     <Modal.Header closeButton className='bg-primary border border-primary' >
                         <Modal.Title className='text-center w-100 text-white' >Crear Proveedor</Modal.Title>
@@ -65,10 +66,4 @@ const NewProvider = ({isModal, createProvider}) => {
     } else return providerForm
 }
 
-const MDTP = dispatch => (
-    {
-        createProvider: (data) => dispatch(createProvider(data))
-    }
-)
-
-export default connect(null, MDTP)(NewProvider)
+export default NewProvider

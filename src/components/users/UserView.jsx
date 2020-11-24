@@ -11,7 +11,7 @@ const UserInfo = ({ user, selection }) => {
 
     return(
         <Fragment>
-            <Button disabled={selection.length !== 1 ? true : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faInfoCircle} size='lg' /></Button>
+            <Button disabled={selection.length !== 1 ? true : false} variant='dark' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faInfoCircle} size='lg' /></Button>
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size='lg'  >
             { user &&
             <Fragment>

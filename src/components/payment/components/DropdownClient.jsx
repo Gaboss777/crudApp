@@ -1,12 +1,10 @@
 //import librerias
 import React, { useEffect, useState } from 'react';
-import { InputGroup, Col, Row, Badge, Card } from 'react-bootstrap'; 
-import { connect } from 'react-redux';
-import { getClient, getPayments } from '../../../ducks/payment';
-import { getUserList } from '../../../ducks/users';
+import { InputGroup, Col, Row, Badge, Card } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import SelectionYear from '../../SelectionYear';
 
-const DropdownClient = ({list, getClient, getUsers, client, payments, getPayments}) => {
+const DropdownClient = ({list, getClient, getUsers, client, getPayments}) => {
     const [selection] = useState('')
 
     useEffect(() => {
@@ -23,7 +21,7 @@ const DropdownClient = ({list, getClient, getUsers, client, payments, getPayment
 
     return (
     <Row>
-        <Col sm lg={4} className='pt-2 pb-3 pl-1'>
+        <Col sm lg={4}>
             <InputGroup>
                 <InputGroup.Prepend className='bg-warning rounded-left text-uppercase' >
                     <InputGroup.Text className='text-white px-2 font-weight-bold' >CLIENTE</InputGroup.Text>
@@ -32,40 +30,30 @@ const DropdownClient = ({list, getClient, getUsers, client, payments, getPayment
             </InputGroup>
         </Col>
         { client &&
-        <Col sm lg={4}>
-            <Card className='shadow-none' border='dark'>
-                <Card.Header className='pb-0'>
-                    <Row className='justify-content-center'>
-                        <Col sm lg={4}>
-                            <p className='mb-1 font-weight-bold'>SERVICIO: </p>
-                            <p>{client.service}</p>
-                        </Col>
-                        <Col sm lg={8}>
-                            <p className='mb-1'><span className='font-weight-bold mr-1'>STATUS: </span><Badge variant={client.status === 'Activo' ? 'success' : client.status === 'Suspendido' ? 'warning' : 'danger'} className='text-uppercase'>{client.status}</Badge></p>
-                            <p className='mb-1'><span className='font-weight-bold mr-1'>MENSUALIDAD: </span> {client.mensuality}</p>
-                        </Col>
-                    </Row>
-                </Card.Header>
-            </Card>
-        </Col>
+        <>
+            <Col sm lg={2} className='my-2'>
+                <SelectionYear />
+            </Col>
+            <Col sm lg={4}>
+                <Card className='shadow-none my-1' border='dark'>
+                    <Card.Header className='pt-1'>
+                        <Row className='justify-content-center'>
+                            <Col sm lg={4}>
+                                <p className='mb-1 font-weight-bold'>SERVICIO: </p>
+                                <p className='mb-0'>{client.service}</p>
+                            </Col>
+                            <Col sm lg={8}>
+                                <p className='mb-1'><span className='font-weight-bold mr-1'>STATUS: </span><Badge variant={client.status === 'Activo' ? 'success' : client.status === 'Suspendido' ? 'warning' : 'danger'} className='text-uppercase'>{client.status}</Badge></p>
+                                <p className='mb-0'><span className='font-weight-bold mr-1'>MENSUALIDAD: </span> {client.mensuality}</p>
+                            </Col>
+                        </Row>
+                    </Card.Header>
+                </Card>
+            </Col>
+        </>
         }
     </Row>
     )
 }
 
-const MSTP = state => (
-    {
-        list: state.users.list,
-        client: state.payment.client
-    }
-)
-
-const MDTP = dispatch => (
-    {
-        getClient: (client) => dispatch(getClient(client)),
-        getUsers: () => dispatch(getUserList()),
-        getPayments: (client) => dispatch(getPayments(client))
-    }
-)
-
-export default connect(MSTP, MDTP)(DropdownClient);
+export default DropdownClient;

@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import { Button, Modal, Tab, Table, Tabs, Row, Col } from 'react-bootstrap'
-import { connect } from 'react-redux';
+import { Button, Modal, Tab, Table, Tabs, Row, Col } from 'react-bootstrap';
 import SelectionYear from '../SelectionYear';
 import PaymentForm from './Forms/PaymentForm';
 import moment from 'moment';
+import { toast } from 'react-toastify';
+import DeleteAlert from '../Alerts/DeleteAlert'
 
-const InfoPayment = ({user, salaries, year }) => {
+const InfoPayment = ({user, salaries, year, removeSalaries, createPayment }) => {
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
 
@@ -15,20 +16,24 @@ const InfoPayment = ({user, salaries, year }) => {
 
     const completeName = user.firstname.toUpperCase()+' '+user.secondname.toUpperCase()+' '+user.lastname.toUpperCase()+' '+user.secondsurname.toUpperCase()
 
+    const handleDelete = (data) => {
+        toast(<DeleteAlert action={() => removeSalaries(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
+    }
+
     return (
     <>
         <Button variant='dark' onClick={() => setShow(true)} size='sm' >Ver Pagos</Button>
-        <Modal show={show} size='lg' onHide={() => setShow(false)} centered dialogClassName='modal-xlg'>
+        <Modal show={show} size='lg' onHide={() => setShow(false)} dialogClassName='modal-xlg'>
             <Modal.Header closeButton className='bg-dark'>
                 <Modal.Title className='text-center w-100 text-white' >PAGOS DE {completeName}</Modal.Title>
             </Modal.Header>
-            <Modal.Body className='m-body'>
+            <Modal.Body>
                 <Row>
                     <Col sm lg='2'>
                         <SelectionYear />
                     </Col>
                     <Col sm lg={2}>
-                        <PaymentForm isModal={true} user={user} year={year} months={months} />
+                        <PaymentForm isModal={true} user={user} year={year} months={months} createPayment={createPayment} />
                     </Col>
                 </Row>
                 <Tabs activeKey={key} onSelect={(k) => setKey(k)} className='nav-fill mt-2 tab-payment border-bottom border-dark' >
@@ -44,6 +49,7 @@ const InfoPayment = ({user, salaries, year }) => {
                                     <th>METODO</th>
                                     <th>BANCO</th>
                                     <th>REFERENCIA</th>
+                                    <th>ACCION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +64,11 @@ const InfoPayment = ({user, salaries, year }) => {
                                         <td>{s.method}</td>
                                         <td>{s.bank}</td>
                                         <td>{s.reference}</td>
+                                        <td><Button variant='danger' size='sm' onClick={() => handleDelete(s.id)} >Eliminar</Button> </td>
                                     </tr>
                                 )}
                             </>
-                                : <tr><td colSpan={7} className='text-center'>NO HAY PAGOS REALIZADOS</td></tr>
+                                : <tr><td colSpan={8} className='text-center'>NO HAY PAGOS REALIZADOS</td></tr>
                             }
                             </tbody>
                         </Table>
@@ -74,11 +81,5 @@ const InfoPayment = ({user, salaries, year }) => {
     )
 }
 
-const MSTP = state => (
-    {
-        salaries: state.rrhh.salaries,
-        year: state.dates.year
-    }
-)
 
-export default connect(MSTP, null)(InfoPayment)
+export default InfoPayment

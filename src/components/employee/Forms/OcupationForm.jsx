@@ -4,11 +4,11 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createOcupation } from '../../../ducks/rrhh';
 import { connect } from 'react-redux';
+import Alerts from '../../Alerts/alerts';
 
 const OcupationForm = ({isModal, createOcupation}) => {
 
     const [name, setName] = useState('')
-    const [area, setArea] = useState('')
     const [gerency, setGerency] = useState('')
 
     const [showModal, setShowModal] = useState('')
@@ -21,10 +21,10 @@ const OcupationForm = ({isModal, createOcupation}) => {
         if ( form.checkValidity() === false) {
             e.stopPropagation()
         } else {
-            let newOcupation = {name, area, gerency}
+            let newOcupation = {name, gerency}
             createOcupation(newOcupation)
+            Alerts.InfoNotify("CARGO CREADO")
             setName('')
-            setArea('')
             setGerency('')
             setShowModal(false)
         }
@@ -34,24 +34,14 @@ const OcupationForm = ({isModal, createOcupation}) => {
 
     const formOcupation = (
         <Form onSubmit={onSubmitOcupation} noValidate validated={valid}>
-            <Form.Group as={Row}>
-                <Form.Label required column sm lg={3}>Cargo</Form.Label>
-                <Col sm lg={7}>
+            <Form.Group>
+                <Form.Label>Cargo</Form.Label>
                     <Form.Control type='text' value={name} placeholder='Indique cargo...' onChange={({target}) => setName(target.value)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Col>
             </Form.Group>
-            <Form.Group as={Row}>
-                <Form.Label column sm lg={3}>Departamento</Form.Label>
-                <Col sm lg={7}>
-                    <Form.Control type='text' value={area} placeholder='Indique area..' onChange={({target}) => setArea(target.value)} />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-                <Form.Label column sm lg={3}>Gerencia</Form.Label>
-                <Col sm lg={7}>
+            <Form.Group>
+                <Form.Label>Gerencia</Form.Label>
                     <Form.Control type='text' value={gerency} placeholder='Indique nivel del cargo..' onChange={({target}) => setGerency(target.value)} />
-                </Col>
             </Form.Group>
             <Row>
                 <Col className='text-center'>
@@ -65,14 +55,14 @@ const OcupationForm = ({isModal, createOcupation}) => {
         return (
             <Fragment>
                 <Button variant='primary' onClick={() => setShowModal(true)} className='my-2' ><FontAwesomeIcon icon={faPlusSquare} size='lg' /></Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} >
-                <Modal.Header closeButton className='bg-primary' >
-                    <Modal.Title className='text-center w-100 text-white' >CREAR CARGO</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {formOcupation}
-                </Modal.Body>
-            </Modal>
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} size='sm' >
+                    <Modal.Header closeButton className='bg-primary' >
+                        <Modal.Title className='text-center w-100 text-white' >CREAR CARGO</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {formOcupation}
+                    </Modal.Body>
+                </Modal>
             </Fragment>
             )
     } else return formOcupation

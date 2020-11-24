@@ -2,12 +2,10 @@ import { faUserPlus, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { createEmployee, getOcupationsList, updateEmployee } from '../../../ducks/rrhh';
 import Alerts from '../../Alerts/alerts';
 import moment from 'moment';
 
-const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, selection, updateEmployee, getOcupationsList }) => {
+const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, selection, updateEmployee }) => {
 
     const [firstname, setFirstname] = useState('')
     const [secondname, setSecondname] = useState('')
@@ -24,7 +22,6 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
     const [valid, setValid] = useState(false)
 
     useEffect(() => {
-        getOcupationsList()
         if (user && editing) {
             setFirstname(user.firstname)
             setSecondname(user.secondname)
@@ -115,7 +112,7 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
                     <Col sm lg={6}><Form.Label>Fecha de Egreso:</Form.Label></Col>
                     <Col sm lg={6}><Form.Check className='w-50' type='checkbox' label='Actualmente' name='checkForm' id='checkForm1' onChange={handleCheck} /></Col>
                 </Row>
-                <Form.Control type='date' value={lastdate} onChange={({target}) => setLastdate(target.value)} disabled={check ? true : false} />
+                <Form.Control type='date' value={lastdate} onChange={({target}) => setLastdate(target.value)} disabled={check ? true : false} className={check ? 'form-disable' : ''} />
             </Form.Group>
         </Form.Row>
         <Form.Row>
@@ -161,20 +158,4 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
     } else return formEmploye
 }
 
-const MSTP = state => (
-    {
-        user: state.rrhh.selected[0],
-        selection: state.rrhh.selected,
-        ocupations: state.rrhh.ocupations
-    }
-)
-
-const MDTP = dispatch => (
-    {
-        createEmployee: (data) => dispatch(createEmployee(data)),
-        updateEmployee: (data) => dispatch(updateEmployee(data)),
-        getOcupationsList: () => dispatch(getOcupationsList())
-    }
-)
-
-export default connect(MSTP, MDTP)(EmployeeForm)
+export default EmployeeForm

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import Logo from '../img/LOGO.png';
+import Logo from '../img/LOGO 2.png';
 import { Link } from 'react-router-dom';
 
 const MainMenu =()=> {

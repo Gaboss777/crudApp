@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
 import { Badge, FormCheck, Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { getEmployies, getSalaries, selectRow } from '../../ducks/rrhh';
 import InfoPayment from './InfoPayment';
 import moment from 'moment'
 
-const EmployeeList = ({employies, selectRow, selected, criteria, getEmployies, getSalaries}) => {
+const EmployeeList = ({employies, selectRow, selected, criteria, salaries, removeSalaries, year, createPayment}) => {
 
     const userDefault = { id: '0'}
     useEffect(() => {
-        getEmployies()
-        getSalaries()
         if(selected.length > 0) {
             selectRow(false, userDefault )
         }
@@ -21,7 +17,7 @@ const EmployeeList = ({employies, selectRow, selected, criteria, getEmployies, g
         let result = [];
         if (criteria) {
             result =
-                employies.filter(user => user.firstname.toLowerCase().includes(criteria.toLowerCase()) || user.secondname.toLowerCase().includes(c) || user.lastname.toLowerCase().includes(c) || user.secondsurname.toLowerCase().includes(c) || user.document.toLowerCase().includes(c) || user.occupation.toLowerCase().includes(c))
+                employies.filter(user => user.firstname.toLowerCase().includes(c) || user.secondname.toLowerCase().includes(c) || user.lastname.toLowerCase().includes(c) || user.secondsurname.toLowerCase().includes(c) || user.document.toString().includes(c) || user.occupation.toLowerCase().includes(c))
         }
         else{
             result=employies
@@ -53,13 +49,13 @@ const EmployeeList = ({employies, selectRow, selected, criteria, getEmployies, g
                         <td><FormCheck type='checkbox' checked={selected.find(x => x.id === e.id)} onChange={({ target }) => selectRow(target.checked, e)} id={'select_row_' + e.id} /> </td>
                         <td>{e.firstname} {e.secondname}</td>
                         <td>{e.lastname} {e.secondsurname}</td>
-                        <td>{e.document}</td>
+                        <td>{e.document.toString()}</td>
                         <td>{e.ocupation_id}</td>
                         <td>{moment(e.initialdate, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                         <td>{e.lastdate ? moment(e.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD') : 'ACTUALMENTE'}</td>
                         <td><Badge variant={!e.lastdate ? 'success' : 'danger'}>{!e.lastdate ? 'ACTIVO' : 'DESPEDIDO'}</Badge></td>
                         <td>
-                            <InfoPayment user={e}/>
+                            <InfoPayment user={e} salaries={salaries} year={year} removeSalaries={removeSalaries} createPayment={createPayment} />
                         </td>
                     </tr>
             )}
@@ -70,19 +66,4 @@ const EmployeeList = ({employies, selectRow, selected, criteria, getEmployies, g
     )
 }
 
-const MSTP = state => (
-    {
-        employies: state.rrhh.employies,
-        selected: state.rrhh.selected
-    }
-)
-
-const MDTP = dispatch => (
-    {
-        selectRow: (e, data) => dispatch(selectRow(e, data)),
-        getEmployies: () => dispatch(getEmployies()),
-        getSalaries: () => dispatch(getSalaries())
-    }
-)
-
-export default connect(MSTP,MDTP)(EmployeeList)
+export default EmployeeList

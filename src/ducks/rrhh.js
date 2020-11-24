@@ -32,6 +32,9 @@ const CREATE_PAYMENT_FAILED = 'CREATE_PAYMENT_FAILED'
 const LIST_SALARIES_REQUEST ='LIST_SALARIES_REQUEST'
 const LIST_SALARIES_SUCCESS ='LIST_SALARIES_SUCCESS'
 
+const DELETE_SALARIES = 'DELETE_SALARIES'
+const DELETE_OCUPATION = 'DELETE_OCUPATION'
+
 const CHECKED = 'CHECKED'
 const UNCHECKED = 'UNCHECKED'
 
@@ -144,6 +147,26 @@ export const getSalaries = () => {
     }
 }
 
+export const removeSalaries = (id) => {
+    return dispatch => {
+        Axios.delete(apiUrl + `/salaries/${id}`)
+            .then(res => {
+                dispatch({type: DELETE_SALARIES, payload: id})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const removeOcupation = (id) => {
+    return dispatch => {
+        Axios.delete(apiUrl + `/occupations/${id}`)
+            .then(res => {
+                dispatch({type: DELETE_OCUPATION, payload: id})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
 export const selectRow = (e, user) => {
     if (e) {
         return dispatch => {
@@ -226,6 +249,16 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
             return {
                 ...state,
                 salaries: payload
+            }
+        case DELETE_SALARIES:
+            return {
+                ...state,
+                salaries: state.salaries.filter(s => s.id !== payload)
+            }
+        case DELETE_OCUPATION:
+            return {
+                ...state,
+                ocupations: state.ocupations.filter(o => o.id !== payload)
             }
         default:
             return state

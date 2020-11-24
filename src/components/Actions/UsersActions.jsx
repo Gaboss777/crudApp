@@ -12,8 +12,8 @@ const UsersActions = ({ userSelected,criteria,setCriteria }) => {
             <Row>
                 <Col sm lg={2}>
                 <ButtonGroup className='mb-2' >
-                    <UserForm btnText='Crear Nuevo Usuario' asModal={true} editing={false} />
-                    <UserForm btnText='Guardar Cambios' asModal={true} editing={true} />
+                    <UserForm asModal={true} editing={false} />
+                    <UserForm asModal={true} editing={true} />
                     <DeleteUser />
                     <UserInfo editing={false} />
                 </ButtonGroup>

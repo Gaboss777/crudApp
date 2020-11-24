@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Alerts from '../Alerts/alerts';
 
 
-const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, selection }) => {
+const UserForm = ({ createUser, user, updateUser, asModal, editing, selection }) => {
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState(user ? user.name : "")
     const [document, setDocument] = useState(user ? user.document : "")
@@ -212,7 +212,8 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
             }
             <Row className='text-center'>
                 <Col>
-                    <Button variant='success' type='submit' >{btnText}</Button>
+                    <Button variant='success' type='submit' className='mr-2' >{editing ? 'Actualizar' : 'Crear'}</Button>
+                    <Button variant='danger' onClick={() => setShowModal(false)}>Cancelar</Button>
                 </Col>
             </Row>
         </Form>
@@ -222,9 +223,9 @@ const UserForm = ({ btnText, createUser, user, updateUser, asModal, editing, sel
     if (asModal) {
         return (
             <Fragment>
-                <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
+                <Button disabled={editing ? selection.length !== 1 : false} variant={editing ? 'primary' : 'warning'} onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} >
-                    <Modal.Header closeButton className='bg-warning' >
+                    <Modal.Header closeButton className={editing ? 'bg-primary' : 'bg-warning'} >
                         <Modal.Title className='text-center w-100 text-white' >{editing ? 'Editar Usuario' : 'Agregar Usuario'}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { createPayment } from '../../../ducks/rrhh'
+import Alerts from '../../Alerts/alerts'
 
 const PaymentForm = ({months, user, isModal, createPayment, year }) => {
 
@@ -43,6 +42,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
         } else {
             let newPayment = { user_id: user.id, concept, amount, date, currency, method, bank, reference, period: month+'-'+year }
             createPayment(newPayment)
+            Alerts.InfoNotify('PAGO CREADO CON EXITO')
             setConcept('')
             setAmount('')
             setCurrency('')
@@ -60,7 +60,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
             <Form.Row>
                 <Form.Group as={Col} sm lg={6}>
                     <Form.Label>EMPLEADO</Form.Label>
-                    <Form.Control type='text' value={completeName} readOnly plaintext className='client-payment' />
+                    <Form.Control type='text' value={completeName} readOnly plaintext className='form-disable' />
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label>MES</Form.Label>
@@ -75,10 +75,11 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label>FECHA DE PAGO</Form.Label>
                     <Form.Control required type='date' value={date} min={`${year}-${month}-01`} max={`${year}-${month}-${days}`} onChange={({target}) => setDate(target.value)} disabled={month ? false : true} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col} sm lg={4}>
+                <Form.Group as={Col} sm lg={3}>
                     <Form.Label>CONCEPTO</Form.Label>
                     <Form.Control required as='select' value={concept} onChange={({target}) => setConcept(target.value)}>
                         <option value='' selected disabled>Elija una opcion</option>
@@ -94,40 +95,44 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label>MONTO</Form.Label>
                     <Form.Control required type='number' value={amount} onChange={({target}) => setAmount(target.valueAsNumber)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} sm lg={1}>
+                <Form.Group as={Col} sm lg={2}>
                     <Form.Label>MONEDA</Form.Label>
                     <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
                     <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
+                    <Form.Text className='text-muted mt-3'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={4}>
                     <Form.Label>METODO</Form.Label>
                     <Form.Control required as='select' value={method} onChange={({target}) => setMethod(target.value)} >
                         <option value='' selected disabled>Elija una opcion</option>
                         <option value='efectivo'>Efectivo</option>
-                        <option value='transferencia'>Transferencia Bancaria</option>
+                        <option value='Transferencia Bancaria'>Transferencia Bancaria</option>
                         <option value='zelle'>Zelle</option>
                     </Form.Control>
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
-            { method === 'transferencia' &&
-                <Form.Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>BANCO</Form.Label>
-                        <Form.Control required={method === 'transferencia' ? true : false} as='select' value={bank} onChange={({target}) => setBank(target.value)} >
-                            <option value='' selected disabled>Elija una opcion</option>
-                            <option value='BNC'>BNC - Banco Nacional de Cretido</option>
-                        </Form.Control>
+            <Form.Row>
+                <Form.Group as={Col}>
+                    <Form.Label>BANCO</Form.Label>
+                    <Form.Control required as='select' value={bank} onChange={({target}) => setBank(target.value)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } >
+                        <option value='' selected disabled>Elija una opcion</option>
+                        <option value='BNC'>BNC - Banco Nacional de Cretido</option>
+                    </Form.Control>
+                    { method === 'Transferencia Bancaria' && 
                         <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label># DE REFERENCIA</Form.Label>
-                        <Form.Control required={method === 'transferencia' ? true : false} type='number' value={reference} placeholder='Numero de referencia' onChange={({target}) => setReference(target.valueAsNumber)} />
-                    </Form.Group>
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Form.Row>
-            }
+                    }
+                </Form.Group>
+                <Form.Group as={Col}>
+                    <Form.Label># DE REFERENCIA</Form.Label>
+                    <Form.Control required type='number' value={reference} placeholder='Numero de referencia' onChange={({target}) => setReference(target.valueAsNumber)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } />
+                    { method === 'Transferencia Bancaria' && 
+                        <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
+                    }
+                </Form.Group>
+            </Form.Row>
             <Row>
                 <Col className='text-center'>
                     <Button variant='success' type='submit' className='mr-2' >Crear Pago</Button>
@@ -154,10 +159,4 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     } else return formjsx
 }
 
-const MDTP = dispatch => (
-    {
-        createPayment: (data) => dispatch(createPayment(data))
-    }
-)
-
-export default connect(null, MDTP)(PaymentForm)
+export default PaymentForm

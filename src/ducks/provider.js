@@ -21,6 +21,9 @@ const PROVIDER_BILLS_REQUEST = 'PROVIDER_BILLS_REQUEST'
 const PROVIDER_BILLS_SUCCESS = 'PROVIDER_BILLS_SUCCESS'
 const PROVIDER_BILLS_FAILED = 'PROVIDER_BILLS_FAILED'
 
+const BILLS_REMOVE_SUCCESS = 'BILLS_REMOVE_SUCCES'
+const PROVIDER_REMOVE_SUCCESS = 'PROVIDER_REMOVE_SUCESS'
+
 export const createProvider = (data) => {
     return dispatch => {
         dispatch({type: CREATE_PROVIDER_REQUEST })
@@ -76,13 +79,35 @@ export const getBills = () => {
 export const getProviderBills =(data)=> {
     return dispatch => {
         dispatch({type: PROVIDER_BILLS_REQUEST})
-        Axios.get(apiUrl+`/provider/${data.provider_id}/bills`)
+        Axios.get(apiUrl+`/providers/${data.provider_id}/bills`)
             .then(res => {
                 dispatch({type: PROVIDER_BILLS_SUCCESS, payload: res.data})
             })
             .catch(err => {
                 dispatch({type: PROVIDER_BILLS_FAILED, payload: err})
             })
+    }
+}
+
+export const removeBills = (id) => {
+    console.log(id)
+    return dispatch => {
+        Axios.delete(apiUrl + `/bills/${id}`)
+            .then(res => {
+                dispatch({type: BILLS_REMOVE_SUCCESS, payload: id})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const removeProvider = (id) => {
+    console.log(id)
+    return dispatch => {
+        Axios.delete(apiUrl + `/providers/${id}`)
+            .then(res => {
+                dispatch({type: PROVIDER_REMOVE_SUCCESS, payload: id})
+            })
+            .catch(err => console.log(err))
     }
 }
 
@@ -120,6 +145,16 @@ export const providerReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 bills: state.bills.filter(x => x.provider_id === payload.provider_id)
+            }
+        case BILLS_REMOVE_SUCCESS:
+            return {
+                ...state,
+                bills: state.bills.filter(x => x.id !== payload)
+            }
+        case PROVIDER_REMOVE_SUCCESS:
+            return {
+                ...state,
+                providers: state.providers.filter(p => p.id !== payload)
             }
         default:
             return state

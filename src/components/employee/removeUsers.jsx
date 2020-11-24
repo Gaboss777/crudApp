@@ -2,12 +2,10 @@ import { faTrash, faExclamationTriangle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Button, Col, Modal, Row, Table, Container } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { deleteEmployee } from '../../ducks/rrhh';
 import Alerts from '../Alerts/alerts';
 import moment from 'moment';
 
-const DeleteUser = ({selection, deleteEmployees}) => {
+const DeleteEmployee = ({selection, deleteEmployees}) => {
 
     const [show, setShow] = useState(false)
 
@@ -70,16 +68,4 @@ const DeleteUser = ({selection, deleteEmployees}) => {
     )
 }
 
-const MSTP = state => (
-    {
-        selection: state.rrhh.selected
-    }
-)
-
-const MDTP = dispatch => (
-    {
-        deleteEmployees: (data) => dispatch(deleteEmployee(data))
-    }
-)
-
-export default connect(MSTP, MDTP)(DeleteUser)
+export default DeleteEmployee

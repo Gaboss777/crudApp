@@ -10,7 +10,7 @@ const Layout =({ children })=> {
                     { children }
                 </Col>
             </Row>
-            <ToastContainer position='top-center' autoClose={2000} hideProgressBar closeOnClick transition={Slide}  />
+            <ToastContainer autoClose={2000} position='top-center' hideProgressBar closeOnClick transition={Slide}  />
         </Container>
     )
 }

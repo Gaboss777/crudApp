@@ -1,17 +1,31 @@
-import React, { Fragment, useState } from 'react'
-import { Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Col, Container, Row, Nav } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-const SideBar = ({ path }) => {
+const SideBar = ({ data, path }) => {
     const [key, setKey] = useState()
+
     return (
-        <Fragment>
-            <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column sidebar-payment bg-warning border-right border-dark' >
-                <Nav.Link eventKey='1' as={Link} to={`${path}/client`} className='side-link'>Pago Clientes</Nav.Link>
-                <Nav.Link eventKey='2' as={Link} to={`${path}/provider`} className='side-link' >Pago Proveedores</Nav.Link>
-                <Nav.Link eventKey='3' as={Link} to={`${path}/employee`} className='side-link' >Pago Empleados</Nav.Link>
-            </Nav>
-        </Fragment>
+        <Router>
+            <Container fluid className='px-0' >
+                <Row>
+                    <Col sm lg='2'>
+                        <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column sidebar-payment bg-warning border-right border-dark' >
+                        {data.map(link =>
+                            <Nav.Link eventKey={link.id} as={Link} to={`${path}/${link.route}`} className='side-link'>{link.linkName}</Nav.Link>
+                        )}
+                        </Nav>
+                    </Col>
+                    <Col sm lg='10'>
+                        <Switch>
+                        {data.map(link => 
+                            <Route path={`${path}/${link.route}`} component={link.component} />
+                        )}
+                        </Switch>
+                    </Col>
+                </Row>
+            </Container>
+        </Router>
     )
 }
 

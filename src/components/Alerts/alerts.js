@@ -1,24 +1,29 @@
 import { toast } from 'react-toastify';
 
-const InfoNotify =(textAlert)=> {
-        toast.info(textAlert)
+const InfoNotify =(config)=> {
+        toast.info(config)
 }
 
-const EditNotify =(textAlert)=> {
-    toast.success(textAlert)
+const EditNotify =(config)=> {
+    toast.success(config)
 }
 
-const RemoveNotify =(textAlert)=> {
-    toast.error(textAlert)
+const RemoveNotify =(config)=> {
+    toast.error(config)
 }
 
-const NoFoundNotify =(textAlert)=> {
-    toast.warning(textAlert)
+const NoFoundNotify =(config)=> {
+    toast.warning(config)
+}
+
+const DefaultNotify =(config)=>{
+    toast(config)
 }
 
 export default {
     InfoNotify,
     EditNotify,
     RemoveNotify,
-    NoFoundNotify
+    NoFoundNotify,
+    DefaultNotify
 }

@@ -1,26 +1,23 @@
-
 import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Form, Button, Modal } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { createBill, createProvider } from '../../ducks/provider';
-import CreateProvider from './CreateProvider';
+import Alerts from '../Alerts/alerts'
 
 //crear componente
 const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
 
-    const [provider, setProvider] = useState()
-    const [billNumber, setBillNumber] = useState()
-    const [amount, setAmount] = useState()
+    const [provider, setProvider] = useState('')
+    const [billNumber, setBillNumber] = useState('')
+    const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const [date, setDate] = useState('')
     const [comment, setComment] = useState('')
-    const [currency, setCurrency] = useState()
+    const [currency, setCurrency] = useState('')
     const [bank, setBank] = useState("")
-    const [reference, setReference] = useState()
+    const [reference, setReference] = useState('')
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
-    const [days, setDays] = useState()
+    const [days, setDays] = useState('')
 
     useEffect(() => {
         if(month.id === '01' || month.id === '03' || month.id === '05' || month.id === '07' || month.id === '08' || month.id === '10' || month.id === '12' ) {
@@ -44,6 +41,7 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
         } else {
             let newBill = {provider_id: provider, billNumber, amount, currency, method, bank, reference, date, comment, period:month.id+'-'+year}
             createBill(newBill)
+            Alerts.InfoNotify('FACTURA CREADA CON EXITO')
             setProvider('')
             setBillNumber('')
             setAmount('')
@@ -61,82 +59,75 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
 
     const billform = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
-            <Form.Group as={Row}  controlId='validation01' >
-                <Form.Label column sm lg={3} >Proveedor: </Form.Label>
-                <Col sm lg={7} >
+            <Form.Row>
+                <Form.Group as={Col} sm lg={8}  controlId='validation01' >
+                    <Form.Label >Proveedor</Form.Label>
                     <Form.Control required as='select' value={provider} onChange={({target}) => setProvider(target.value)} >
-                        <option value='' disabled selected >Elija un proveedor</option>
+                        <option value='' disabled selected hidden >Elija un proveedor</option>
                         {providers.map(x => (
                             <option value={x.id} >{x.name}</option>
                             )
                         )}
                     </Form.Control>
-                </Col>
-                <Col sm lg={2} >
-                    <CreateProvider isModal={true} />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row}  controlId='validation02'>
-                <Form.Label column sm lg={3} ># de Factura: </Form.Label>
-                <Col sm lg={7}>
-                    <Form.Control required type='number' value={billNumber} placeholder='Ingrese numero de factura' onChange={({target}) => setBillNumber(target.valueAsNumber)} />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row}  controlId='validation03'>
-                <Form.Label column sm lg={3}>Monto: </Form.Label>
-                <Col sm lg={5}>
-                    <Form.Control required type='number' value={amount} placeholder='Ingrese monto' onChange={({target}) => setAmount(target.valueAsNumber)} />
-                </Col>
-                <Col sm lg={2} >
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
+                </Form.Group>
+                <Form.Group as={Col} sm lg={4} controlId='validation04'>
+                    <Form.Label>Fecha</Form.Label>
+                    <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`} value={date} onChange={({target}) => setDate(target.value)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} sm lg={5}  controlId='validation02'>
+                    <Form.Label ># de Factura</Form.Label>
+                    <Form.Control required type='number' value={billNumber} placeholder='Ingrese factura' onChange={({target}) => setBillNumber(target.valueAsNumber)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
+                </Form.Group>
+                <Form.Group as={Col} sm lg={4} controlId='validation03'>
+                    <Form.Label>Monto</Form.Label>
+                        <Form.Control required type='number' value={amount} placeholder='Ingrese monto' onChange={({target}) => setAmount(target.valueAsNumber)} />
+                        <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
+                </Form.Group>
+                <Form.Group as={Col} sm lg={3}>
+                    <Form.Label>Moneda</Form.Label>
                     <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
                     <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='validation03' >
-                <Form.Label column sm={3}>Metodo de Pago: </Form.Label>
-                <Col sm={7}>
+                    <Form.Text className='text-muted mt-3'>Campo obligatorio</Form.Text>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} sm lg={4} controlId='validation03' >
+                    <Form.Label>Metodo de Pago</Form.Label>
                     <Form.Control  required as='select' value={method} onChange={({ target }) => setMethod(target.value)} >
-                        <option value='' disabled selected hidden >Elegir metodo de pago</option>
+                        <option value='' disabled selected hidden >Elegir..</option>
                         <option value='Efectivo' >Efectivo</option>
                         <option value='Transferencia Bancaria' >Transferencia Bancaria</option>
                         <option value='Zelle' >Zelle</option>
                     </Form.Control>
-                </Col>
-            </Form.Group>
-            {method === "Transferencia Bancaria" &&
-            <>
-                <Form.Group as={Row} >
-                    <Form.Label column sm lg={3}>Banco</Form.Label>
-                    <Col sm lg={7} >
-                        <Form.Control required as="select" value={bank} onChange={({target}) => setBank(target.value)} >
-                            <option value="" selected disabled>Elija una opcion</option>
-                            <option value="BNC">BNC - Banco Nacional de Credito</option>
-                        </Form.Control>
-                    </Col>
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Row}>
-                    <Form.Label column sm lg={3}># de Referencia</Form.Label>
-                    <Col sm lg={7}>
-                        <Form.Control required type="number" value={reference} placeholder="Numero de referencia" onChange={({target}) => setReference(target.valueAsNumber)} />
-                    </Col>
+                <Form.Group as={Col} sm lg={5} >
+                    <Form.Label>Banco</Form.Label>
+                    <Form.Control required as="select" value={bank} onChange={({target}) => setBank(target.value)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } >
+                        <option value="" selected disabled hidden>Elija una opcion</option>
+                        <option value="BNC">BNC - Banco Nacional de Credito</option>
+                    </Form.Control>
                 </Form.Group>
-            </>
-            }
-            <Form.Group as={Row}  controlId='validation04'>
-                <Form.Label column sm lg={3}>Fecha: </Form.Label>
-                <Col sm lg={7}>
-                    <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`} value={date} onChange={({target}) => setDate(target.value)} />
-                </Col>
-            </Form.Group>
+                <Form.Group as={Col} sm lg={3}>
+                    <Form.Label># de Referencia</Form.Label>
+                    <Form.Control required type="number" value={reference} placeholder="Ingrese Ref" onChange={({target}) =>setReference(target.valueAsNumber)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } />
+                </Form.Group>
+            </Form.Row>
             <Form.Group as={Row}  controlId='validation05' >
-                <Form.Label column sm lg={3}>Comentarios: </Form.Label>
-                <Col sm lg={7}>
-                    <Form.Control required as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
+                <Form.Label column sm lg={2}>Comentarios: </Form.Label>
+                <Col sm lg={10}>
+                    <Form.Control as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
                 </Col>
             </Form.Group>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' variant='success' className='text-center'>Crear Factura</Button>
+                    <Button type='submit' variant='success'>Crear</Button>
+                    <Button variant='danger' className='ml-2' onClick={() => setShowModal(false)}>Cancelar</Button>
                 </Col>
             </Row>
         </Form>
@@ -146,8 +137,8 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
         return (
             <Fragment>
                 <Button variant='success' size='sm' onClick={() => setShowModal(true)} className='mt-3 mb-1' disabled={year ? false : true} >Agregar Pago</Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered >
-                    <Modal.Header closeButton className='bg-warning' >
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName='modal-m-sm' >
+                    <Modal.Header closeButton className='bg-success' >
                         <Modal.Title className='text-center w-100 text-white' >CREAR FACTURA</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -159,18 +150,4 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
     } else return billform
 }
 
-const MSTP = state => (
-    {
-        providers: state.providers.providers,
-        year: state.dates.year
-    }
-)
-
-const MDTP = dispatch => (
-    {
-        createBill: (data) => dispatch(createBill(data)),
-        createProvider: (data) => dispatch(createProvider(data))
-    }
-)
-
-export default connect(MSTP, MDTP)(PaymentForm);
+export default PaymentForm

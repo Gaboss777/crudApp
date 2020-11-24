@@ -17,8 +17,8 @@ const DeleteUser = ({ selection,deleteUser }) => {
     }
     return (
         <Fragment>
-            <Button disabled={selection.length===0} variant='warning'  onClick={() => setShow(true)}><FontAwesomeIcon icon={faTrashAlt} size='lg' /></Button>
-            <Modal show={show} onHide={() => setShow(false)} centered dialogClassName='modal-xlg' >
+            <Button disabled={selection.length===0} variant='danger' onClick={() => setShow(true)}><FontAwesomeIcon icon={faTrashAlt} size='lg' /></Button>
+            <Modal show={show} onHide={() => setShow(false)} dialogClassName='modal-xlg' >
                 <Modal.Header closeButton className='bg-danger' >
                     <Modal.Title className='text-center w-100 text-white' >Eliminar Datos</Modal.Title>
                 </Modal.Header>

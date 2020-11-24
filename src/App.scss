@@ -1,6 +1,6 @@
 $yellow:#ff9800;
 $darkyellow: #c48105;
-$darkessyellow: #946104;
+$darkessyellow: #956204;
 $white: #ffffff;
 $black: #000000;
 
@@ -26,11 +26,6 @@ $black: #000000;
        max-width: 50%;
     }
  }
-
-
-.m-body {
-   height: 400px;
-}
 
  .btn-dash-size {
    width: fit-content;
@@ -128,8 +123,12 @@ $black: #000000;
     resize: none;
  }
 
- .client-payment {
+ .form-disable {
     background-color: rgba(192, 192, 192, 0.3) !important;
+ }
+
+ .form-text {
+    color: rgba(255, 0, 0, 0.5) !important;
  }
 
  textarea,
@@ -210,7 +209,7 @@ $black: #000000;
       font-weight: bold;
       border-radius: 0px;
       box-shadow: inset 0 -5px $black;
-      margin: 0 5px;
+      margin: 0 2.5px;
       &.active{
          background-color: $black;
          color: $white;
@@ -218,7 +217,7 @@ $black: #000000;
          &:focus{
             color: $white;
             box-shadow: none;
-            margin-right: 5px;
+            margin: 0 2.5px;
             &:hover {
                color: $yellow;
             }
@@ -239,7 +238,7 @@ $black: #000000;
       &:active{
          color: $white;
          background-color: $darkessyellow;
-         margin-right: 5px;
+         margin: 0 2.5px;
       }
    }
 }

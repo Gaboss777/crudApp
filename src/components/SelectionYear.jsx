@@ -17,10 +17,10 @@ const SelectionYear = ({ selectedYear, year }) => {
     return (
         <InputGroup>
             <InputGroup.Prepend className='bg-warning rounded-left text-uppercase'>
-                <InputGroup.Text className='text-white px-2 font-weight-bold'>AÑO</InputGroup.Text>
+                <InputGroup.Text className='text-white px-4 font-weight-bold'>AÑO</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl as='select' onChange={({target}) => selectedYear(target.value)}>
-                <option value='' selected disabled>Seleccione..</option>
+                <option value='' selected disabled>Elija</option>
                 {years.map(y =>
                     <option value={y}>{y}</option>
                 )}
