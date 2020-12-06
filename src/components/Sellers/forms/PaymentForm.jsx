@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import Alerts from '../../Alerts/alerts'
 
-const PaymentForm = ({month, seller, clientsList, isModal, createSell}) => {
+const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) => {
 
     const [show, setShow] = useState(false)
 
@@ -12,59 +12,88 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell}) => {
     const [currency, setCurrency] = useState('')
     const [totalAmount, setTotalAmount] = useState('')
 
+    const [days, setDays] = useState('')
+
+    const [valid, setValid] = useState(false)
+
     const payamount = (totalAmount * percent) / 100
+
+    useEffect(() => {
+        if(month.id === '01' || month.id === '03' || month.id === '05' || month.id === '07' || month.id === '08' || month.id === '10' || month.id === '12' ) {
+            setDays(31)
+        } if(month.id === '04' || month.id === '06' || month.id === '09' || month.id === '11') {
+            setDays(30)
+        } if(month.id === '02') {
+            if((year - 2016) % 4 === 0 ) {
+                setDays(29)
+            } else {
+                setDays(28)
+            }
+        }
+    }, [month])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        let newPayment = {seller_id: seller.id ,client_id: parseInt(client), date, payamount, percent, currency, period: month.id +'-2020'}
-        createSell(newPayment)
-        Alerts.InfoNotify('PAGO CREADO CON EXITO')
-        setClient('')
-        setDate('')
-        setPercent('')
-        setCurrency('')
-        setTotalAmount('')
-        setShow(false)
+        let form = e.currentTarget
+        if(form.checkValidity() === false){
+            e.stopPropagation()
+        } else {
+            let newPayment = {seller_id: seller.id ,client_id: parseInt(client), date, amount: payamount, percent, currency, period: month.id +'-2020'}
+            createSell(newPayment)
+            Alerts.InfoNotify('PAGO CREADO CON EXITO')
+            setClient('')
+            setDate('')
+            setPercent('')
+            setCurrency('')
+            setTotalAmount('')
+            setShow(false)
+        }
+        setValid(true)
     }
 
     const form = (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} noValidate validated={valid}>
             <Form.Row>
                 <Form.Group as={Col} sm lg={6}>
-                    <Form.Label>Vendedor</Form.Label>
-                    <Form.Control type='text' readOnly plaintext value={seller.name.toUpperCase()} className='client-payment' />
+                    <Form.Label className='font-weight-bold text-uppercase'>Vendedor</Form.Label>
+                    <Form.Control type='text' readOnly plaintext value={seller.name.toUpperCase()} className='form-disable' />
                 </Form.Group>
                 <Form.Group as={Col} sm lg={6}>
-                    <Form.Label>Cliente</Form.Label>
-                    <Form.Control as='select' value={client} onChange={({target}) => setClient(target.value)}>
+                    <Form.Label className='font-weight-bold text-uppercase'>Cliente</Form.Label>
+                    <Form.Control required as='select' value={client} onChange={({target}) => setClient(target.value)}>
                         <option value='' selected disabled>Elija un cliente</option>
                         {clientsList.map(client =>
                             <option value={client.id}>{client.name}</option>
                         )}
                     </Form.Control>
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>Fecha de Pago</Form.Label>
-                    <Form.Control type='date' value={date} onChange={({target}) => setDate(target.value)} />
+                    <Form.Label className='font-weight-bold text-uppercase'>Fecha de Pago</Form.Label>
+                    <Form.Control required type='date' value={date} min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`} onChange={({target}) => setDate(target.value)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>Monto Total</Form.Label>
-                    <Form.Control type='number' value={totalAmount} onChange={({target}) => setTotalAmount(target.value)} />
+                    <Form.Label className='font-weight-bold text-uppercase'>Monto Total</Form.Label>
+                    <Form.Control required type='number' value={totalAmount} onChange={({target}) => setTotalAmount(target.value)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} sm lg={1} className='mr-2'>
-                    <Form.Label>Moneda</Form.Label>
-                    <Form.Check type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
-                    <Form.Check type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
+                <Form.Group as={Col} sm lg={1}>
+                    <Form.Label className='font-weight-bold text-uppercase'>Moneda</Form.Label>
+                    <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
+                    <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
+                    <Form.Text className='text-muted mt-2'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} sm lg={1} classname='ml-2'>
-                    <Form.Label>Porcentaje</Form.Label>
-                    <Form.Control type='number' value={percent} onChange={({target}) => setPercent(target.valueAsNumber)} />
+                <Form.Group as={Col} sm lg={2} >
+                    <Form.Label className='font-weight-bold text-uppercase'>Porcentaje</Form.Label>
+                    <Form.Control required type='number' value={percent} onChange={({target}) => setPercent(target.valueAsNumber)} />
+                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} sm lg={2}>
-                    <Form.Label>Total</Form.Label>
-                    <Form.Control readOnly plaintext type='number' value={payamount} className='client-payment' />
+                <Form.Group as={Col} sm lg={3}>
+                    <Form.Label className='font-weight-bold text-uppercase'>Total</Form.Label>
+                    <Form.Control required readOnly plaintext type='number' value={payamount} className='form-disable' />
                 </Form.Group>
             </Form.Row>
             <Row>

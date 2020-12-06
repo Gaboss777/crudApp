@@ -71,45 +71,43 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
         }
         setValid(true)
     }
-    console.log(lastdate)
-    console.log(check)
 
     const formEmploye = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
         <Form.Row>
             <Form.Group as={Col} controlId='validation01'>
-                <Form.Label>Primer Nombre *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Primer Nombre *</Form.Label>
                 <Form.Control required type='text' value={firstname} placeholder='Indique Primer nombre...' onChange={({target}) => setFirstname(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} >
-                <Form.Label>Segundo Nombre</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Segundo Nombre</Form.Label>
                 <Form.Control type='text' value={secondname} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondname(target.value)} />
             </Form.Group>
             <Form.Group as={Col} controlId='validation02'>
-                <Form.Label>Primer Apellido *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Primer Apellido *</Form.Label>
                 <Form.Control required type='text' value={lastname} placeholder='Ingrese Primer apellido..' onChange={({target}) => setLastname(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col}>
-                <Form.Label>Segundo Apellido</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Segundo Apellido</Form.Label>
                 <Form.Control type='text' value={secondsurname} placeholder='Indique Segundo nombre...' onChange={({target}) => setSecondsurname(target.value)} />
             </Form.Group>
         </Form.Row>
         <Form.Row>
             <Form.Group as={Col} controlId='validation03'>
-                <Form.Label>Cedula *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Cedula *</Form.Label>
                 <Form.Control required type='number' value={document} placeholder='Indique Cedula...' onChange={({target}) => setDocument(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} controlId='validation04'>
-                <Form.Label>Fecha de Ingreso *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Ingreso *</Form.Label>
                 <Form.Control required type='date' value={initialdate} onChange={({target}) => setInitialdate(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} controlId='validation07'>
                 <Row>
-                    <Col sm lg={6}><Form.Label>Fecha de Egreso:</Form.Label></Col>
+                    <Col sm lg={6}><Form.Label className='font-weight-bold text-uppercase'>Egreso:</Form.Label></Col>
                     <Col sm lg={6}><Form.Check className='w-50' type='checkbox' label='Actualmente' name='checkForm' id='checkForm1' onChange={handleCheck} /></Col>
                 </Row>
                 <Form.Control type='date' value={lastdate} onChange={({target}) => setLastdate(target.value)} disabled={check ? true : false} className={check ? 'form-disable' : ''} />
@@ -117,7 +115,7 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
         </Form.Row>
         <Form.Row>
             <Form.Group as={Col} controlId='validation05'>
-                <Form.Label>Cargo *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Cargo *</Form.Label>
                 <Form.Control required as='select' value={ocupation} onChange={({target}) => setOcupation(target.value)} aria-describedby='add-ocupation1' >
                     <option value='' selected disabled >Elija un cargo</option>
                     {ocupations.map(x =>
@@ -127,7 +125,7 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col} controlId='validation06'>
-                <Form.Label>Salario *</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Salario *</Form.Label>
                 <Form.Control required type='number' value={salary} placeholder='Ingrese Salario...' onChange={({target}) => setSalary(target.valueAsNumber)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>

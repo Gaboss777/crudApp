@@ -59,11 +59,11 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
         <Form onSubmit={onSubmit} notValidate validated={valid}>
             <Form.Row>
                 <Form.Group as={Col} sm lg={6}>
-                    <Form.Label>EMPLEADO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>EMPLEADO</Form.Label>
                     <Form.Control type='text' value={completeName} readOnly plaintext className='form-disable' />
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>MES</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>MES</Form.Label>
                     <Form.Control required as='select' value={month} onChange={({target}) => handlerDays(target.value)} >
                         <option value='' selected disabled>Elegir Mes..</option>
                         {months.map(m =>
@@ -73,14 +73,14 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>FECHA DE PAGO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>FECHA DE PAGO</Form.Label>
                     <Form.Control required type='date' value={date} min={`${year}-${month}-01`} max={`${year}-${month}-${days}`} onChange={({target}) => setDate(target.value)} disabled={month ? false : true} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>CONCEPTO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>CONCEPTO</Form.Label>
                     <Form.Control required as='select' value={concept} onChange={({target}) => setConcept(target.value)}>
                         <option value='' selected disabled>Elija una opcion</option>
                         <option value='salario'>Salario</option>
@@ -93,18 +93,18 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label>MONTO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>MONTO</Form.Label>
                     <Form.Control required type='number' value={amount} onChange={({target}) => setAmount(target.valueAsNumber)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={2}>
-                    <Form.Label>MONEDA</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>MONEDA</Form.Label>
                     <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
                     <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
                     <Form.Text className='text-muted mt-3'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={4}>
-                    <Form.Label>METODO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>METODO</Form.Label>
                     <Form.Control required as='select' value={method} onChange={({target}) => setMethod(target.value)} >
                         <option value='' selected disabled>Elija una opcion</option>
                         <option value='efectivo'>Efectivo</option>
@@ -116,7 +116,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col}>
-                    <Form.Label>BANCO</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'>BANCO</Form.Label>
                     <Form.Control required as='select' value={bank} onChange={({target}) => setBank(target.value)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } >
                         <option value='' selected disabled>Elija una opcion</option>
                         <option value='BNC'>BNC - Banco Nacional de Cretido</option>
@@ -126,7 +126,7 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
                     }
                 </Form.Group>
                 <Form.Group as={Col}>
-                    <Form.Label># DE REFERENCIA</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase'># DE REFERENCIA</Form.Label>
                     <Form.Control required type='number' value={reference} placeholder='Numero de referencia' onChange={({target}) => setReference(target.valueAsNumber)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } />
                     { method === 'Transferencia Bancaria' && 
                         <Form.Text className='text-muted'>Campo obligatorio</Form.Text>

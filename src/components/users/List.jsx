@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table, FormCheck, Badge, Spinner } from 'react-bootstrap';
+import { Table, FormCheck, Badge, Spinner, Row, Col } from 'react-bootstrap';
 import { getUserList, selectRow } from '../../ducks/users';
 import { connect } from 'react-redux';
 import PaginationList from '../PaginationList';
@@ -9,7 +9,7 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10)
 
-    const userDefault = { id: '0'}
+    const userDefault = []
 
     useEffect(() => {
         getUserList()
@@ -36,8 +36,6 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
     const indexOfLastUser = currentPage * usersPerPage
     const indexOfFirstUser = indexOfLastUser - usersPerPage
     const currentUsers = newList.slice(indexOfFirstUser, indexOfLastUser)
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <>
@@ -72,14 +70,16 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                         }
                     </tbody>
                 </Table>
-                <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} paginate={paginate} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} />
+                <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
                 </>
                 :
-                <>
-                    <Spinner variant='warning' animation='grow' className='ml-4' />
-                    <Spinner variant='warning' animation='grow' className='mx-1' />
-                    <Spinner variant='warning' animation='grow' />
-                </>
+                <Row>
+                    <Col className='text-center'>
+                        <Spinner variant='warning' animation='grow' className='ml-4' />
+                        <Spinner variant='warning' animation='grow' className='mx-1' />
+                        <Spinner variant='warning' animation='grow' />
+                    </Col>
+                </Row>
             }
         </>
     )

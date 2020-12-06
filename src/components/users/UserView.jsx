@@ -21,35 +21,75 @@ const UserInfo = ({ user, selection }) => {
                 <Modal.Body>
                     <Container fluid >
                         <Row>
-                            <Col sm lg={6} >
-                                <Card border='dark' >
-                                    <Card.Header as='h4' className='bg-dark text-center text-white'>DATOS DEL CLIENTE</Card.Header>
-                                    <Card.Body>
-                                        <Card.Text>
-                                            <p><span className='font-weight-bold text-dark'>RAZON SOCIAL: </span> {user.name} </p>
-                                            <p><span className='font-weight-bold text-dark'>CI / RIF: </span> {user.document} </p>
-                                            <p><span className='font-weight-bold text-dark'>UBICACION: </span> {user.location} </p>
-                                            <p><span className='font-weight-bold text-dark'>EMAIL: </span> {user.email} </p>
-                                            <p><span className='font-weight-bold text-dark'>TELEFONO: </span> {user.phone} </p>
-                                            <p><span className='font-weight-bold text-dark'>STATUS: </span> <Badge variant={user.status === 'Activo' ? 'success' : user.status === 'Cancelado' ? 'danger' : 'warning' }>{user.status.toUpperCase()}</Badge> </p>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
+                            <Col sm lg={7} >
+                                <Row>
+                                    <Col sm lg={12} className='pl-0' >
+                                        <h4 className='bg-warning py-2 text-center text-white border border-dark'>DATOS DEL CLIENTE</h4>
+                                    </Col>
+                                    <Col sm lg={9} className='pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>RAZON SOCIAL</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.name}</p>
+                                    </Col>
+                                    <Col sm lg={3} className='pl-0' >
+                                        <p className='bg-dark border border-dark mb-0 text-white text-center'>STATUS</p>
+                                        <h5 className={`bg-${user.status === 'Activo' ? 'success' : user.status === 'Suspendido' ? 'warning' : 'danger'} text-center text-white py-2`}>{user.status}</h5>
+                                    </Col>
+                                    <Col sm lg={4} className='mt-2 pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>CEDULA/RIF</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.document}</p>
+                                    </Col>
+                                    <Col sm lg={8} className='mt-2'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1'>DIRECCION</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.location ? user.location : 'N/A'}</p>
+                                    </Col>
+                                    <Col sm lg={7} className='mt-2 pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>EMAIL</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.email ? user.email : 'N/A'}</p>
+                                    </Col>
+                                    <Col sm lg={5} className='mt-2'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1'>TELEFONO</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.phone ? user.phone : 'N/A'}</p>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2 pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>INICIO</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.initialdate ? user.initialdate : 'YYYY-MM-DD'}</p>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1'>CANCELACION</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark' >{user.lastdate ? user.lastdate : 'YYYY-MM-DD'}</p>
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col sm lg={6} >
-                                <Card border='dark'>
-                                    <Card.Header as='h4' className='bg-dark text-center text-white'>DATOS DEL PLAN</Card.Header>
-                                    <Card.Body>
-                                        <Card.Text>
-                                            <p><span className='font-weight-bold text-dark'>BANDWIDTH: </span> {user.bandwidth} Mb</p>
-                                            <p><span className='font-weight-bold text-dark'>DIRECCION IP: </span> {user.ip}</p>
-                                            <p><span className='font-weight-bold text-dark'>SERIAL: </span> {user.serial}</p>
-                                            <p><span className='font-weight-bold text-dark'>DIRECCION MAC: </span> {user.mac}</p>
-                                            <p><span className='font-weight-bold text-dark'>SERVICIO: </span> {user.service}</p>
-                                            <p><span className='font-weight-bold text-dark'>MENSUALIDAD: </span> {user.mensuality} USD </p>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
+                            <Col sm lg={5} className='pr-0' >
+                                <Row>
+                                    <Col sm lg={12} className='pl-0' >
+                                        <h4 className='bg-warning py-2 text-center text-white border border-dark'>PLAN ACTUAL</h4>
+                                    </Col>
+                                    <Col sm lg={7} className='pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1'>PLAN</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark'>{user.service}</p>
+                                    </Col>
+                                    <Col sm lg={5}>
+                                        <p className='bg-dark border border-dark text-white pl-1 mb-0'>Bandwidth</p>
+                                        <h3 className='text-center py-2 mb-0 text-white bg-warning'>{user.bandwidth ? user.bandwidth : 'N/A'}</h3>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2 pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>IP</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark'>{user.ip ? user.ip : 'N/A'}</p>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>MAC</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark'>{user.mac ? user.mac : 'N/A'}</p>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2 pl-0'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>MENSUALIDAD</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark'>{user.mensuality}</p>
+                                    </Col>
+                                    <Col sm lg={6} className='mt-2'>
+                                        <h5 className='bg-dark border border-dark text-white pl-1 '>SERIAL</h5>
+                                        <p className='font-weight-bold pl-2 border border-dark'>{user.serial ? user.serial : 'N/A'}</p>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                     </Container>

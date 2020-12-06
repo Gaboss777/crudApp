@@ -9,23 +9,23 @@ import SellerForm from './forms/SellerForm';
 import {connect} from 'react-redux';
 import SellersList from './List';
 import DropdownSellers from './DropdownSellers';
+import SelectionYear from '../SelectionYear';
 
-const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSelected, clientsList, getUserList, createSell, removeSell, sells, getSellsList, updateSellUser, getSellersList}) => {
+const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSelected, clientsList, getUserList, createSell, removeSell, sells, getSellsList, updateSellUser, getSellersList, year}) => {
 
     useEffect(() => {
         getSellersList()
     }, [])
 
     return (
-        <Container fluid >
-            <Row className='mt-3'>
-                <Col sm lg={12}>
-                    <h3 className='text-center'>REGISTRO PAGO DE VENDEDORES</h3>
-                </Col>
-            </Row>
+        <Container fluid className='px-0' >
+            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGOS VENDEDORES</h1>
             <Row className='mt-2'>
                 <Col sm lg={5}>
                     <DropdownSellers list={list} selected={selected} sellUserSelected={sellUserSelected} />
+                </Col>
+                <Col sm lg={2}>
+                    <SelectionYear disabled={selected ? false : true} className={!selected ? 'form-disable' : ''} />
                 </Col>
                 <Col sm lg={4}>
                     <ButtonGroup className='mt-1'>
@@ -34,11 +34,11 @@ const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSe
                     </ButtonGroup>
                 </Col>
             </Row>
-            {selected && 
+            {selected && year && 
                 <Row className='mt-2'>
                     <Col>
-                    <h2 className='text-center'>CALENDARIO DE PAGOS</h2>
-                        <Calendar seller={selected} clientsList={clientsList} getUserList={getUserList} createSell={createSell} removeSell={removeSell} sells={sells} getSellsList={getSellsList} />
+                    <h4 className='text-center my-3'>CALENDARIO DE PAGOS</h4>
+                        <Calendar seller={selected} clientsList={clientsList} getUserList={getUserList} createSell={createSell} removeSell={removeSell} sells={sells} getSellsList={getSellsList} year={year} />
                     </Col>
                 </Row>
             }
@@ -51,7 +51,8 @@ const MSTP = state => (
         list: state.sellers.list,
         selected: state.sellers.selected,
         clientsList: state.users.list,
-        sells: state.sellers.sells
+        sells: state.sellers.sells,
+        year: state.dates.year
     }
 )
 

@@ -79,6 +79,11 @@ $black: #000000;
 }
 
 /* Navbar */
+
+.custom-navbar {
+   border-bottom: solid 5px #000;
+}
+
 .nav-link-menu {
    padding: 8rem 1rem;
    font-weight: bold;
@@ -131,6 +136,11 @@ $black: #000000;
     color: rgba(255, 0, 0, 0.5) !important;
  }
 
+ .title-section {
+    margin-left: -15px;
+    margin-right: -15px;
+ }
+
  textarea,
  textarea.form-control,
  input.form-control,
@@ -163,6 +173,7 @@ $black: #000000;
    height: 100%;
    min-height: 87.6vh;
    margin-left: -15px;
+   border-right: solid 5px rgb(0, 0, 0);
    .side-link {
       font-size: 15px;
       color: $white;
@@ -273,4 +284,15 @@ $black: #000000;
    margin-right: auto;
    width: 75%;
    height: 100%;
+}
+
+.login-container {
+   height: 85vh;
+   max-height: 85vh;
+   .login-form {
+      border: solid 2px $yellow;
+      position: absolute;
+      top: 26%;
+      box-shadow: 0 0 10px 5px $yellow;
+   }
 }

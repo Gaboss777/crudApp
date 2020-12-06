@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { faUserPlus, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Alerts from '../Alerts/alerts';
+import moment from 'moment'
 
 
 const UserForm = ({ createUser, user, updateUser, asModal, editing, selection }) => {
@@ -21,7 +22,10 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
     const [mensuality, setMensuality] = useState(user ? user.ip : "")
     const [serial, setSerial] = useState(user ? user.ip : "")
     const [mac, setMac] = useState(user ? user.ip : "")
+    const [initialDate, setInitialDate] = useState(user ? user.initialdate : "")
+    const [lastDate, setLastDate] = useState(user ? user.lastdate : "")
 
+    console.log(user)
 
     useEffect(() => {
         if (user && editing) {
@@ -37,6 +41,8 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
             setMensuality(user.mensuality)
             setSerial(user.serial)
             setMac(user.mac)
+            setLastDate(moment(user.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD'))
+            setInitialDate(moment(user.initialdate, 'YYYY-MM-DD').format('YYYY-MM-DD'))
         }
     }, [user, editing])
 
@@ -48,7 +54,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newUser = { name, document, location, bandwidth, status, service, ip, mac, email, phone, serial, mensuality }
+            let newUser = { name, document, location, bandwidth, status, service, ip, mac, email, phone, serial, mensuality, initialDate, lastDate }
             if (!user) {
                 createUser(newUser)
                 Alerts.InfoNotify("USUARIO AGREGADO EXITOSAMENTE")
@@ -72,6 +78,8 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
             setMensuality('')
             setSerial('')
             setMac('')
+            setInitialDate('')
+            setLastDate('')
         }
         setValid(true)
     }
@@ -79,31 +87,29 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
     const formjsx = (
         <Form onSubmit={onSubmit} noValidate validated={valid}>
             <Form.Row>
-                <Form.Group as={Col} controlId='validation01' >
+                <Form.Group as={Col} sm lg={6} controlId='validation01' >
                     <Form.Label className='font-weight-bold text-uppercase' >Razon Social </Form.Label>
                     <Form.Control
                         required
                         type='text'
-                        placeholder='Ingrese Nombre'
+                        placeholder='Razon Social'
                         value={name}
                         onChange={({ target }) => setName(target.value)}
                     />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} controlId='validation02' >
+                <Form.Group as={Col} sm lg={2} controlId='validation02' >
                     <Form.Label className='font-weight-bold text-uppercase' >CI/RIF</Form.Label>
                     <Form.Control
                         required
                         type='text'
-                        placeholder='Ingrese Cedula o RIF'
+                        placeholder='Cedula o Rif'
                         value={document}
                         onChange={({ target }) => setDocument(target.value)}
                     />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} controlID='validation06' >
+                <Form.Group as={Col} sm lg={2} controlID='validation06' >
                     <Form.Label className='font-weight-bold text-uppercase' >Servicio</Form.Label>
                     <Form.Control as='select' value={service} onChange={({ target }) => setService(target.value)} required custom >
                         <option value='' disabled selected >Elija un Servicio</option>
@@ -113,12 +119,12 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                     </Form.Control>
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
-                <Form.Group as={Col} controlID='validation05' >
+                <Form.Group as={Col} sm lg={2} controlID='validation05' >
                     <Form.Label className='font-weight-bold text-uppercase' >Mensualidad</Form.Label>
                     <Form.Control
                         required
                         type='number'
-                        placeholder='Ingrese Mensualidad'
+                        placeholder='Mensualidad'
                         value={mensuality}
                         onChange={({ target }) => setMensuality(target.valueAsNumber)}
                     />
@@ -129,7 +135,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
             { editing && 
                 <>
                 <Form.Row>
-                    <Form.Group as={Col} controlID='validation04' >
+                    <Form.Group as={Col} sm lg={5} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Email</Form.Label>
                         <Form.Control
                             type='email'
@@ -138,7 +144,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setEmail(target.value)}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlID='validation04' >
+                    <Form.Group as={Col} sm lg={3} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Telefono</Form.Label>
                         <Form.Control
                             type='text'
@@ -147,9 +153,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setPhone(target.value)}
                         />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlID='validation04' >
+                    <Form.Group as={Col} sm lg={2} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Bandwidth</Form.Label>
                         <Form.Control
                             type='number'
@@ -158,7 +162,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setBandwidth(target.valueAsNumber)}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlID='validation05' >
+                    <Form.Group as={Col} sm lg={2} controlID='validation05' >
                         <Form.Label className='font-weight-bold text-uppercase' >Direccion IP</Form.Label>
                         <Form.Control
                             type='text'
@@ -169,7 +173,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group as={Col} controlID='validation05' >
+                    <Form.Group as={Col} sm lg={3} controlID='validation05' >
                         <Form.Label className='font-weight-bold text-uppercase' >Direccion MAC</Form.Label>
                         <Form.Control
                             type='text'
@@ -178,7 +182,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setMac(target.value)}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlID='validation04' >
+                    <Form.Group as={Col} sm lg={3} controlID='validation04' >
                         <Form.Label className='font-weight-bold text-uppercase' >Serial</Form.Label>
                         <Form.Control
                             type='text'
@@ -187,9 +191,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setSerial(target.value)}
                         />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlID='validation03' >
+                    <Form.Group as={Col} sm lg={4} controlID='validation03' >
                         <Form.Label className='font-weight-bold text-uppercase' >Ubicacion</Form.Label>
                         <Form.Control
                             type='text'
@@ -198,7 +200,7 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             onChange={({ target }) => setLocation(target.value)}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} sm={6} controlID='validation07' >
+                    <Form.Group as={Col} sm={2} controlID='validation07' >
                         <Form.Label className='font-weight-bold text-uppercase' >Status</Form.Label>
                         <Form.Control as='select' value={status} onChange={({ target }) => setStatus(target.value)} required custom >
                             <option value='' disabled selected >Elija un Status</option>
@@ -206,6 +208,16 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
                             <option value='Cancelado' >Cancelado</option>
                             <option value='Suspendido' >Suspendido</option>
                         </Form.Control>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className='justify-content-center'>
+                    <Form.Group as={Col} sm lg={3} >
+                        <Form.Label className='font-weight-bold text-uppercase'>Fecha de Ingreso</Form.Label>
+                        <Form.Control type='date' value={initialDate} onChange={({target}) => setInitialDate(target.value)} />
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={3}>
+                        <Form.Label className='font-weight-bold text-uppercase'>Fecha de Cancelacion</Form.Label>
+                        <Form.Control type='date' value={lastDate} onChange={({target}) => setLastDate(target.value)} />
                     </Form.Group>
                 </Form.Row>
                 </>
@@ -223,8 +235,8 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
     if (asModal) {
         return (
             <Fragment>
-                <Button disabled={editing ? selection.length !== 1 : false} variant={editing ? 'primary' : 'warning'} onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} >
+                <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} size='lg' >
                     <Modal.Header closeButton className={editing ? 'bg-primary' : 'bg-warning'} >
                         <Modal.Title className='text-center w-100 text-white' >{editing ? 'Editar Usuario' : 'Agregar Usuario'}</Modal.Title>
                     </Modal.Header>

@@ -10,11 +10,9 @@ import { getUserList } from '../../../ducks/users'
 const PayUsers = ({client, year, payments, removePayment, list, getClient, getPayments, getUsers, createPayment}) => {
 
     return (
-        <Container fluid>
+        <Container fluid className='px-0'>
+            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO COBRO CLIENTES</h1>
             <Row >
-                <Col sm lg={12} className='text-center mt-3' >
-                    <h3>REGISTROS PAGOS CLIENTES</h3>
-                </Col>
                 <Col sm lg={12} >
                     <DropdownClient list={list} client={client} getClient={getClient} getPayments={getPayments} getUsers={getUsers} />
                 </Col>

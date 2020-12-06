@@ -9,8 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 
 export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  rootReducer,composeWithDevTools(applyMiddleware(thunk))
 );
 ReactDOM.render(
   <React.StrictMode>

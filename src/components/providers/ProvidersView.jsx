@@ -17,11 +17,9 @@ const ProviderView = ({year, createBill, createProvider, removeBills, getBills, 
     }, [])
 
     return (
-        <Container fluid className='mt-2'>
+        <Container fluid className='px-0' >
+            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGO PROVEEDORES</h1>
             <Row>
-                <Col sm lg={12}>
-                    <h3 className='text-center my-2'>REGISTRO PAGOS PROVEEDORES</h3>
-                </Col>
                 <Col sm lg={2} className='my-2'>
                     <SelectionYear />
                 </Col>

@@ -25,7 +25,7 @@ const ListBills = ({bills, providers, year, removeBills, createBill }) => {
                             <tr>
                                 <th>FECHA</th>
                                 <th>PROVEEDOR</th>
-                                <th># FACTURA</th>
+                                <th>FACTURA</th>
                                 <th>MONTO</th>
                                 <th>MONEDA</th>
                                 <th>METODO</th>

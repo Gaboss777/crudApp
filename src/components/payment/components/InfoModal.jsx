@@ -25,11 +25,11 @@ const InfoModal = ({month,payments, year, removePayment}) => {
                                 <th>MONTO</th>
                                 <th>MONEDA</th>
                                 <th>DESCUENTO</th>
+                                <th>CONCEPTO</th>
                                 <th>METODO</th>
                                 <th>BANCO</th>
                                 <th>#REFERENCIA</th>
                                 <th>COMENTARIOS</th>
-                                <th>IMAGEN</th>
                                 <th>ACCION</th>
                             </tr>
                         </thead>
@@ -45,11 +45,11 @@ const InfoModal = ({month,payments, year, removePayment}) => {
                                         <td>{pay.amount}</td>
                                         <td>{pay.currency}</td>
                                         <td>{pay.discount} %</td>
+                                        <td>{pay.concept}</td>
                                         <td>{pay.method}</td>
                                         <td>{pay.bank}</td>
                                         <td>{pay.reference}</td>
                                         <td>{pay.comment}</td>
-                                        <td>{img ? URL.createObjectURL(img) : 'NO HAY IMAGEN'}</td>
                                         <td><Button variant='danger' onClick={() => handleDelete(pay.id)} size='sm' >ELIMINAR</Button> </td>
                                     </tr>
                                 )}

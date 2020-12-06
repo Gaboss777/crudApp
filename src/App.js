@@ -19,15 +19,15 @@ import EmployeeView from './components/employee/View';
 import SellersView from './components/Sellers/SellersView';
 
 //Componentes Vista Reportes
-import Paymentsearch from './components/Reports/PaymentSearch';
 import ReportsClients from './components/Reports/ReportsView/ReportsClient';
+import ReportsPayment from './components/Reports/ReportsView/ReportsPayment';
 
 function App() {
   return (
     <Router>
       <MainMenu />
       <Layout >
-        <Switch>,
+        <Switch>
           <Route exact path='/' component={Dashboard} />
           <Route exact path='/users' component={UsersView} />
           <Route exact path='/payment' component={PayView} />
@@ -38,13 +38,30 @@ function App() {
   )
 }
 
+// const Inicio = () => {
+//   return (
+//     <Router>
+//       <MainMenu />
+//       <Layout >
+//         <Switch>,
+//           <Route exact path='/' component={Login} />
+//           <Route exact path='/dashboard' component={Dashboard} />
+//           <Route exact path='/users' component={UsersView} />
+//           <Route exact path='/payment' component={PayView} />
+//           <Route exact path='/reports' component={ReportsView} />
+//         </Switch>
+//       </Layout>
+//     </Router>
+//   )
+// }
+
 const UsersView =()=> {
 
   const [criteria,setCriteria]=useState("")
 
   return (
   <>
-    <h1 className='text-center text-warning mt-2'>CLIENTES</h1>
+    <h1 className='text-center text-white py-2 bg-warning title-section'>CLIENTES</h1>
     <UsersActions criteria={criteria} setCriteria={setCriteria} />
     <UsersList criteria={criteria} />
   </>
@@ -52,29 +69,28 @@ const UsersView =()=> {
 }
 
 const PayView =()=> {
-  const { path } = useRouteMatch()
+
   const data = [
-      {id: '1', route: 'client', linkName: 'Pago Clientes', component: PayUsers},
+      {id: '1', route: 'client', linkName: 'Cobro Clientes', component: PayUsers},
       {id: '2', route: 'provider', linkName: 'Pago Proveedores', component: ProviderView},
       {id: '3', route: 'employee', linkName: 'Pago Empleados', component: EmployeeView},
       {id: '4', route: 'sellers', linkName: 'Pago Vendedores', component: SellersView}
   ]
 
   return (
-      <SideBar data={data} path={path} />
+      <SideBar data={data} />
   )
 }
 
 const ReportsView =()=>{
 
-  const { path } = useRouteMatch()
   const data = [
-      {id: '1', route: 'client', linkName: 'Reportes Clientes', component: ReportsClients},
-      {id: '2', route: 'provider', linkName: 'Reportes Pagos', component: Paymentsearch}
+      {id: '1', route: 'client', linkName: 'Datos Generales', component: ReportsClients},
+      {id: '2', route: 'payments', linkName: 'Reportes', component: ReportsPayment}
   ]
 
   return (
-      <SideBar data={data} path={path} />
+      <SideBar data={data} />
   )
 }
 

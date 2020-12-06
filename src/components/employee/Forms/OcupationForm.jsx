@@ -35,12 +35,12 @@ const OcupationForm = ({isModal, createOcupation}) => {
     const formOcupation = (
         <Form onSubmit={onSubmitOcupation} noValidate validated={valid}>
             <Form.Group>
-                <Form.Label>Cargo</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Cargo</Form.Label>
                     <Form.Control type='text' value={name} placeholder='Indique cargo...' onChange={({target}) => setName(target.value)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group>
-                <Form.Label>Gerencia</Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>Gerencia</Form.Label>
                     <Form.Control type='text' value={gerency} placeholder='Indique nivel del cargo..' onChange={({target}) => setGerency(target.value)} />
             </Form.Group>
             <Row>

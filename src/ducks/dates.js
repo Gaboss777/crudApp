@@ -13,7 +13,6 @@ const initialState = {
 export const datesReducer = (state = initialState, { type, payload}) => {
     switch (type) {
         case YEAR_SELECTION:
-            console.log(payload)
             return {
                 year: payload
             }

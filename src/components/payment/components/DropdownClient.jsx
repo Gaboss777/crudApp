@@ -21,7 +21,7 @@ const DropdownClient = ({list, getClient, getUsers, client, getPayments}) => {
 
     return (
     <Row>
-        <Col sm lg={4}>
+        <Col sm lg={4} className='mt-2'>
             <InputGroup>
                 <InputGroup.Prepend className='bg-warning rounded-left text-uppercase' >
                     <InputGroup.Text className='text-white px-2 font-weight-bold' >CLIENTE</InputGroup.Text>
@@ -31,12 +31,12 @@ const DropdownClient = ({list, getClient, getUsers, client, getPayments}) => {
         </Col>
         { client &&
         <>
-            <Col sm lg={2} className='my-2'>
+            <Col sm lg={2} className='mt-2' >
                 <SelectionYear />
             </Col>
             <Col sm lg={4}>
                 <Card className='shadow-none my-1' border='dark'>
-                    <Card.Header className='pt-1'>
+                    <Card.Header className='py-1'>
                         <Row className='justify-content-center'>
                             <Col sm lg={4}>
                                 <p className='mb-1 font-weight-bold'>SERVICIO: </p>

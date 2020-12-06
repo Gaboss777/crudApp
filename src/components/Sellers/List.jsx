@@ -10,7 +10,7 @@ const SellersList = ({list, removeSeller, updateSellUser}) => {
     const [show, setShow] = useState(false)
 
     const handleDelete = (data) => {
-        toast(<DeleteAlert action={() => removeSeller(data)}/>, {position: toast.POSITION.TOP_CENTER, autoClose: false })
+        toast(<DeleteAlert action={() => removeSeller(data)}/>, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false })
     }
 
     return (

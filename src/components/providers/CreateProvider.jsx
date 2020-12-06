@@ -32,12 +32,12 @@ const NewProvider = ({isModal, createProvider}) => {
     const providerForm = (
         <Form onSubmit={onSubmitProvider} noValidate validated={valid}>
             <Form.Group>
-                <Form.Label>NOMBRE: </Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>NOMBRE: </Form.Label>
                 <Form.Control required type='text' value={name} placeholder='Indique nombre...' onChange={({target}) => setName(target.value)} />
                 <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group>
-                <Form.Label>SERVICIO: </Form.Label>
+                <Form.Label className='font-weight-bold text-uppercase'>SERVICIO: </Form.Label>
                 <Form.Control type='text' value={service} placeholder='Indique Servicio' onChange={({target}) => setService(target.value)} />
             </Form.Group>
             <Row>

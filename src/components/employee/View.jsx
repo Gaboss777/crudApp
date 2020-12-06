@@ -20,11 +20,9 @@ const EmployeeView = ({ocupations, removeOcupation, user, selection, createEmplo
     },[])
 
     return (
-        <Container fluid>
+        <Container fluid className='px-0'>
+            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGO EMPLEADO</h1>
             <Row>
-                <Col sm lg={12}>
-                    <h3 className='text-center mt-3'>REGISTRO PAGO EMPLEADOS</h3>
-                </Col>
                 <Col sm lg={2}>
                     <ButtonGroup>
                         <EmployeeForm isModal={true} editing={false} user={user} selection={selection} ocupations={ocupations} createEmployee={createEmployee} />
@@ -38,11 +36,8 @@ const EmployeeView = ({ocupations, removeOcupation, user, selection, createEmplo
                         <OcupationList ocupations={ocupations} removeOcupation={removeOcupation} />
                     </ButtonGroup>
                 </Col>
-                <Col sm lg={4} className='my-2'>
-                    <SearchData criteria={criteria} setCriteria={setCriteria}  />
-                </Col>
                 <Col sm lg={12}>
-                    <EmployeeList criteria={criteria} createPayment={createPayment} selectRow={selectRow} selected={selection} year={year} salaries={salaries} employies={employies} removeSalaries={removeSalaries} />
+                    <EmployeeList criteria={criteria} createPayment={createPayment} selectRow={selectRow} selected={selection} year={year} salaries={salaries} employies={employies} removeSalaries={removeSalaries} ocupations={ocupations} />
                 </Col>
             </Row>
         </Container>
