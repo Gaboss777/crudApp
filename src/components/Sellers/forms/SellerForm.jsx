@@ -70,6 +70,7 @@ const SellerForm = ({isModal, createSeller, textBtn, user, editing, sizeBtn, upd
             <Form.Group as={Col}>
                 <Form.Label className='font-weight-bold text-uppercase'>Cedula</Form.Label>
                 <Form.Control required type='number' value={document} onChange={({target}) => setDocument(target.valueAsNumber)} />
+                <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
             </Form.Group>
             <Form.Group as={Col}>
                 <Form.Label className='font-weight-bold text-uppercase'>Fecha de Ingreso</Form.Label>

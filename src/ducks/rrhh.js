@@ -1,5 +1,5 @@
 import Axios from 'axios';
-const apiUrl = 'http://capi.inversionescerecom.com';
+import { apiUrl } from './apiUrl'
 
 const LIST_EMPLOYIES_REQUEST = 'LIST_EMPLOYIES_REQUEST'
 const LIST_EMPLOYIES_SUCCESS = 'LIST_EMPLOYIES_SUCCESS'

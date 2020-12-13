@@ -2,17 +2,13 @@ import React from 'react';
 import { Col, Container, Pagination, Row, Dropdown } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate'
 
-const PaginationList = ({ usersPerPage, totalUsers, currentPage, list, setUsersPerPage, setCurrentPage }) => {
+const PaginationList = ({ usersPerPage, totalUsers, list, setUsersPerPage, setCurrentPage }) => {
 
     const pageCount = Math.ceil(totalUsers / usersPerPage)
 
     const handlePageChange = ({ selected: selectedPage}) => {
         setCurrentPage(selectedPage + 1)
     }
-
-    console.log(usersPerPage)
-    console.log(usersPerPage === list.length)
-    console.log(list.length)
 
     return (
         <Container fluid className='mb-2 align' >

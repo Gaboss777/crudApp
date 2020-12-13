@@ -28,7 +28,6 @@ const InfoPayment = ({month, sells, removeSell, clientsList, year}) => {
                                 <th>FECHA</th>
                                 <th>MONEDA</th>
                                 <th>STATUS</th>
-                                <th>ACCION</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +42,6 @@ const InfoPayment = ({month, sells, removeSell, clientsList, year}) => {
                                         <td>{moment(p.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                         <td>{p.currency}</td>
                                         <td><Badge variant='danger'>PENDIENTE</Badge> </td>
-                                        <td><Button variant='danger' onClick={() => handleDelete(p.id)} size='sm'>Eliminar</Button> </td>
                                     </tr>
                                 )}
                             )}

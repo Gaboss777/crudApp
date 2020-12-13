@@ -5,7 +5,7 @@ import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.scss';
 import Layout from './components/layout';
-import MainMenu from './components/Navbar';
+import MenuNavbar from './components/MenuNavbar';
 import Dashboard from './components/Dashboard/dashboard';
 import UsersActions from './components/Actions/UsersActions';
 import UsersList from './components/users/List';
@@ -25,7 +25,7 @@ import ReportsPayment from './components/Reports/ReportsView/ReportsPayment';
 function App() {
   return (
     <Router>
-      <MainMenu />
+      <MenuNavbar />
       <Layout >
         <Switch>
           <Route exact path='/' component={Dashboard} />
@@ -37,23 +37,6 @@ function App() {
     </Router>
   )
 }
-
-// const Inicio = () => {
-//   return (
-//     <Router>
-//       <MainMenu />
-//       <Layout >
-//         <Switch>,
-//           <Route exact path='/' component={Login} />
-//           <Route exact path='/dashboard' component={Dashboard} />
-//           <Route exact path='/users' component={UsersView} />
-//           <Route exact path='/payment' component={PayView} />
-//           <Route exact path='/reports' component={ReportsView} />
-//         </Switch>
-//       </Layout>
-//     </Router>
-//   )
-// }
 
 const UsersView =()=> {
 

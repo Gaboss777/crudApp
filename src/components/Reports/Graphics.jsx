@@ -479,31 +479,29 @@ export const TableLastExpenses = ({bills, sells, salaries}) => {
         <Info>
             <Info.Header>ULTIMOS GASTOS</Info.Header>
             <Info.Body>
-            <Table>
-                    <thead>
-                        <tr>
-                            <th>NOMBRE</th>
-                            <th>FECHA</th>
-                            <th>METODO</th>
-                            <th>MONTO</th>
-                            <th>MONEDA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    { lastPay.slice(0,5).map(x => {
-
-                        return(
+                <Table>
+                        <thead>
                             <tr>
-                                <td>hola</td>
-                                <td>{moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
-                                <td>{x.method}</td>
-                                <td>{x.amount}</td>
-                                <td>{x.currency}</td>
+                                <th>FECHA</th>
+                                <th>METODO</th>
+                                <th>MONTO</th>
+                                <th>MONEDA</th>
                             </tr>
-                        )
-                    })}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                        { lastPay.slice(0,5).map(x => {
+
+                            return(
+                                <tr>
+                                    <td>{moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
+                                    <td>{x.method}</td>
+                                    <td>{x.amount}</td>
+                                    <td>{x.currency}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                    </Table>
             </Info.Body>
         </Info>
     )

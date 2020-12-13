@@ -1,5 +1,6 @@
 import React from 'react'
 import { Document, View, Page, Text, StyleSheet} from '@react-pdf/renderer'
+import TableReports from '../Reports/TableReports'
 
 const styles = StyleSheet.create({
     page: {
@@ -11,16 +12,14 @@ const styles = StyleSheet.create({
 
 })
 
-const PdfClient = () => {
+export const ReportPDF = () => {
     return (
         <Document >
             <Page>
                 <View>
-                    <Text>PRUEBA DE PDF</Text>
+                    <Text></Text>
                 </View>
             </Page>
         </Document>
     )
 }
-
-export default PdfClient

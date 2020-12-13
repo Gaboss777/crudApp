@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Container, Row, Col, ButtonGroup} from 'react-bootstrap';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,26 +8,37 @@ import Calendar from './Calendar';
 import SellerForm from './forms/SellerForm';
 import {connect} from 'react-redux';
 import SellersList from './List';
-import DropdownSellers from './DropdownSellers';
 import SelectionYear from '../SelectionYear';
+import DropdownList from '../DropdownList';
 
 const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSelected, clientsList, getUserList, createSell, removeSell, sells, getSellsList, updateSellUser, getSellersList, year}) => {
 
+    const [count, setCount] = useState(0)
+    const names = list.map(x => {return {name: x.firstname.toUpperCase()+' '+x.secondname.toUpperCase()+' '+x.lastname.toUpperCase()+' '+x.secondsurname.toUpperCase(), id: x.id}} )
+
     useEffect(() => {
-        getSellersList()
-    }, [])
+        if(selected) {
+            sellUserSelected('')
+        }
+        if(count !== 1){
+            setCount(1)
+            getSellersList()
+        }
+        getUserList()
+        getSellsList()
+    }, [count])
 
     return (
         <Container fluid className='px-0' >
             <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGOS VENDEDORES</h1>
             <Row className='mt-2'>
                 <Col sm lg={5}>
-                    <DropdownSellers list={list} selected={selected} sellUserSelected={sellUserSelected} />
+                    <DropdownList data={names} action={sellUserSelected} labelKey='name' text='VENDEDORES' placeholder='Elija un venededor' />
                 </Col>
-                <Col sm lg={2}>
+                <Col sm lg={2} classNAme='mt-2'>
                     <SelectionYear disabled={selected ? false : true} className={!selected ? 'form-disable' : ''} />
                 </Col>
-                <Col sm lg={4}>
+                <Col sm lg={4} classNAme='mt-2'>
                     <ButtonGroup className='mt-1'>
                         <SellerForm isModal={true} createSeller={createSellUser} textBtn={<FontAwesomeIcon icon={faPlusSquare} size='lg' />} />
                         <SellersList list={list} removeSeller={removeSellUser} updateSellUser={updateSellUser} />

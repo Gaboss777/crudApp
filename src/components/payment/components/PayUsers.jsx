@@ -1,21 +1,41 @@
 //import librerias
-import React from 'react';
-import { Container, Row, Col} from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Container, Row, Col, Badge, Card} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import DropdownClient from './DropdownClient';
 import Calendar from './Calendar';
 import { createPayment, getClient, getPayments, removePayment } from '../../../ducks/payment';
 import { getUserList } from '../../../ducks/users'
+import SelectionYear from '../../SelectionYear';
+import InfoCard from './InfoClient';
+import DropdownList from '../../DropdownList';
 
 const PayUsers = ({client, year, payments, removePayment, list, getClient, getPayments, getUsers, createPayment}) => {
+
+    useEffect(() => {
+        getUsers()
+        getPayments()
+        if(client) {
+            getClient('')
+        }
+    }, [])
 
     return (
         <Container fluid className='px-0'>
             <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO COBRO CLIENTES</h1>
             <Row >
-                <Col sm lg={12} >
-                    <DropdownClient list={list} client={client} getClient={getClient} getPayments={getPayments} getUsers={getUsers} />
+                <Col sm lg={4} >
+                    <DropdownList data={list} action={getClient} labelKey='name' text='CLIENTES' placeholder='Elija un cliente' />
                 </Col>
+                <Col sm lg={2} className='mt-2' >
+                    <SelectionYear disabled={client ? false : true} className={!client ? 'form-disable' : ''} />
+                </Col>
+                {client && 
+                    <Col sm lg={4}>
+                        <InfoCard client={client} />
+                    </Col>
+                }
+            </Row>
+            <Row>
                 { client &&
                 <>
                     { year && 

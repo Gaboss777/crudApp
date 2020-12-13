@@ -1,5 +1,5 @@
 import Axios from 'axios';
-const apiUrl = 'http://capi.inversionescerecom.com';
+import { apiUrl } from './apiUrl'
 
 const SELLERS_LIST = 'SELLERS_LIST'
 const CREATE_SELLER ='CREATE_SELLER'

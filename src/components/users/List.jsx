@@ -39,7 +39,15 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
 
     return (
         <>
-            {!loading && filteredList ?
+            {loading ? 
+                <Row>
+                    <Col className='text-center'>
+                        <Spinner variant='warning' animation='grow' className='ml-4' />
+                        <Spinner variant='warning' animation='grow' className='mx-1' />
+                        <Spinner variant='warning' animation='grow' />
+                    </Col>
+                </Row>
+            : filteredList &&
                 <>
                 <Table size='sm'>
                     <thead className='bg-warning text-white text-center text-uppercase'>
@@ -55,6 +63,8 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                         </tr>
                     </thead>
                     <tbody className='text-center' >
+                    {currentUsers.length > 0 ? 
+                        <>
                         {currentUsers.map(user => (
                             <tr className='hover-table' onClick={() => selectRow(!document.getElementById('select_row_' + user.id).checked, user)} >
                                 <td><FormCheck checked={selected.find(x => x.id === user.id)} id={'select_row_' + user.id} type='checkbox' onChange={({ target }) => selectRow(target.checked, user)} /></td>
@@ -68,18 +78,13 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                             </tr>
                         ))
                         }
+                        </>
+                    : <tr><td colSpan={8}>NO HAY DATOS DISPONIBLES</td></tr>
+                    }
                     </tbody>
                 </Table>
                 <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
                 </>
-                :
-                <Row>
-                    <Col className='text-center'>
-                        <Spinner variant='warning' animation='grow' className='ml-4' />
-                        <Spinner variant='warning' animation='grow' className='mx-1' />
-                        <Spinner variant='warning' animation='grow' />
-                    </Col>
-                </Row>
             }
         </>
     )

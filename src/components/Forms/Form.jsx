@@ -25,8 +25,6 @@ const UserForm = ({ createUser, user, updateUser, asModal, editing, selection })
     const [initialDate, setInitialDate] = useState(user ? user.initialdate : "")
     const [lastDate, setLastDate] = useState(user ? user.lastdate : "")
 
-    console.log(user)
-
     useEffect(() => {
         if (user && editing) {
             setName(user.name)

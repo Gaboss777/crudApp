@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+
+import { Typeahead } from 'react-bootstrap-typeahead';
+
 import Alerts from '../../Alerts/alerts'
 
 const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) => {
@@ -13,6 +16,7 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
     const [totalAmount, setTotalAmount] = useState('')
 
     const [days, setDays] = useState('')
+    const [key, setKey] = useState('')
 
     const [valid, setValid] = useState(false)
 
@@ -38,7 +42,8 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
         if(form.checkValidity() === false){
             e.stopPropagation()
         } else {
-            let newPayment = {seller_id: seller.id ,client_id: parseInt(client), date, amount: payamount, percent, currency, period: month.id +'-2020'}
+            let clientId = client[0].id
+            let newPayment = {seller_id: seller.id ,client_id: clientId, date, amount: payamount, percent, currency, period: month.id +'-2020'}
             createSell(newPayment)
             Alerts.InfoNotify('PAGO CREADO CON EXITO')
             setClient('')
@@ -51,6 +56,8 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
         setValid(true)
     }
 
+    console.log(client)
+
     const form = (
         <Form onSubmit={handleSubmit} noValidate validated={valid}>
             <Form.Row>
@@ -60,12 +67,13 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={6}>
                     <Form.Label className='font-weight-bold text-uppercase'>Cliente</Form.Label>
-                    <Form.Control required as='select' value={client} onChange={({target}) => setClient(target.value)}>
+                    <Typeahead id='sellers-list' defaultSelected='' labelKey='name' options={clientsList} onChange={(selected) => setClient(selected)} placeholder='Elija un cliente' clearButton />
+                    {/* <Form.Control required as='select' value={client} onChange={({target}) => setClient(target.value)}>
                         <option value='' selected disabled>Elija un cliente</option>
                         {clientsList.map(client =>
                             <option value={client.id}>{client.name}</option>
                         )}
-                    </Form.Control>
+                    </Form.Control> */}
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>

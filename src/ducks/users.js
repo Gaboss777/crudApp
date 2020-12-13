@@ -1,5 +1,6 @@
 import Axios from 'axios';
-const apiUrl = 'http://capi.inversionescerecom.com';
+import { apiUrl } from './apiUrl'
+
 export const actionCreator = (resource) => {
     return {
         LIST_REQUESTED: resource.toUpperCase() + '_LIST_REQUESTED',

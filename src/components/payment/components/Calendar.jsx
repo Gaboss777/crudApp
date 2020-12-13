@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container, Row, Col, Card, Badge} from 'react-bootstrap'
-import InfoModal from './InfoModal'
+import Month from '../../Month'
+import InfoPayments from './InfoPayments'
 import PayForm from './PayForm'
 
 const Calendar = ({client, year, payments, removePayment, createPayment}) => {
@@ -17,20 +18,13 @@ const Calendar = ({client, year, payments, removePayment, createPayment}) => {
                 let totalPayed = clientPayments.filter(x=>x.period===month.id+'-'+year).filter(x=>x.concept === 'mensualidad').reduce((a,b) => {return a + b.amount}, 0)
 
                 return(
-                    <Col sm lg={3} className='px-1 my-1'>
-                        <Card border='dark' className='shadow-none'>
-                            <Card.Header className='bg-warning text-white text-center text-uppercase'><h5 className='mb-0'>{month.name}</h5></Card.Header>
-                            <Card.Body className='p-0'>
-                                <Card.Text className='p-3 text-center'>
-                                    <p className='font-weight-bold text-uppercase'>MENSUALIDAD: <Badge variant={totalPayed >= client.mensuality ? 'success' : 'danger'}>{totalPayed >= client.mensuality ? 'PAGADO' : 'PENDIENTE'}</Badge></p>
-                                    <p className='font-weight-bold text-uppercase'>TOTAL PAGADO BS: {isPayedBs}</p>
-                                    <p className='font-weight-bold text-uppercase'>TOTAL PAGADO USD: {isPayedUSD}</p>
-                                    <InfoModal month={month} payments={clientPayments} year={year} removePayment={removePayment} />
-                                    <PayForm asModal={true} month={month} year={year} createPayment={createPayment} client={client} />
-                                    </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                    <Month title={month.name}>
+                        <p className='font-weight-bold text-uppercase'>MENSUALIDAD: <Badge variant={totalPayed >= client.mensuality ? 'success' : 'danger'}>{totalPayed >= client.mensuality ? 'PAGADO' : 'PENDIENTE'}</Badge></p>
+                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO BS: {isPayedBs}</p>
+                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO USD: {isPayedUSD}</p>
+                        <InfoPayments month={month} payments={clientPayments} year={year} removePayment={removePayment} />
+                        <PayForm asModal={true} month={month} year={year} createPayment={createPayment} client={client} />
+                    </Month>
                 )}
             )}
         </Row>

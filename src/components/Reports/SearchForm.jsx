@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Form, Row, Button } from 'react-bootstrap'
 import moment from 'moment'
-import Alerts from '../Alerts/alerts'
 
-const SearchForm = ({sells, bills, salaries, payments}) => {
+const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
 
     const currentDate = new Date()
     const currentYear = currentDate.getFullYear()
     const currentMonth = currentDate.getMonth()
 
-    const [option, setOption] = useState('')
+    const [tableData, setTableData] = useState('')
     const [moreOptions, setMoreOptions] = useState(null)
     const [initialDate, setInitialDate] = useState('')
     const [lastDate, setLastDate] = useState('')
@@ -21,80 +20,76 @@ const SearchForm = ({sells, bills, salaries, payments}) => {
 
     const [data, setData] = useState([])
 
+    const filters = {currency: currency, method: method, concept: concept}
 
-    const otherDates = (info) => {
+    const otherDates = (values) => {
         switch(moreOptions) {
             case '7 dias':
-                let lastWeek = info.filter(x => moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') <= moment(currentDate, 'YYYY-MM-DD').format('YYYY-MM-DD') &&  moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') >= moment().subtract(7, 'days').format('YYYY-MM-DD'))
+                let lastWeek = values.filter(x => moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') <= moment(currentDate, 'YYYY-MM-DD').format('YYYY-MM-DD') &&  moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') >= moment().subtract(7, 'days').format('YYYY-MM-DD'))
                 setData(lastWeek)
                 break
             case '1 mes':
-                let lastMonth = info.filter(x => x.period === currentMonth+'-'+currentYear)
+                let lastMonth = values.filter(x => x.period === currentMonth+'-'+currentYear)
                 setData(lastMonth)
                 break
             case '2 meses':
-                let twoMonths = info.filter(x => x.period === currentMonth+'-'+currentYear || x.period === (currentMonth - 1)+'-'+currentYear)
+                let twoMonths = values.filter(x => x.period === currentMonth+'-'+currentYear && x.period === (currentMonth - 1)+'-'+currentYear)
                 setData(twoMonths)
                 break
             case '3 meses':
-                let threeMonths = info.filter(x => x.period === currentMonth+'-'+currentYear || x.period === (currentMonth - 1)+'-'+currentYear || x.period === (currentMonth - 2)+'-'+currentYear)
+                let threeMonths = values.filter(x => x.period === currentMonth+'-'+currentYear && x.period === (currentMonth - 1)+'-'+currentYear && x.period === (currentMonth - 2)+'-'+currentYear)
                 setData(threeMonths)
                 break
             default: setData([])
         }
     }
 
-    const filterOptions = (data) => {
-        let newData = data.filter(x => x.amount <= maxAmount || x.amount >= minAmount || x.currency === currency || x.method ===  method || x.concept === concept )
-        console.log('Datos filtrados con opciones', data.filter(x => x.currency === currency))
-        setData(newData)
+    const filterOptions = (values) => {
+        console.log('datos filtrados con otras opciones')
+        let dataFiltered = values.filter(m => !maxAmount || m.amount <= maxAmount).filter(m => !minAmount || m.amount >= minAmount).filter(x => !filters.currency || x.currency === filters.currency).filter(y => !filters.method || y.method === method).filter(z => !filters.concept || z.concept === concept)
+        return dataFiltered
     }
 
-    const filterPerDates = (data, filters) => {
-        let newData = data.filter(x => moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') <= lastDate && moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') >= initialDate )
-        if(filters === true){
-            filterOptions(newData)
-        } else {
-            console.log('Datos filtrados sin opciones')
-            setData(newData)
-        }
-    }
-
-    const handleSearch = (dbTable) => {
-        if(moreOptions || initialDate || lastDate) {
-            console.log('Datos con fecha')
-            if(initialDate && lastDate){
-                if(minAmount || maxAmount || currency || method || currency || concept){
-                    filterPerDates(dbTable, true)
-                } else {
-                    filterPerDates(dbTable, false)
+    const filterPerDates = (values) => {
+        let newData = []
+        if(moreOptions || initialDate || lastDate){
+            if(initialDate && lastDate ){
+                console.log('datos filtrados con fechas variadas')
+                newData = values.filter(x => moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') <= lastDate && moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD') >= initialDate )
+                if(currency || method || concept || minAmount || maxAmount){
+                    newData = filterOptions(newData)
                 }
+                setData(newData)
             } else {
-                otherDates(dbTable)
+                console.log('datos filtrados por fechas fijas')
+                if(currency || method || concept || minAmount || maxAmount){
+                    newData = filterOptions(values)
+                }
+                otherDates(!newData ? newData : values)
             }
         } else {
-            console.log('Datos sin fecha')
-            if(minAmount || maxAmount || currency || method || currency || concept){
-                filterOptions(dbTable)
+            if(currency || method || concept || minAmount || maxAmount){
+                newData = filterOptions(values)
+                setData(newData)
             } else {
-                setData(dbTable)
+                setData(values)
             }
         }
     }
 
-    const reportPerOptions = () => {
-        switch(option){
+    const handleReports = () => {
+        switch(tableData){
             case '1':
-                handleSearch(bills)
+                filterPerDates(bills)
                 break
             case '2':
-                handleSearch(salaries)
+                filterPerDates(salaries)
                 break
             case '3':
-                handleSearch(sells)
+                filterPerDates(sells)
                 break
             case '4':
-                handleSearch(payments)
+                filterPerDates(payments)
                 break
             default: setData([])
         }
@@ -102,11 +97,27 @@ const SearchForm = ({sells, bills, salaries, payments}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        reportPerOptions()
+        handleReports()
     }
 
+    const handleResetFilters = () => {
+        setTableData('')
+        setConcept('')
+        setCurrency('')
+        setMethod('')
+        setMaxAmount(0)
+        setMinAmount(0)
+        setMoreOptions('')
+        setData([])
+        setInitialDate('')
+        setLastDate('')
+    }
+
+    useEffect(() => {
+        createReports(data)
+    }, [data])
+
     console.log(data)
-    console.log(method, currency, maxAmount, minAmount, concept)
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -115,7 +126,7 @@ const SearchForm = ({sells, bills, salaries, payments}) => {
                     <Form.Row>
                         <Form.Group as={Col} sm lg={12}>
                             <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>TABLA</Form.Label>
-                            <Form.Control required as='select' value={option} onChange={({target}) => setOption(target.value)} >
+                            <Form.Control required as='select' value={tableData} onChange={({target}) => setTableData(target.value)} >
                                 <option value='' selected>Elija uno</option>
                                 <option value='4'>CLIENTES</option>
                                 <option value='1'>PROVEEDORES</option>
@@ -125,7 +136,7 @@ const SearchForm = ({sells, bills, salaries, payments}) => {
                         </Form.Group>
                         <Col sm lg={12} className='mt-3'>
                             <Button variant='primary' type='submit'>BUSCAR</Button>
-                            <Button variant='danger' className='ml-2'>REINICIAR</Button>
+                            <Button variant='danger' className='ml-2' onClick={handleResetFilters} >REINICIAR</Button>
                         </Col>
                     </Form.Row>
                 </Col>
@@ -177,9 +188,9 @@ const SearchForm = ({sells, bills, salaries, payments}) => {
                         </Form.Group>
                         <Form.Group as={Col} sm lg={3}>
                             <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>CONCEPTO</Form.Label>
-                            <Form.Control as='select' value={concept} onChange={({target}) => setConcept(target.value)} disabled={option === '2' || option === '4' ? false : true} className={option === '2' || option === '4' ? '' : 'form-disable' }>
+                            <Form.Control as='select' value={concept} onChange={({target}) => setConcept(target.value)} disabled={tableData === '2' || tableData === '4' ? false : true} className={tableData === '2' || tableData === '4' ? '' : 'form-disable' }>
                                 <option value='' selected>Todo</option>
-                                {option === '4' ? 
+                                {tableData === '4' ? 
                                 <>
                                     <option value='mensualidad'>Mensualidad</option>
                                     <option value='alquiler'>Alquiler</option>

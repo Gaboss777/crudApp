@@ -3,7 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import Logo from '../img/Logo 3.png';
 import { Link } from 'react-router-dom';
 
-const MainMenu =()=> {
+const MenuNavbar =()=> {
     return(
     <Navbar expand="lg" bg='white' className='py-1 shadow-none custom-navbar' >
         <Navbar.Brand>
@@ -19,4 +19,4 @@ const MainMenu =()=> {
     )
 }
 
-export default MainMenu
+export default MenuNavbar

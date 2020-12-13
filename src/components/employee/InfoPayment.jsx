@@ -49,7 +49,6 @@ const InfoPayment = ({user, salaries, year, removeSalaries, createPayment }) => 
                                     <th>METODO</th>
                                     <th>BANCO</th>
                                     <th>REFERENCIA</th>
-                                    <th>ACCION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,7 +63,6 @@ const InfoPayment = ({user, salaries, year, removeSalaries, createPayment }) => 
                                         <td>{s.method}</td>
                                         <td>{s.bank}</td>
                                         <td>{s.reference}</td>
-                                        <td><Button variant='danger' size='sm' onClick={() => handleDelete(s.id)} >Eliminar</Button> </td>
                                     </tr>
                                 )}
                             </>

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-const apiUrl = 'http://capi.inversionescerecom.com';
+import { apiUrl } from './apiUrl';
 
 const CLIENT_SELECTED = "CLIENT_SELECTED";
 const PAYMENT_LIST = 'PAYMENT_LIST';

@@ -1,5 +1,5 @@
 import Axios from 'axios';
-const apiUrl = 'http://capi.inversionescerecom.com';
+import { apiUrl } from './apiUrl'
 
 const CREATE_PROVIDER_REQUEST = 'CREATE_PROVIDER_REQUEST'
 const CREATE_PROVIDER_SUCCESS = 'CREATE_PROVIDER_SUCCESS'

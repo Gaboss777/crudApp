@@ -1,0 +1,85 @@
+Componentes comunes:
+- boton modal 
+- month + calendar
+- table + paginationList
+
+ESTRUCTURA
+- components
+   |- common
+	|- SelectionYear
+	|- SearchData
+	|- Sidebar
+	|- PaginationList
+	|- BtnModal
+	|- DropdownList
+	|- DeleteData
+	|- Alerts
+   |- containers
+	|- ActionsGroup
+	|- Layout
+	|- InfoSection
+	|- Month
+	|- Dashboard
+   |- constants
+	|- Menunavbar
+	|- BtnDashboard
+- screens
+   |- Users
+	|- UsersView
+	|- UsersForm
+	|- UsersList
+	|- UsersInfo
+   |- Payments
+	|- PaymentsView
+	|- CardInfo
+	|- PaymentsList
+	|- PaymentsForm
+   |- Providers
+	|- ProviderView
+	|- Lists
+	   |- BillsList
+	   |- ProvidersList
+	|- Forms
+	   |- ProviderForm
+	   |- BillForm
+   |- Employies
+	|- EmployieView
+	|- Lists
+	   |- OcupationsList
+	   |- EmployiesList
+	|- Forms
+	   |- EmployeeForm
+	   |- OcupationForm
+	   |- SalariesForm
+	|- PaymentsInfo
+   |- Reports
+	|- Views
+	   |- GeneralInfo
+	   |- ReportPayments
+	|- Graphics
+	   |- LineGraph
+	   |- CircleGraph
+	   |- BarGraph
+	|- Lists
+	   |- LastItems
+	   |- TableReport
+	|- FilterForm
+   |- Login
+	|- LoginPage
+	|- token
+- PDF
+	|- Styles
+	|- documents
+	   |- GeneralReport
+	   |- PaymentsReport
+- ducks
+   |- apiUrl
+   |- root
+   |- users
+   |- payment
+   |- provider
+   |- rrhh
+   |- seller
+   |- reports
+   |- dates
+	
