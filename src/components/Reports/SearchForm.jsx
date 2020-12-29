@@ -21,6 +21,7 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
     const [data, setData] = useState([])
 
     const filters = {currency: currency, method: method, concept: concept}
+    const allTables = [...bills, ...sells, ...salaries, ...payments]
 
     const otherDates = (values) => {
         switch(moreOptions) {
@@ -46,7 +47,7 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
 
     const filterOptions = (values) => {
         console.log('datos filtrados con otras opciones')
-        let dataFiltered = values.filter(m => !maxAmount || m.amount <= maxAmount).filter(m => !minAmount || m.amount >= minAmount).filter(x => !filters.currency || x.currency === filters.currency).filter(y => !filters.method || y.method === method).filter(z => !filters.concept || z.concept === concept)
+        let dataFiltered = values.filter(m => !maxAmount || m.amount <= maxAmount).filter(m => !minAmount || m.amount >= minAmount).filter(x => !filters.currency || x.currency === filters.currency).filter(y => !filters.method || y.method == method).filter(z => !filters.concept || z.concept === concept)
         return dataFiltered
     }
 
@@ -91,6 +92,9 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
             case '4':
                 filterPerDates(payments)
                 break
+            case '5':
+                filterPerDates(allTables)
+                break
             default: setData([])
         }
     }
@@ -127,7 +131,8 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                         <Form.Group as={Col} sm lg={12}>
                             <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>TABLA</Form.Label>
                             <Form.Control required as='select' value={tableData} onChange={({target}) => setTableData(target.value)} >
-                                <option value='' selected>Elija uno</option>
+                                <option value='' >Elija una opcion</option>
+                                <option value='5'>TODOS</option>
                                 <option value='4'>CLIENTES</option>
                                 <option value='1'>PROVEEDORES</option>
                                 <option value='2'>EMPLEADOS</option>

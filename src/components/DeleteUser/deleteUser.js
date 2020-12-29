@@ -1,7 +1,7 @@
 import React, { Fragment,  useState } from 'react';
 import { connect } from 'react-redux';
 import {Button, Modal, Row, Col, Table, Container} from 'react-bootstrap';
-import { removeUser } from '../../ducks/users';
+import { removeUser } from '../../ducks/usersReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Alerts from '../Alerts/alerts';

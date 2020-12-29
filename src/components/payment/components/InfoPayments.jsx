@@ -42,7 +42,7 @@ const InfoModal = ({month,payments, year, removePayment}) => {
                                 return(
                                     <tr>
                                         <td>{pay.date}</td>
-                                        <td>{pay.amount}</td>
+                                        <td>{new Intl.NumberFormat().format(pay.amount)}</td>
                                         <td>{pay.currency}</td>
                                         <td>{pay.discount} %</td>
                                         <td>{pay.concept}</td>

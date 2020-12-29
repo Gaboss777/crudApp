@@ -1,9 +1,11 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import Logo from '../img/Logo 3.png';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const MenuNavbar =()=> {
+    const {path} = useRouteMatch()
+
     return(
     <Navbar expand="lg" bg='white' className='py-1 shadow-none custom-navbar' >
         <Navbar.Brand>
@@ -11,9 +13,10 @@ const MenuNavbar =()=> {
         </Navbar.Brand>
         <Nav >
             <Nav.Link as={Link} to='/' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >INICIO</Nav.Link>
-            <Nav.Link as={Link} to='/users' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >CLIENTES</Nav.Link>
-            <Nav.Link as={Link} to='/payment' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >PAGOS</Nav.Link>
+            <Nav.Link as={Link} to='/clients' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >CLIENTES</Nav.Link>
+            <Nav.Link as={Link} to='/payments' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >PAGOS</Nav.Link>
             <Nav.Link as={Link} to='/reports' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >REPORTES</Nav.Link>
+            <Nav.Link as={Link} to='/accounts' className='nav-link-menu p-2 mx-1 navbar-hover-effect '>CUENTAS</Nav.Link>
         </Nav>
     </Navbar>
     )

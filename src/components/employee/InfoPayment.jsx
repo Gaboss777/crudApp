@@ -54,11 +54,11 @@ const InfoPayment = ({user, salaries, year, removeSalaries, createPayment }) => 
                             <tbody>
                             { salaries.length > 0 ?
                             <>
-                                { salaries.filter(x => x.period === m.id+'-'+year && x.user_id === user.id).map(s => 
+                                { salaries.filter(x => x.period === m.id+'-'+year && x.employie_id === user.id).map(s => 
                                     <tr>
                                         <td>{moment(s.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                         <td>{s.concept}</td>
-                                        <td>{s.amount}</td>
+                                        <td>{new Intl.NumberFormat().format(s.amount)}</td>
                                         <td>{s.currency}</td>
                                         <td>{s.method}</td>
                                         <td>{s.bank}</td>

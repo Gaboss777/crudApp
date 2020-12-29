@@ -15,12 +15,14 @@ const Calendar = ({seller, clientsList, createSell, removeSell, sells, year}) =>
             <Row>
                 {months.map(month => {
                     let totalSells = sellerPayments.filter(x => x.period === month.id+'-'+year)
-                    let totalAmount = totalSells.reduce((a,b) => {return a + b.amount;}, 0).toFixed(2)
+                    let totalAmountUsd = totalSells.filter(x => x.currency === 'USD').reduce((a,b) => {return a + b.amount;}, 0)
+                    let totalAmountBs = totalSells.filter(x => x.currency === 'BS').reduce((a,b) => {return a + b.amount}, 0)
 
                     return(
                     <Month title={month.name}>
                         <p className='font-weight-bold text-uppercase'>Total Pagos: {totalSells.length}</p>
-                        <p className='font-weight-bold text-uppercase'>Monto Total: {totalAmount}</p>
+                        <p className='font-weight-bold text-uppercase'>Total USD: {new Intl.NumberFormat("es-VE").format(totalAmountUsd)}</p>
+                        <p className='font-weight-bold text-uppercase'>Total BS: {new Intl.NumberFormat("es-VE").format(totalAmountBs)}</p>
                         <InfoPayment removeSell={removeSell} sells={sellerPayments} month={month} clientsList={clientsList} year={year} />
                         <PaymentForm clientsList={clientsList} month={month} seller={seller} isModal={true} createSell={createSell} year={year} />
                     </Month>

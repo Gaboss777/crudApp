@@ -50,7 +50,7 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
             event.stopPropagation()
         } else {
             let newEmployee = { firstname, secondname, lastname, secondsurname, document, initialdate, lastdate, salary, ocupation_id: ocupation }
-            if(!user){
+            if(!user && !editing){
                 createEmployee(newEmployee)
                 Alerts.InfoNotify('EMPLEADO CREADO')
             } else {

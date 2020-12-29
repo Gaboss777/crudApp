@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import { usersReducer } from "./users";
-import { paymentReducer } from './payment';
-import { providerReducer } from "./provider";
-import { employiesReducer } from "./rrhh";
-import { datesReducer } from "./dates";
-import { sellerReducer } from "./sellers";
-import { reportsReducer } from "./reports";
+import { usersReducer } from "./usersReducer";
+import { paymentReducer } from './paymentReducer';
+import { providerReducer } from "./providerReducer";
+import { employiesReducer } from "./rrhhReducer";
+import { datesReducer } from "./datesReducer";
+import { sellerReducer } from "./sellersReducer";
+import { reportsReducer } from "./reportsReducer";
+import { authReducer } from "./authReducer";
 
 export const rootReducer = combineReducers({
     users:usersReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
     rrhh:employiesReducer,
     dates:datesReducer,
     sellers:sellerReducer,
-    reports:reportsReducer
+    reports:reportsReducer,
+    auth:authReducer
 })

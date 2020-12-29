@@ -68,12 +68,6 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
                 <Form.Group as={Col} sm lg={6}>
                     <Form.Label className='font-weight-bold text-uppercase'>Cliente</Form.Label>
                     <Typeahead id='sellers-list' defaultSelected='' labelKey='name' options={clientsList} onChange={(selected) => setClient(selected)} placeholder='Elija un cliente' clearButton />
-                    {/* <Form.Control required as='select' value={client} onChange={({target}) => setClient(target.value)}>
-                        <option value='' selected disabled>Elija un cliente</option>
-                        {clientsList.map(client =>
-                            <option value={client.id}>{client.name}</option>
-                        )}
-                    </Form.Control> */}
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>

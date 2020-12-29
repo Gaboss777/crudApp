@@ -21,6 +21,7 @@ export const actionCreator = (resource) => {
 }
 
 const ACTIONS = actionCreator('user');
+const CLEAR_SELECTED_ROW = 'CLEAR_SELECTED_ROW'
 
 export const getUserList = () => {
     return dispatch => {
@@ -85,6 +86,12 @@ export const selectRow = (e, user) => {
         return dispatch => {
             dispatch({ type: ACTIONS.UNCHECKED, payload: user })
         }
+    }
+}
+
+export const clearSelectedRow = () => {
+    return dispatch => {
+        dispatch({type: CLEAR_SELECTED_ROW})
     }
 }
 
@@ -157,6 +164,11 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 selected: [...state.selected.filter(x => x.id !== payload.id)]
+            }
+        case CLEAR_SELECTED_ROW:
+            return {
+                ...state,
+                selected: initialState.selected
             }
         default:
             return state

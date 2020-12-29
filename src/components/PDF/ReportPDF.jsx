@@ -1,23 +1,25 @@
 import React from 'react'
-import { Document, View, Page, Text, StyleSheet} from '@react-pdf/renderer'
-import TableReports from '../Reports/TableReports'
+import { Document, View, Page, Text, Image, StyleSheet} from '@react-pdf/renderer'
+import logo from '../../img/Logo 3.png'
 
 const styles = StyleSheet.create({
     page: {
-
+        padding: 30
     },
-    section: {
-
-    },
+    imagen: {
+        width: 250,
+        height: 75
+    }
 
 })
 
 export const ReportPDF = () => {
+
     return (
-        <Document >
-            <Page>
+        <Document>
+            <Page style={styles.page}>
                 <View>
-                    <Text></Text>
+                    <Image src={logo} style={styles.image} />
                 </View>
             </Page>
         </Document>

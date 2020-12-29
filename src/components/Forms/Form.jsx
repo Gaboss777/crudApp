@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
-import { createUser, updateUser } from '../../ducks/users';
+import { createUser, updateUser } from '../../ducks/usersReducer';
 import { connect } from 'react-redux';
 import { faUserPlus, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

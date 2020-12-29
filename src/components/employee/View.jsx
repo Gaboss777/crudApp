@@ -3,11 +3,11 @@ import { Container, Row, Col, ButtonGroup } from 'react-bootstrap';
 import EmployeeList from './List';
 import EmployeeForm from './Forms/EmployeeForm';
 import OcupationForm from './Forms/OcupationForm';
-import DeleteEmployee from './removeUsers';
+import DeleteEmployee from './DeleteEmployee';
 import SearchData from '../SearchData';
 import OcupationList from './OcupationList';
 import { connect } from 'react-redux';
-import { removeOcupation, createEmployee, updateEmployee, getOcupationsList, deleteEmployee, createPayment, selectRow, getEmployies, getSalaries, removeSalaries } from '../../ducks/rrhh';
+import { removeOcupation, createEmployee, updateEmployee, getOcupationsList, deleteEmployee, createPayment, selectRow, getEmployies, getSalaries, removeSalaries } from '../../ducks/rrhhReducer';
 
 const EmployeeView = ({ocupations, removeOcupation, user, selection, createEmployee, updateEmployee, deleteEmployees, createPayment, getSalaries, getEmployies, year, salaries, employies, getOcupationsList, removeSalaries, selectRow}) => {
 

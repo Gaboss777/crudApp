@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Button, Col, Form, Row, Modal } from 'react-bootstrap';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { createOcupation } from '../../../ducks/rrhh';
+import { createOcupation } from '../../../ducks/rrhhReducer';
 import { connect } from 'react-redux';
 import Alerts from '../../Alerts/alerts';
 

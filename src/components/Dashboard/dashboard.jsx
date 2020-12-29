@@ -5,12 +5,13 @@ import { faThList, faFileInvoiceDollar, faFileContract } from '@fortawesome/free
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+
     return (
         <Container fluid>
             <Row className='justify-content-center dashboard-container'>
                 <Col className='text-center btn-dash-position '>
-                    <Link to='/users'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>
-                    <Link to='/payment'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
+                    <Link to='/clients'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>
+                    <Link to='/payments'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
                     <Link to='/reports'><ButtonDashboard textBtn='REPORTES' icon={faFileContract} /></Link>
                 </Col>
             </Row>

@@ -46,7 +46,7 @@ const ListBills = ({bills, providers, year, removeBills, createBill }) => {
                                     <td>{bill.date}</td>
                                     <td>{providerName}</td>
                                     <td>{bill.billnumber}</td>
-                                    <td>{bill.amount}</td>
+                                    <td>{new Intl.NumberFormat("es-VE").format(bill.amount)}</td>
                                     <td>{bill.currency}</td>
                                     <td>{bill.method}</td>
                                     <td>{bill.bank}</td>

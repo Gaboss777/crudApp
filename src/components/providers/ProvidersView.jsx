@@ -5,7 +5,7 @@ import SelectionYear from '../SelectionYear';
 import ListBills from './ListBills';
 import CreateProvider from './CreateProvider';
 import { connect } from 'react-redux';
-import { getBills, removeBills, createBill, createProvider, getProviders, removeProvider } from '../../ducks/provider';
+import { getBills, removeBills, createBill, createProvider, getProviders, removeProvider } from '../../ducks/providerReducer';
 import Listprovider from './Listprovider';
 
 //crear componente

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { selectedYear } from '../ducks/dates'
+import { selectedYear } from '../ducks/datesReducer'
 import { useEffect } from 'react'
 
 const SelectionYear = ({ selectedYear, year, disabled, className }) => {

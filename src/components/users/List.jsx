@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Table, FormCheck, Badge, Spinner, Row, Col } from 'react-bootstrap';
-import { getUserList, selectRow } from '../../ducks/users';
+import { clearSelectedRow, getUserList, selectRow } from '../../ducks/usersReducer';
 import { connect } from 'react-redux';
 import PaginationList from '../PaginationList';
 
-const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }) => {
+const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria, clearSelectedRow }) => {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10)
 
     const userDefault = []
+    console.log(selected)
 
     useEffect(() => {
         getUserList()
         if(selected.length > 0) {
-            selectRow(false, userDefault )
+            clearSelectedRow()
         }
     }, [])
 
@@ -83,7 +84,7 @@ const UsersList = ({ list, loading, getUserList, selectRow, selected, criteria }
                     }
                     </tbody>
                 </Table>
-                <PaginationList usersPerPage={usersPerPage} totalUsers={newList.length} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
+                <PaginationList usersPerPage={usersPerPage} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
                 </>
             }
         </>
@@ -99,7 +100,8 @@ const MSTP = state => (
 const MDTP = dispatch => (
     {
         getUserList: () => dispatch(getUserList()),
-        selectRow: (e, user) => dispatch(selectRow(e, user))
+        selectRow: (e, user) => dispatch(selectRow(e, user)),
+        clearSelectedRow: () => dispatch(clearSelectedRow())
     }
 )
 export default connect(MSTP, MDTP)(UsersList)

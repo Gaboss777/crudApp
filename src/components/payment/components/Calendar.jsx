@@ -20,8 +20,8 @@ const Calendar = ({client, year, payments, removePayment, createPayment}) => {
                 return(
                     <Month title={month.name}>
                         <p className='font-weight-bold text-uppercase'>MENSUALIDAD: <Badge variant={totalPayed >= client.mensuality ? 'success' : 'danger'}>{totalPayed >= client.mensuality ? 'PAGADO' : 'PENDIENTE'}</Badge></p>
-                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO BS: {isPayedBs}</p>
-                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO USD: {isPayedUSD}</p>
+                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO BS: {new Intl.NumberFormat("es-VE").format(isPayedBs)}</p>
+                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO USD: {new Intl.NumberFormat("es-VE").format(isPayedUSD)}</p>
                         <InfoPayments month={month} payments={clientPayments} year={year} removePayment={removePayment} />
                         <PayForm asModal={true} month={month} year={year} createPayment={createPayment} client={client} />
                     </Month>

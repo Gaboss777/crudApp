@@ -138,12 +138,15 @@ export const MovementsChart = ({payments, bills, sells, salaries}) => {
 
     const [chartData, setChartData] = useState([])
     const [currency, setCurrency] = useState('USD')
+    const [totalGastos, setTotalGastos] = useState([])
+    const [totalIngresos, setTotalIngresos] = useState([])
 
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
 
     const initialYear = new Date().getFullYear().toString()
     const monthsName = months.map(x => x.name)
     const dbTables = [bills, sells, salaries]
+    
 
     const movementsPerYear = (dataArr) => {
         const result = dataArr.filter(x => x.period.includes(initialYear) && x.currency === currency).map(x => {return {period: x.period, amount: x.amount}})
@@ -157,8 +160,8 @@ export const MovementsChart = ({payments, bills, sells, salaries}) => {
     }
 
     const totalMovements = () => {
-        let ingresos = []
-        let gastos = []
+        const ingresos = []
+        const gastos = []
         months.forEach((month) => {
             let totalExpenses = 0
             let totalPayments = movementsPerMonth(payments, month)
@@ -168,6 +171,8 @@ export const MovementsChart = ({payments, bills, sells, salaries}) => {
             gastos.push(totalExpenses)
             ingresos.push(totalPayments)
         })
+        setTotalGastos(gastos.reduce((a, b) => {return a + b}, 0).toFixed(2))
+        setTotalIngresos(ingresos.reduce((a,b) => {return a + b}, 0).toFixed(2))
 
         setChartData({
             labels: monthsName,
@@ -228,6 +233,12 @@ export const MovementsChart = ({payments, bills, sells, salaries}) => {
                     </Col>
                     <Col sm lg={1}>
                         <FormCheck type='radio' label='USD' name='radioForm' onChange={() => setCurrency('USD')} />
+                    </Col>
+                    <Col sm lg={5} className='text-center pl-2'>
+                        <p>Ingresos Anual: <span className='text-success'>{totalIngresos}</span></p>
+                    </Col>
+                    <Col sm lg={5} className='text-center pl-2'>
+                        <p>Egresos Anual: <span className='text-danger'>{totalGastos}</span></p>
                     </Col>
                 </Row>
                 <Line data={chartData} options={options} />
@@ -441,7 +452,7 @@ export const TableLastPayments = ({payments, list}) => {
                                 <td>{name}</td>
                                 <td>{moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                 <td>{x.concept}</td>
-                                <td>{x.amount}</td>
+                                <td>{new Intl.NumberFormat().format(x.amount)}</td>
                                 <td>{x.currency}</td>
                             </tr>
                         )
@@ -495,7 +506,7 @@ export const TableLastExpenses = ({bills, sells, salaries}) => {
                                 <tr>
                                     <td>{moment(x.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                     <td>{x.method}</td>
-                                    <td>{x.amount}</td>
+                                    <td>{new Intl.NumberFormat().format(x.amount)}</td>
                                     <td>{x.currency}</td>
                                 </tr>
                             )

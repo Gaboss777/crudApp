@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col, Badge, Card} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Calendar from './Calendar';
-import { createPayment, getClient, getPayments, removePayment } from '../../../ducks/payment';
-import { getUserList } from '../../../ducks/users'
+import { createPayment, getClient, getPayments, removePayment } from '../../../ducks/paymentReducer';
+import { getUserList } from '../../../ducks/usersReducer'
 import SelectionYear from '../../SelectionYear';
 import InfoCard from './InfoClient';
 import DropdownList from '../../DropdownList';

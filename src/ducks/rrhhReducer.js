@@ -93,7 +93,6 @@ export const getOcupationsList = () => {
 
 export const deleteEmployee = (selection) => {
     let id = selection.map(s => s.id)
-    console.log(id)
     return dispatch => {
         dispatch({type: DELETE_EMPLOYEE_REQUEST})
         Axios.delete(apiUrl + '/employees', {data: id})
@@ -207,7 +206,6 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
                 employies: [...state.employies, payload]
             }
         case LIST_OCUPATIONS_SUCCESS:
-            console.log(payload)
             return {
                 ...state,
                 ocupations: payload,

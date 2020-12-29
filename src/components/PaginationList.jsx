@@ -2,9 +2,9 @@ import React from 'react';
 import { Col, Container, Pagination, Row, Dropdown } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate'
 
-const PaginationList = ({ usersPerPage, totalUsers, list, setUsersPerPage, setCurrentPage }) => {
+const PaginationList = ({ usersPerPage, list, setUsersPerPage, setCurrentPage, ...rest }) => {
 
-    const pageCount = Math.ceil(totalUsers / usersPerPage)
+    const pageCount = Math.ceil(list.length / usersPerPage)
 
     const handlePageChange = ({ selected: selectedPage}) => {
         setCurrentPage(selectedPage + 1)
@@ -13,8 +13,8 @@ const PaginationList = ({ usersPerPage, totalUsers, list, setUsersPerPage, setCu
     return (
         <Container fluid className='mb-2 align' >
             <Row>
-                <Col sm lg={1} className='px-0 text-center'>
-                    <Dropdown onSelect={(k) => setUsersPerPage(k)}>
+                <Col sm lg={1} className='px-0 text-center mr-2'>
+                    <Dropdown onSelect={(k) => setUsersPerPage(k)} >
                         <Dropdown.Toggle variant='dark' id='drop-basic'>
                             {usersPerPage == list.length ? 'TODOS' : usersPerPage}
                         </Dropdown.Toggle>
@@ -22,7 +22,7 @@ const PaginationList = ({ usersPerPage, totalUsers, list, setUsersPerPage, setCu
                             <Dropdown.Item eventKey={10}>10</Dropdown.Item>
                             <Dropdown.Item eventKey={20}>20</Dropdown.Item>
                             <Dropdown.Item eventKey={30}>30</Dropdown.Item>
-                            <Dropdown.Item eventKey={list.length}>TODOS</Dropdown.Item>
+                            <Dropdown.Item eventKey={list.length} disabled={list.length === 0 ? true : false} >TODOS</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>
