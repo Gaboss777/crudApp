@@ -86,8 +86,12 @@ export const login = (username, password) => {
     return dispatch => {
         Axios.post(apiUrl + '/login', {username, password})
             .then(res => {
+<<<<<<< Updated upstream
                 const token = res.data.jwt;
                 console.log(token);
+=======
+                const token = res.data.jwt
+>>>>>>> Stashed changes
                 localStorage.setItem('jwtToken', token)
                 setToken(token)
                 dispatch({type: SET_CURRENT_USER, payload: jwtDecode(token)})

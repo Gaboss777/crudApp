@@ -57,7 +57,7 @@ const AccountForm = ({isModal, registerAccount, edit, account, selected, updateA
             <Form.Group as={Row}>
                 <Form.Label column sm lg={4}>PASSWORD</Form.Label>
                 <Col sm lg={8}>
-                    <Form.Control required type='text' value={password} onChange={({target}) => setPassword(target.value)} />
+                    <Form.Control required type='password' value={password} onChange={({target}) => setPassword(target.value)} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row}>
