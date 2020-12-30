@@ -86,10 +86,12 @@ export const login = (username, password) => {
     return dispatch => {
         Axios.post(apiUrl + '/login', {username, password})
             .then(res => {
-                const token = res.data
+                const token = res.data.jwt;
+                console.log(token);
                 localStorage.setItem('jwtToken', token)
                 setToken(token)
                 dispatch({type: SET_CURRENT_USER, payload: jwtDecode(token)})
+               
             })
     }
 }

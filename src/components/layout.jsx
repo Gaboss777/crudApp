@@ -4,10 +4,11 @@ import { ToastContainer, Slide } from 'react-toastify';
 import MenuNavbar from './MenuNavbar'
 import { getToken } from '../ducks/authReducer'
 
-const Layout =({ children })=> {
+const Layout =({ children,user })=> {
     return(
         <Container fluid className='h-100 px-0'>
-            {!getToken() && <MenuNavbar /> }
+           
+            {getToken() && <MenuNavbar /> }
             <Container fluid >
                 { children }
             </Container>

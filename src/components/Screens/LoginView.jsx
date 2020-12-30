@@ -49,7 +49,7 @@ const LoginScreen = ({login}) => {
 
 const MDTP = dispatch => (
     {
-        login: (email, password) =>  dispatch(login(email, password))
+        login: (username, password) =>  dispatch(login(username, password))
     }
 )
 
