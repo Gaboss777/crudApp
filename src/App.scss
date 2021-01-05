@@ -1,7 +1,12 @@
 $yellow:#ff9800;
 $darkyellow: #c48105;
-$darkessyellow: #946104;
+$darkessyellow: #956204;
 $white: #ffffff;
+$black: #000000;
+
+.bg-warning {
+   background-color: $yellow !important;
+}
 
 .hover-table{
    cursor:pointer;
@@ -15,6 +20,10 @@ $white: #ffffff;
     .modal-xlg {
        width: 90%;
        max-width: 90%;
+    }
+    .modal-m-sm {
+       width: 50%;
+       max-width: 50%;
     }
  }
 
@@ -70,10 +79,15 @@ $white: #ffffff;
 }
 
 /* Navbar */
+
+.custom-navbar {
+   border-bottom: solid 5px #000;
+}
+
 .nav-link-menu {
    padding: 8rem 1rem;
    font-weight: bold;
-   font-size: 20px;
+   font-size: 15px;
    color: $yellow !important;
    text-decoration: none;
    transition: border 0.3s ease-in-out;
@@ -96,7 +110,7 @@ $white: #ffffff;
    right: 51%;
    bottom: 0;
    background: $yellow;
-   height: 4px;
+   height: 3px;
    -webkit-transition-property: left, right;
    transition-property: left, right;
    -webkit-transition-duration: 0.3s;
@@ -114,8 +128,17 @@ $white: #ffffff;
     resize: none;
  }
 
- .client-payment {
+ .form-disable {
     background-color: rgba(192, 192, 192, 0.3) !important;
+ }
+
+ .form-text {
+    color: rgba(255, 0, 0, 0.5) !important;
+ }
+
+ .title-section {
+    margin-left: -15px;
+    margin-right: -15px;
  }
 
  textarea,
@@ -131,18 +154,145 @@ $white: #ffffff;
  [type=tel].form-control,
  [contenteditable].form-control {
    padding-left: 0.5rem;
-   box-shadow: inset 0 -1px 0 rgba(255, 152, 0, 0.60);
+   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.60);
    &:focus {
-     box-shadow: inset 0 -3px 0 $yellow;
+     box-shadow: inset 0 -4px 0 $yellow;
    }
  }
  
  select,
  select.form-control {
    padding-left: 0.5rem;
-   box-shadow: inset 0 -1px 0 rgba(255, 152, 0, 0.60);
+   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.60);
    &:focus {
      box-shadow: inset 0 -2px 0 $yellow;
    }
  }
  
+.sidebar-payment {
+   height: 100%;
+   min-height: 87.6vh;
+   margin-left: -15px;
+   border-right: solid 5px rgb(0, 0, 0);
+   .side-link {
+      font-size: 15px;
+      color: $white;
+      font-weight: bold;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      box-shadow: inset 0 -3px $darkessyellow;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      &.active {
+         background-color: $black;
+         color: $white;
+         box-shadow: inset 0 -4px $white;
+         &:focus{
+            color: $white;
+            box-shadow: inset 0 -4px $white;
+         }
+         &:hover{
+            color: $white;
+            background-color: $black;
+            box-shadow: inset 0 -4px $white;
+         }
+         &:active{
+            color: $white
+         }
+      }
+      &:hover{
+         color: $white;
+         box-shadow: inset 0 -4px $white;
+         background-color: $black;
+      }
+      &:active{
+         color: $white;
+         background-color: $darkessyellow;
+      }
+   }
+}
+
+.tab-payment {
+   .nav-link {
+      background-color: $white;
+      font-size: 15px;
+      color: $black;
+      font-weight: bold;
+      border-radius: 0px;
+      box-shadow: inset 0 -5px $black;
+      margin: 0 2.5px;
+      &.active{
+         background-color: $black;
+         color: $white;
+         box-shadow: none;
+         &:focus{
+            color: $white;
+            box-shadow: none;
+            margin: 0 2.5px;
+            &:hover {
+               color: $yellow;
+            }
+         }
+         &:hover{
+            color: $white;
+            background-color: rgba(0,0,0,0.75);
+            box-shadow: none;
+         }
+         &:active{
+            color: $white;
+         }
+      }
+      &:hover{
+         color: $white;
+         box-shadow: inset 0 -40px $yellow;
+      }
+      &:active{
+         color: $white;
+         background-color: $darkessyellow;
+         margin: 0 2.5px;
+      }
+   }
+}
+
+.tab-provider {
+   .nav-link {
+      font-size: 15px;
+      &.active {
+         background-color: $black;
+      }
+   }
+}
+
+.pagination-cerecom {
+   .page-item {
+      .page-link {
+         color: $white;
+         background-color: $yellow;
+      }
+      &.active {
+         .page-link {
+            border: solid 1px $black;
+            background-color: $black;
+         }
+      }
+   }
+}
+
+.center-img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: 75%;
+   height: 100%;
+}
+
+.login-container {
+   height: 85vh;
+   max-height: 85vh;
+   .login-form {
+      border: solid 2px $yellow;
+      position: absolute;
+      top: 21%;
+      box-shadow: 0 0 10px 5px $yellow;
+   }
+}

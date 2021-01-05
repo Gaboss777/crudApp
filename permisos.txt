@@ -1,0 +1,43 @@
+Opciones: Crear, Editar, Eliminar, Visualizar
+
+ROLE
+nombre:
+Areas de acceso:
+- Clientes
+	- Crear
+	- Editar
+	- Eliminar
+	- Visualizar
+- Pagos
+	- Visualizar
+	- Cobro Clientes:
+		- Crear
+		- Eliminar
+		- Visualizar
+	- Pago Proveedores:
+		- Crear
+		- Eliminar
+		- Visualizar
+	- Pago Empleados:
+		- Crear
+		- Editar
+		- Eliminar
+		- Visualizar
+	- Pago Vendedores:
+		- Crear
+		- Editar
+		- Eliminar
+		- Visualizar
+- Reportes
+	- Visualizar
+	- Datos Generales:
+		- Visualizar
+	- Reportes:
+		- Crear
+		- Visualizar
+- Cuentas
+	- Crear
+	- Editar
+	- Eliminar
+	- Visualizar
+
