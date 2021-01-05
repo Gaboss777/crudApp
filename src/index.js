@@ -5,13 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './ducks/root';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { getToken, setToken } from './ducks/authReducer';
 import jwtDecode from 'jwt-decode'
 
 export const store = createStore(
-  rootReducer, composeWithDevTools(applyMiddleware(thunk))
+  rootReducer, applyMiddleware(thunk)
 );
 
 let authToken = getToken()

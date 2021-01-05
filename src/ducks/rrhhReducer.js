@@ -37,6 +37,7 @@ const DELETE_OCUPATION = 'DELETE_OCUPATION'
 
 const CHECKED = 'CHECKED'
 const UNCHECKED = 'UNCHECKED'
+const CLEAR_SELECTED_ROW = 'CLEAR_SELECTED_ROW'
 
 export const getEmployies = () => {
     return dispatch => {
@@ -178,6 +179,12 @@ export const selectRow = (e, user) => {
     }
 }
 
+export const clearSelectedRow = () => {
+    return dispatch => {
+        dispatch({type: CLEAR_SELECTED_ROW})
+    }
+}
+
 
 const initialState = {
     employies: [],
@@ -237,6 +244,11 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
             return {
                 ...state,
                 selected: [...state.selected.filter(x => x.id !== payload.id)]
+            }
+        case CLEAR_SELECTED_ROW:
+            return {
+                ...state,
+                selected: []
             }
         case CREATE_PAYMENT_SUCCESS:
             return {

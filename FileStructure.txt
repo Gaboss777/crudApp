@@ -8,32 +8,38 @@ ESTRUCTURA
    |- common
 	|- SelectionYear
 	|- SearchData
-	|- Sidebar
 	|- PaginationList
 	|- BtnModal
 	|- DropdownList
 	|- DeleteData
 	|- Alerts
+	|- Permission
    |- containers
+	|- Sidebar
 	|- ActionsGroup
 	|- Layout
 	|- InfoSection
-	|- Month
-	|- Dashboard
+	|- Calendar
+	|- CustomsRoutes
    |- constants
 	|- Menunavbar
-	|- BtnDashboard
+	|- Dashboard
+	|- Rules
 - screens
-   |- Users
-	|- UsersView
-	|- UsersForm
-	|- UsersList
-	|- UsersInfo
+   |- Cliens
+	|- ClientsView
+	|- ClientInfo
+	   |- Lists
+	   	|- ClientsList
+	   |- Forms
+	   	|- ClientsForm
    |- Payments
 	|- PaymentsView
 	|- CardInfo
-	|- PaymentsList
-	|- PaymentsForm
+	|- Lists
+	   |- PaymentsList
+	|- Forms
+	   |- PaymentsForm
    |- Providers
 	|- ProviderView
 	|- Lists
@@ -52,26 +58,39 @@ ESTRUCTURA
 	   |- OcupationForm
 	   |- SalariesForm
 	|- PaymentsInfo
-   |- Reports
-	|- Views
-	   |- GeneralInfo
-	   |- ReportPayments
-	|- Graphics
+   |- GeneralData
+	|- GeneralDataView
+	| Graphics
 	   |- LineGraph
 	   |- CircleGraph
 	   |- BarGraph
-	|- Lists
+	|- Tables
 	   |- LastItems
-	   |- TableReport
+   |- Reports
+	|- ReportsView
 	|- FilterForm
+	|- ResultsTable
+   |- Sellers
+	|- SellersView
+	|- List
+	   |- ComissionList
+	   |- SellersList
+	|- Forms
+	   |- ComissionForm
+	   |- SellerForm
+   |- Accounts
+	|- AccountsView
+	|- Forms
+	   |- AccountForm
+	|- List
+	   |- AccountsList
    |- Login
-	|- LoginPage
-	|- token
-- PDF
-	|- Styles
-	|- documents
-	   |- GeneralReport
-	   |- PaymentsReport
+	|- LoginView
+- assets
+   |- img
+	|- Logo
+   |- css
+	|- App.css
 - ducks
    |- apiUrl
    |- root

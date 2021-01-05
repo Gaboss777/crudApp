@@ -16,6 +16,14 @@ const CLEAR_SELECTED_ROW = 'CLEAR_SELECTED_ROW'
 export const setToken = (token) => {
     if(token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        Axios.interceptors.response.use(res => res, error=> {
+            if(error.response && error.response.status === 403){
+                localStorage.removeItem('jwtToken')
+                return dispatch => {
+                    dispatch({type: SET_CURRENT_USER, payload: {}})
+                }
+            }
+        })
     } else {
         delete Axios.defaults.headers.common['Authorization']
     }
@@ -25,48 +33,29 @@ export const registerAccount = (data) => {
     return dispatch => {
         Axios.post(apiUrl + '/accounts', data)
             .then(res => {
-                dispatch({type: REGISTER_USER_SUCCESS, payload: data})
+                dispatch({type: REGISTER_USER_SUCCESS, payload: res.data.data})
             })
             .catch(err => console.log(err))
     }
 }
 
 export const updateAccount = (data) => {
+    let id = data.id
     return dispatch => {
-        Axios.put(apiUrl + `/accounts/${data.id}`, data)
+        Axios.put(apiUrl + `/accounts/${id}`, data)
             .then(res => {
-                dispatch({type: UPDATE_USER_SUCCESS, payload: data})
+                dispatch({type: UPDATE_USER_SUCCESS, payload: res.data.data})
             })
             .catch(err => console.log(err))
     }
 }
 
-export const removeAccount = (data) => {
-    let id = data.map(x => x.id)
+export const removeAccount = (id) => {
     return dispatch => {
-        Axios.delete(apiUrl + '/accounts', {data: id})
+        Axios.delete(apiUrl + `/accounts/${id}`, )
             .then(res => {
+                console.log(res.data.data)
                 dispatch({type: DELETE_USER_SUCCESS, payload: id})
-            })
-            .catch(err => console.log(err))
-    }
-}
-
-export const registerRole = (data) => {
-    return dispatch => {
-        Axios.post(apiUrl + '/roles', data)
-         .then(res => {
-             dispatch({type: REGISTER_ROLE_SUCCESS, payload: data})
-         })
-         .catch(err => console.log(err))
-    }
-}
-
-export const getRolesList = () =>{
-    return dispatch => {
-        Axios.get(apiUrl + '/roles')
-            .then(res => {
-                dispatch({type: ROLES_LIST, payload: res.data.data})
             })
             .catch(err => console.log(err))
     }
@@ -84,19 +73,14 @@ export const getAccountsList = () =>{
 
 export const login = (username, password) => {
     return dispatch => {
-        Axios.post(apiUrl + '/login', {username, password})
+        return Axios.post(apiUrl + '/logins', {username, password})
             .then(res => {
-<<<<<<< Updated upstream
-                const token = res.data.jwt;
-                console.log(token);
-=======
                 const token = res.data.jwt
->>>>>>> Stashed changes
                 localStorage.setItem('jwtToken', token)
                 setToken(token)
                 dispatch({type: SET_CURRENT_USER, payload: jwtDecode(token)})
-               
             })
+            .catch(err => console.log(err))
     }
 }
 
@@ -143,38 +127,30 @@ export const authReducer = ( state = initialState, { type, payload}) => {
         case SET_CURRENT_USER:
             return {
                 ...state,
-                isAuthenticated: !!(Object.keys(payload).length),
-                user: payload
+                isAuthenticated: Object.keys(payload).length>0,
+                user: payload.data
             }
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
                 accounts: [...state.accounts, payload]
             }
-        case REGISTER_ROLE_SUCCESS:
-            return {
-                ...state,
-                roles: [...state.roles, payload]
-            }
         case UPDATE_USER_SUCCESS:
             return {
                 ...state,
-                accounts: [...state.accounts.map(x => x.id === payload.id ? payload : x)]
+                accounts: [...state.accounts.map(x => x.id === payload.id ? payload : x)],
+                selected: initialState.selected
             }
         case DELETE_USER_SUCCESS:
             return {
                 ...state,
-                accounts: state.accounts.filter(acc => !payload.includes(acc.id))
+                accounts: state.accounts.filter(acc => acc.id !== payload),
+                selected: initialState.selected
             }
         case ACCOUNTS_LIST:
             return {
                 ...state,
                 accounts: payload
-            }
-        case ROLES_LIST:
-            return {
-                ...state,
-                roles: payload
             }
         case CHECKED:
             return {
