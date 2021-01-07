@@ -8,15 +8,13 @@ const SideBar = ({ data, user, path }) => {
     const [key, setKey] = useState()
 
     return (
-        <Col sm lg='2' className='pr-0'>
-            <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column sidebar-payment bg-warning' >
+        <Col sm lg='2' className='px-0 sidebar-payment'>
+            <Nav variant='tabs' activeKey={key} onSelect={(k) => setKey(k)} className='flex-column bg-warning' >
             {data.map((link) =>
                 <Permission
                     role={user.role}
-                    perform={`${link.route}-page:visual`}
-                    yes={() =>
-                        <Nav.Link eventKey={link.id} as={Link} to={`${path}/${link.route}`} className='side-link'>{link.linkName}</Nav.Link>
-                    }
+                    perform={`${link.perform}:visual`}
+                    yes={<Nav.Link eventKey={link.id} as={Link} to={`${path}/${link.route}`} className='side-link'>{link.linkName}</Nav.Link>}
                 />
             )}
             </Nav>

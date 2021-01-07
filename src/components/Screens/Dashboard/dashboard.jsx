@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThList, faFileInvoiceDollar, faFileContract } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faFileInvoiceDollar, faFileContract, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link, Redirect } from 'react-router-dom';
 import Permission from '../../Layouts/Permission';
 import { connect } from 'react-redux';
@@ -11,35 +11,34 @@ const Dashboard = ({ user }) => {
         <Permission
             role={user.role}
             perform='dashboard-page:visual'
-            yes={() => (
+            yes={
                 <Container fluid>
                     <Row className='justify-content-center dashboard-container'>
                         <Col className='text-center btn-dash-position '>
                             <Permission 
                                 role={user.role}
                                 perform='clients-section:visual'
-                                yes={() =>
-                                    <Link to='/clients'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>
-                                }
+                                yes={<Link to='/clients'><ButtonDashboard textBtn='CLIENTES' icon={faThList} /></Link>}
                             />
                             <Permission 
                                 role={user.role}
                                 perform='payments-section:visual'
-                                yes={() =>
-                                    <Link to='/payments'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>
-                                }
+                                yes={<Link to='/payments'><ButtonDashboard textBtn='PAGOS' icon={faFileInvoiceDollar} /></Link>}
                             />
                             <Permission 
                                 role={user.role}
                                 perform='reports-section:visual'
-                                yes={() =>
-                                    <Link to='/reports'><ButtonDashboard textBtn='REPORTES' icon={faFileContract} /></Link>
-                                }
+                                yes={<Link to='/reports'><ButtonDashboard textBtn='REPORTES' icon={faFileContract} /></Link>}
+                            />
+                            <Permission 
+                                role={user.role}
+                                perform='permission-section:visual'
+                                yes={<Link to='/permission'><ButtonDashboard textBtn='PERMISOS' icon={faUserCircle} /></Link>}
                             />
                         </Col>
                     </Row>
                 </Container>
-            )}
+            }
          />
     )
 }

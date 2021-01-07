@@ -22,8 +22,8 @@ const ListBills = ({bills, providers, user, year, removeBills, createBill }) => 
                 <Tab eventKey={month.id} title={month.name} >
                 <Permission 
                     role={user.role}
-                    perform='bills:create'
-                    yes={() => 
+                    perform='providers:create'
+                    yes={
                         <PaymentForm isModal={true} month={month} providers={providers} year={year} createBill={createBill} />
                     }
                 />
@@ -62,8 +62,8 @@ const ListBills = ({bills, providers, user, year, removeBills, createBill }) => 
                                     <td>
                                     <Permission 
                                         role={user.role}
-                                        perform='bills:remove'
-                                        yes={() => 
+                                        perform='providers:remove'
+                                        yes={
                                             <Button variant='danger' onClick={() => handleDelete(bill.id)} size='sm'>Eliminar</Button>
                                         }
                                     />

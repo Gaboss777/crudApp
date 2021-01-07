@@ -23,24 +23,18 @@ const ProviderView = ({year, user, createBill, createProvider, removeBills, getB
                 <Col sm lg={2} className='my-2'>
                     <SelectionYear />
                 </Col>
-                <Permission
-                    role={user.role}
-                    perform='providers:list'
-                    yes={() =>
-                        <Col sm lg={2} >
-                            <ButtonGroup>
-                            <Permission
-                                role={user.role}
-                                perform='providers:create'
-                                yes={() =>
-                                    <CreateProvider isModal={true} createProvider={createProvider} />
-                                }
-                            />
-                                <Listprovider user={user} providers={providers} removeProvider={removeProvider} />
-                            </ButtonGroup>
-                        </Col>
-                    }
-                />
+                <Col sm lg={2} >
+                    <ButtonGroup>
+                    <Permission
+                        role={user.role}
+                        perform='providers:create'
+                        yes={
+                            <CreateProvider isModal={true} createProvider={createProvider} />
+                        }
+                    />
+                        <Listprovider user={user} providers={providers} removeProvider={removeProvider} />
+                    </ButtonGroup>
+                </Col>
                 {year &&
                 <>
                     <Col sm lg={12}>

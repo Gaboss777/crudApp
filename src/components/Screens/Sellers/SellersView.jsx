@@ -33,7 +33,7 @@ const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSe
 
     return (
         <Container fluid className='px-0' >
-            { isAuthenticated && user.role === 'vendedor' 
+            { user.role === 'vendedor' 
                 ? <h1 className='text-center text-white py-2 bg-warning title-section'>Ventas de {user.user}</h1>
                 : <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGOS VENDEDORES</h1>
             }
@@ -46,32 +46,23 @@ const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSe
                 <Col sm lg={2} className='mt-2'>
                     <SelectionYear disabled={selected || isAuthenticated ? false : true} className={!selected ? isAuthenticated ? '' : 'form-disabled' : '' } />
                 </Col>
-                <Permission
-                    role={user.role}
-                    perform='sellers:list'
-                    yes={() =>
-                        <Col sm lg={4} className='mt-2'>
-                            <ButtonGroup className='mt-1'>
-                            <Permission 
-                                role={user.role}
-                                perform='seller:create'
-                                yes={() =>
-                                    <SellerForm isModal={true} createSeller={createSellUser} textBtn={<FontAwesomeIcon icon={faPlusSquare} size='lg' />} />
-                                }
-                            />
-                                <SellersList user={user} list={list} removeSeller={removeSellUser} updateSellUser={updateSellUser} />
-                            </ButtonGroup>
-                        </Col>
-                    }
-                />
+                <Col sm lg={4} className='mt-2'>
+                    <ButtonGroup className='mt-1'>
+                    <Permission 
+                        role={user.role}
+                        perform='sellers:create'
+                        yes={
+                            <SellerForm isModal={true} createSeller={createSellUser} textBtn={<FontAwesomeIcon icon={faPlusSquare} size='lg' />} />
+                        }
+                    />
+                        <SellersList role={user.role} list={list} removeSeller={removeSellUser} updateSellUser={updateSellUser} />
+                    </ButtonGroup>
+                </Col>
             </Row>
             {year &&
                 <Row className='mt-2'>
                     <Col>
                         <h4 className='text-center my-3'>CALENDARIO DE PAGOS {year}</h4>
-                        {!user.role === 'vendedor' &&
-                            <h4 className='text-center mb-2'>{selected.name}</h4>
-                        }
                         <Calendar seller={selected} clientsList={clientsList} getUserList={getUserList} createSell={createSell} removeSell={removeSell} sells={sells} getSellsList={getSellsList} year={year} user={user} />
                     </Col>
                 </Row>

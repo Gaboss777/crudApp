@@ -37,7 +37,7 @@ const OcupationList = ({ocupations, removeOcupation, role}) => {
                                     <Permission
                                         role={role}
                                         perform='occupations:remove'
-                                        yes={() =>
+                                        yes={
                                             <Button variant='danger' size='sm' onClick={() => handleDelete(ocu.id)} >Eliminar</Button>
                                         }
                                     />

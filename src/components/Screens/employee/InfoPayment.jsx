@@ -35,8 +35,8 @@ const InfoPayment = ({user, role, salaries, year, removeSalaries, createPayment 
                     </Col>
                     <Permission
                         role={role}
-                        perform='salaries:create'
-                        yes={() =>
+                        perform='employies:create'
+                        yes={
                             <Col sm lg={2}>
                                 <PaymentForm isModal={true} user={user} year={year} months={months} createPayment={createPayment} />
                             </Col>
@@ -74,8 +74,8 @@ const InfoPayment = ({user, role, salaries, year, removeSalaries, createPayment 
                                         <td>
                                             <Permission 
                                                 role={role}
-                                                perform='salaries:remove'
-                                                yes={() =>
+                                                perform='employies:remove'
+                                                yes={
                                                     <Button variant='danger' onClick={() => handleDelete(s.id)}  size='sm'>Eliminar</Button>
                                                 }
                                             />

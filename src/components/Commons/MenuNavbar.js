@@ -19,36 +19,31 @@ const MenuNavbar =({user, logout})=> {
                 <Permission
                     role={user.role}
                     perform='dashboard-page:visual'
-                    yes={() =>
-                        <Nav.Link as={Link} to='/' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >INICIO</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >INICIO</Nav.Link>
                     }
                 />
                 <Permission
                     role={user.role}
                     perform='clients-section:visual'
-                    yes={() =>
-                        <Nav.Link as={Link} to='/clients' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >CLIENTES</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/clients' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >CLIENTES</Nav.Link>
                     }
                 />
                 <Permission
                     role={user.role}
                     perform='payments-section:visual'
-                    yes={() =>
-                        <Nav.Link as={Link} to='/payments' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >PAGOS</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/payments' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >PAGOS</Nav.Link>
                     }
                 />
                 <Permission
                     role={user.role}
                     perform='reports-section:visual'
-                    yes={() =>
-                        <Nav.Link as={Link} to='/reports' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >REPORTES</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/reports' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >REPORTES</Nav.Link>
                     }
                 />
                 <Permission
                     role={user.role}
                     perform='permission-section:visual'
-                    yes={() =>
-                        <Nav.Link as={Link} to='/permission' className='nav-link-menu p-2 mx-1 navbar-hover-effect '>PERMISOS</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/permission' className='nav-link-menu p-2 mx-1 navbar-hover-effect '>PERMISOS</Nav.Link>
                     }
                  />
 

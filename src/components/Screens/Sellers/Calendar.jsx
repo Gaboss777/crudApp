@@ -37,8 +37,8 @@ const Calendar = ({seller, clientsList, createSell, removeSell, sells, year, use
                         <InfoPayment user={user} removeSell={removeSell} sells={sellerPayments} month={month} clientsList={clientsList} year={year} />
                         <Permission
                             role={user.role}
-                            perform='comission:create'
-                            yes={()=>
+                            perform='sellers:create'
+                            yes={
                                 <PaymentForm clientsList={clientsList} month={month} seller={seller} isModal={true} createSell={createSell} year={year} />
                             }
                         />

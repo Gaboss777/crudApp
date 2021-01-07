@@ -9,16 +9,16 @@ export const ReportsView =()=>{
     const { path } = useRouteMatch()
 
     const data = [
-        {id: '1', route: 'graphics', linkName: 'Datos Generales', component: GeneralDataView},
-        {id: '2', route: 'movements', linkName: 'Reportes', component: ReportsPayment}
+        {id: '1', route: 'graphics', linkName: 'Datos Generales', perform: 'graphics-page', component: GeneralDataView},
+        {id: '2', route: 'movements', linkName: 'Reportes', perform: 'movements-page', component: ReportsPayment}
     ]
   
     return (
         <Router>
             <Container fluid className='px-0'>
-                <Row>
+                <Row className='mx-0'>
                     <SideBar data={data} path={path} />
-                    <Col sm lg={10}>
+                    <Col sm lg={10} className='side-content'>
                         <Switch>
                         { data.map(x => 
                             <Route exact path={`${path}/${x.route}`} component={x.component} />

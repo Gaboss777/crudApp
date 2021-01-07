@@ -8,7 +8,6 @@ import { getUserList } from 'ducks/usersReducer'
 import SelectionYear from 'components/Utils/SelectionYear';
 import InfoCard from './InfoClient';
 import DropdownList from 'components/Utils/DropdownList';
-import Permission from 'components/Layouts/Permission';
 
 const PayClientsView = ({client, user, year, payments, removePayment, list, getClient, getPayments, getUsers, createPayment, updatePayment}) => {
 

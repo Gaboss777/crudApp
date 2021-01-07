@@ -66,16 +66,14 @@ $black: #000000;
 }
 
 .btn-dash-position {
-   top: 40%;
-   left: 26%;
+   top: 35%;
    position: absolute;
    margin: 0;
-   width: 50%
 }
 
 .dashboard-container {
    position: relative;
-   height: 70vh;
+   height: calc(100vh - 99.125px);
 }
 
 /* Navbar */
@@ -168,12 +166,18 @@ $black: #000000;
      box-shadow: inset 0 -2px 0 $yellow;
    }
  }
- 
+
+.side-content {
+   height: calc(100vh - 99px);
+   min-height: calc(100vh - 99px);
+   overflow: auto;
+}
+
 .sidebar-payment {
-   height: 100%;
-   min-height: 87.6vh;
-   margin-left: -15px;
+   height: calc(100vh - 99px);
+   min-height: calc(100vh - 99px);
    border-right: solid 5px rgb(0, 0, 0);
+   background-color: $yellow;
    .side-link {
       font-size: 15px;
       color: $white;

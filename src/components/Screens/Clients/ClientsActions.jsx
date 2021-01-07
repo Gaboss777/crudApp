@@ -16,23 +16,17 @@ const UsersActions = ({ user }) => {
                     <Permission
                         role={user.role}
                         perform='clients:create'
-                        yes={() =>
-                            <UserForm asModal={true} editing={false} />
-                        }
+                        yes={<UserForm asModal={true} editing={false} />}
                     />
                     <Permission
                         role={user.role}
                         perform='clients:edit'
-                        yes={() =>
-                            <UserForm asModal={true} editing={true} />
-                        }
+                        yes={<UserForm asModal={true} editing={true} />}
                     />
                     <Permission
                         role={user.role}
                         perform='clients:remove'
-                        yes={() =>
-                            <DeleteClients />
-                        }
+                        yes={<DeleteClients />}
                     />
                     <ClientInfo />
                 </ButtonGroup>

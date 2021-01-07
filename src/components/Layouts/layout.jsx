@@ -8,7 +8,7 @@ const Layout =({ children,user })=> {
     return(
         <Container fluid className='h-100 px-0'>
             {getToken() && <MenuNavbar /> }
-            <Container fluid >
+            <Container fluid className='px-0'>
                 { children }
             </Container>
             <ToastContainer autoClose={2000} position='top-center' hideProgressBar closeOnClick transition={Slide}  />

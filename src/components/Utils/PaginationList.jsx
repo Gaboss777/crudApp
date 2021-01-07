@@ -11,7 +11,7 @@ const PaginationList = ({ usersPerPage, list, setUsersPerPage, setCurrentPage, .
     }
 
     return (
-        <Container fluid className='mb-2 align' >
+        <Container fluid className='my-2 align' >
             <Row>
                 <Col sm lg={1} className='px-0 text-center mr-2'>
                     <Dropdown onSelect={(k) => setUsersPerPage(k)} >

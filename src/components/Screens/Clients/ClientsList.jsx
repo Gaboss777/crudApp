@@ -39,11 +39,7 @@ const ClientsList = ({ list, loading, getUserList, selectRow, selected, criteria
                 <Table size='sm'>
                     <thead className='bg-warning text-white text-center text-uppercase'>
                         <tr>
-                            <Permission 
-                                role={userRole.role}
-                                perform='check'
-                                yes={<th><FormCheck type='checkbox' /></th>}
-                            />
+                            <th><FormCheck type='checkbox' /></th>
                             <th>Razon Social</th>
                             <th>Localizacion </th>
                             <th>Mensualidad</th>
@@ -58,11 +54,7 @@ const ClientsList = ({ list, loading, getUserList, selectRow, selected, criteria
                         <>
                         {currentUsers.map(user => (
                             <tr className='hover-table' onClick={() => selectRow(!document.getElementById('select_row_' + user.id).checked, user)} >
-                                <Permission 
-                                    role={userRole.role}
-                                    perform='check'
-                                    yes={<td><FormCheck checked={selected.find(x => x.id === user.id) ? true : false} id={'select_row_' + user.id} type='checkbox' onChange={({ target }) => selectRow(target.checked, user)} /></td>}
-                                />
+                                <td><FormCheck checked={selected.find(x => x.id === user.id) ? true : false} id={'select_row_' + user.id} type='checkbox' onChange={({ target }) => selectRow(target.checked, user)} /></td>
                                 <td>{user.name}</td>
                                 <td>{user.location} </td>
                                 <td>{user.mensuality}</td>

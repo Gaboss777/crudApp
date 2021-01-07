@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import DeleteAlert from '../../Utils/Alerts/DeleteAlert';
 import Permission from '../../Layouts/Permission';
 
-const SellersList = ({list, removeSeller, updateSellUser, user}) => {
+const SellersList = ({list, removeSeller, updateSellUser, role}) => {
 
     const [show, setShow] = useState(false)
 
@@ -42,20 +42,20 @@ const SellersList = ({list, removeSeller, updateSellUser, user}) => {
                                     <td>{user.document}</td>
                                     <td>{moment(user.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                     <td>
-                                        <Permission
-                                            role={user.role}
-                                            perform='sellers:remove'
-                                            yes={() =>
-                                                <Button variant='danger' onClick={() => handleDelete(user.id)} size='sm' >ELIMINAR</Button>
-                                            }
-
-                                        />
                                         <Permission 
-                                            role={user.role}
+                                            role={role}
                                             perform='sellers:edit'
-                                            yes={() =>
+                                            yes={
                                                 <SellerForm isModal={true} editing={true} user={user} textBtn='Editar' sizeBtn='sm' className='ml-2' updateSellUser={updateSellUser} />
                                             }
+                                        />
+                                        <Permission
+                                            role={role}
+                                            perform='sellers:remove'
+                                            yes={
+                                                <Button className='ml-2' variant='danger' onClick={() => handleDelete(user.id)} size='sm' >ELIMINAR</Button>
+                                            }
+
                                         />
                                     </td>
                                 </tr>

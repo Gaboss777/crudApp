@@ -1,44 +1,38 @@
-import Permission from 'components/Layouts/Permission'
-import SearchData from 'components/Utils/SearchData'
-import React, { useState, Fragment } from 'react'
+import Sidebar from 'components/Utils/Sidebar';
+import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import ClientsActions from '../Clients/ClientsActions'
-import UsersList from '../Clients/List'
+import { BrowserRouter as Router, Route, Switch, useRouteMatch } from 'react-router-dom';
+import ClienstView from '../Clients/ClienstView';
+import PayClientsView from '../payment/PayClientsView';
+import StatusView from '../Status/StatusView';
 
-const UsersView = ({user}) => {
-    const [criteria, setCriteria] = useState('')
+const UsersView = () => {
+
+    const { path } = useRouteMatch()
+
+    const data = [
+        {id: '1', route: 'list', linkName: 'Lista Clientes', perform: 'clients-page' , component: ClienstView },
+        {id: '2', route: 'status', linkName: 'Estatus de Cobro', perform: 'status-page' ,component: StatusView },
+        {id: '3', route: 'payments', linkName: 'Cobro Clientes', perform: 'paymentsClient-page' ,component: PayClientsView }
+    ]
 
     return (
-    <Container fluid className='px-0'>
-        <h1 className='text-center text-white py-2 bg-warning title-section'>CLIENTES</h1>
-        <Row>
-            <Permission 
-                role={user.role}
-                perform='clients:actions'
-                yes={() =>
-                    <Col sm lg={2}>
-                        <ClientsActions />
+        <Router>
+            <Container fluid className='px-0'>
+                <Row className='mx-0'>
+                    <Sidebar data={data} path={path} />
+                    <Col sm lg={10} className='side-content'>
+                        <Switch>
+                            {data.map(link => 
+                                <Route exact path={`${path}/${link.route}`} component={link.component} />
+                            )}
+                        </Switch>
                     </Col>
-                }
-            />
-            <Col sm lg={3}>
-                <SearchData criteria={criteria} setCriteria={setCriteria} />
-            </Col>
-        </Row>
-        <Row>
-            <Col sm lg={12}>
-                <UsersList criteria={criteria} />
-            </Col>
-        </Row>
-    </Container>
+                </Row>
+            </Container>
+
+        </Router>
     )
 }
 
-const MSTP = state => (
-    {
-        user: state.auth.user
-    }
-)
-
-export default connect(MSTP, null)(UsersView)
+export default UsersView

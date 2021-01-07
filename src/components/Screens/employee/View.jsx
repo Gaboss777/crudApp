@@ -30,27 +30,27 @@ const EmployeeView = ({ocupations, role, removeOcupation, user, selection, creat
                 <Permission
                     role={role}
                     perform='employies:actions'
-                    yes={() =>
+                    yes={
                         <Col sm lg={2}>
                             <ButtonGroup>
                                 <Permission
                                     role={role}
                                     perform='employies:create'
-                                    yes={() =>
+                                    yes={
                                         <EmployeeForm isModal={true} editing={false} user={user} selection={selection} ocupations={ocupations} createEmployee={createEmployee} />
                                     }
                                 />
                                 <Permission
                                     role={role}
                                     perform='employies:edit'
-                                    yes={() =>
+                                    yes={
                                         <EmployeeForm isModal={true} editing={true} user={user} selection={selection} ocupations={ocupations} updateEmployee={updateEmployee} />
                                     }
                                 />
                                 <Permission
                                     role={role}
                                     perform='employies:remove'
-                                    yes={() =>
+                                    yes={
                                         <DeleteEmployee selection={selection} deleteEmployees={deleteEmployees} />
                                     }
                                 />
@@ -61,13 +61,13 @@ const EmployeeView = ({ocupations, role, removeOcupation, user, selection, creat
                 <Permission
                     role={role}
                     perform='occupations:list'
-                    yes={() =>
+                    yes={
                         <Col sm lg={2}>
                             <ButtonGroup>
                             <Permission
                                 role={role}
                                 perform='occupations:create'
-                                yes={() =>
+                                yes={
                                     <OcupationForm isModal={true} />
                                 }
                             />

@@ -4,6 +4,7 @@ import { apiUrl } from './apiUrl';
 const CLIENT_SELECTED = "CLIENT_SELECTED";
 const PAYMENT_LIST = 'PAYMENT_LIST';
 const CREATE_PAYMENT = "CREATE_PAYMENT";
+const UPDATE_PAYMENT = 'UPDATE_PAYMENT'
 const FILE_UPLOAD = "FILE_UPLOAD";
 const FILES_LIST = "FILES_LIST";
 const PAYMENT_REMOVE = "PAYMENT_REMOVE"
@@ -74,6 +75,16 @@ export const removePayment = (id) => {
     }
 }
 
+export const updatePayment = (data) => {
+    return dispatch => {
+        Axios.put(apiUrl + `/payments/${data.id}`, data)
+            .then(res => {
+                dispatch({type: UPDATE_PAYMENT, payload: data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
 const initialState = {
     client: null,
     payments: [],
@@ -111,6 +122,11 @@ export const paymentReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 payments: state.payments.filter(p => p.id !== payload)
+            }
+        case UPDATE_PAYMENT:
+            return {
+                ...state,
+                payments: state.payments.map(p => p.id === payload.id ? payload : p)
             }
         default:
             return state

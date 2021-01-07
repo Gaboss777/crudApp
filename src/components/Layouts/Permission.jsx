@@ -1,6 +1,6 @@
 import rules from '../Commons/rules'
 
-const check = (rules, role, action, data) => {
+const check = (rules, role, action) => {
     const permissions = rules[role]
     if(!permissions){
         return false
@@ -15,10 +15,15 @@ const check = (rules, role, action, data) => {
     return false
 }
 
-const Permission = ({role, perform, data, yes, no}) =>
-    check(rules, role, perform, data)
-    ? yes()
-    : no()
+const Permission = ({role, perform, yes, no}) => {
+
+    if(check(rules, role, perform)){
+        return yes
+    } else {
+        return no
+    }
+}
+
 
 Permission.defaultProps = {
     yes:() => null,

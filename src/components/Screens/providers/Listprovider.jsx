@@ -37,7 +37,7 @@ const Listprovider = ({providers, removeProvider, user}) => {
                                     <Permission 
                                         role={user.role}
                                         perform='providers:remove'
-                                        yes={() =>
+                                        yes={
                                             <Button variant='danger' onClick={() => handleDelete(p.id)} size='sm'>Eliminar</Button>
                                         }
                                     />
