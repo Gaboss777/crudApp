@@ -1,12 +1,11 @@
 //import librerias
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Badge, Card} from 'react-bootstrap';
+import { Container, Row, Col, Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Calendar from './Calendar';
 import { createPayment, getClient, getPayments, removePayment, updatePayment } from 'ducks/paymentReducer';
 import { getUserList } from 'ducks/usersReducer'
 import SelectionYear from 'components/Utils/SelectionYear';
-import InfoCard from './InfoClient';
 import DropdownList from 'components/Utils/DropdownList';
 
 const PayClientsView = ({client, user, year, payments, removePayment, list, getClient, getPayments, getUsers, createPayment, updatePayment}) => {
@@ -20,9 +19,13 @@ const PayClientsView = ({client, user, year, payments, removePayment, list, getC
     }, [])
 
     return (
-        <Container fluid className='px-0 my-3 rounded bg-white'>
-            <h3 className='text-center text-white py-2 bg-warning rounded-top font-weight-bold'>REGISTRO COBRO</h3>
-            <Row className='p-3' >
+        <Container fluid className='rounded bg-white'>
+            <Row >
+                <Col sm lg={12} className='px-0'>
+                    <h3 className='text-center text-white mb-0 py-2 px-0 bg-warning rounded-top font-weight-bold'>REGISTRO COBRO</h3>
+                </Col>
+            </Row>
+            <Row className='mt-3'>
                 <Col sm lg={5} >
                     <DropdownList data={list} action={getClient} labelKey='name' text='CLIENTES' placeholder='Elija un cliente' />
                 </Col>

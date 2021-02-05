@@ -24,7 +24,7 @@ const EmployeeView = ({ocupations, role, removeOcupation, user, selection, creat
     },[])
 
     return (
-        <Container fluid className='my-3 px-0 rounded bg-white'>
+        <Container fluid className='px-0 rounded bg-white'>
             <h3 className='text-center text-white py-2 bg-warning font-weight-bold rounded-top'>REGISTRO PAGO EMPLEADO</h3>
             <Row className='px-3'>
                 <Permission

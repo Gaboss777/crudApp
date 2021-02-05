@@ -19,7 +19,7 @@ const ProviderView = ({year, month, user, createBill, createProvider, removeBill
     }, [])
 
     return (
-        <Container fluid className='px-0 my-3 rounded bg-white' >
+        <Container fluid className='px-0 rounded bg-white' >
             <h3 className='text-center text-white py-2 bg-warning font-weight-bold rounded-top'>REGISTRO PAGO PROVEEDORES</h3>
             <Row className='p-3'>
                 <Col sm lg={2} >
