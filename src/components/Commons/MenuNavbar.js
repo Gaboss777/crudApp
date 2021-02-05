@@ -1,28 +1,32 @@
 import React from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import Logo from '../../img/Logo 3.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout, getToken } from '../../ducks/authReducer'
 import Permission from '../Layouts/Permission';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV, faKey, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const MenuNavbar =({user, logout})=> {
 
     return(
-    <Navbar expand="lg" bg='white' className='py-1 shadow-none custom-navbar' >
+    <Navbar expand="lg" bg='white' className='py-1' >
         <Navbar.Brand>
-            <img src={Logo} alt='Logo' width='230' height='75' />
+            <img src={Logo} alt='Logo' width='200' height='60' />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls='responsive-navbar' />
+        <Navbar.Toggle aria-controls='responsive-navbar'>
+            <FontAwesomeIcon icon={faEllipsisV} />
+        </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar' className='justify-content-end'>
-            <Nav >
+            <Nav>
                 <Permission
                     role={user.role}
                     perform='dashboard-page:visual'
-                    yes={<Nav.Link as={Link} to='/' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >INICIO</Nav.Link>
+                    yes={<Nav.Link as={Link} to='/' className='nav-link-menu p-2 mx-1 navbar-hover-effect float-left' >INICIO</Nav.Link>
                     }
                 />
-                <Permission
+                {/* <Permission
                     role={user.role}
                     perform='clients-section:visual'
                     yes={<Nav.Link as={Link} to='/clients' className='nav-link-menu p-2 mx-1 navbar-hover-effect' >CLIENTES</Nav.Link>
@@ -45,13 +49,18 @@ const MenuNavbar =({user, logout})=> {
                     perform='permission-section:visual'
                     yes={<Nav.Link as={Link} to='/permission' className='nav-link-menu p-2 mx-1 navbar-hover-effect '>PERMISOS</Nav.Link>
                     }
-                 />
+                 /> */}
 
-                { getToken() && (
-                        <Navbar.Text className='ml-5'>
-                            <span className='mr-2 font-weight-bold text-uppercase text-dark'>{user.user} </span><Button variant='danger' size='sm' onClick={() => logout()} >Salir</Button>
-                        </Navbar.Text>
-                )}
+                { getToken() ? (
+                    <NavDropdown alignRight title={user.user} id='nav-dropdown' className='font-weight-bold text-dark dropdown-menu-left'>
+                        <NavDropdown.Item className='px-3' as={Button} >
+                            <FontAwesomeIcon icon={faKey} className='mr-2' style={{ fontSize: 10 }} />Cambiar Contrasena
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Button} variant='danger' onClick={logout} className='px-3' >
+                            <FontAwesomeIcon icon={faSignOutAlt} className='mr-2' />Salir
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                ) : null }
             </Nav>
         </Navbar.Collapse>
     </Navbar>

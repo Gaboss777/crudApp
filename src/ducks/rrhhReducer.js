@@ -34,6 +34,7 @@ const LIST_SALARIES_SUCCESS ='LIST_SALARIES_SUCCESS'
 
 const DELETE_SALARIES = 'DELETE_SALARIES'
 const DELETE_OCUPATION = 'DELETE_OCUPATION'
+const UPDATE_OCCUPATION = 'UPDATE_OCCUPATION'
 
 const CHECKED = 'CHECKED'
 const UNCHECKED = 'UNCHECKED'
@@ -167,6 +168,16 @@ export const removeOcupation = (id) => {
     }
 }
 
+export const updateOcupation = (data) => {
+    return dispatch => {
+        Axios.put(apiUrl + `/occupations/${data.id}`, data)
+            .then(res => {
+                dispatch({type: UPDATE_OCCUPATION, payload: data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
 export const selectRow = (e, user) => {
     if (e) {
         return dispatch => {
@@ -269,6 +280,11 @@ export const employiesReducer = (state = initialState, { type, payload} ) => {
             return {
                 ...state,
                 ocupations: state.ocupations.filter(o => o.id !== payload)
+            }
+        case UPDATE_OCCUPATION:
+            return {
+                ...state,
+                occupations: [...state.occupations.map(o => o.id === payload.id ? payload : o)]
             }
         default:
             return state

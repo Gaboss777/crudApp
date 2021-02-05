@@ -3,7 +3,7 @@ import { ButtonGroup, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import DeleteClients from './DeleteClients';
 
-import UserForm from './Form';
+import ClientsForm from './Forms/ClientsForm';
 import Permission from '../../Layouts/Permission';
 import ClientInfo from './ClientInfo';
 
@@ -12,24 +12,24 @@ const UsersActions = ({ user }) => {
         <Fragment >
             <Row>
                 <Col sm lg={2}>
-                <ButtonGroup className='mb-2' >
-                    <Permission
-                        role={user.role}
-                        perform='clients:create'
-                        yes={<UserForm asModal={true} editing={false} />}
-                    />
-                    <Permission
-                        role={user.role}
-                        perform='clients:edit'
-                        yes={<UserForm asModal={true} editing={true} />}
-                    />
-                    <Permission
-                        role={user.role}
-                        perform='clients:remove'
-                        yes={<DeleteClients />}
-                    />
-                    <ClientInfo />
-                </ButtonGroup>
+                    <ButtonGroup className='mb-2 rounded' aria-label='clients-actions' >
+                        <Permission
+                            role={user.role}
+                            perform='clients:create'
+                            yes={<ClientsForm asModal={true} editing={false} />}
+                        />
+                        <Permission
+                            role={user.role}
+                            perform='clients:edit'
+                            yes={<ClientsForm asModal={true} editing={true} />}
+                        />
+                        <Permission
+                            role={user.role}
+                            perform='clients:remove'
+                            yes={<DeleteClients />}
+                        />
+                        <ClientInfo />
+                    </ButtonGroup>
                 </Col>
             </Row>
         </Fragment>

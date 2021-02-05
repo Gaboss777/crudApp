@@ -26,19 +26,20 @@ const ReportsPayments = ({reports, sells, bills, salaries, getBills, getSalaries
     const data= [employies, clients, providers, sellers]
 
     return (
-        <Container fluid className='px-0'>
-            <h1 className='text-center text-white py-2 bg-warning title-section'>REPORTE DE MOVIMIENTOS</h1>
+        <Container fluid className='px-0 bg-white rounded'>
+            <h3 className='text-center text-white py-2 bg-warning font-weight-bold rounded-top'>REPORTE DE MOVIMIENTOS</h3>
             <Row>
                 <Col sm lg={12}>
-                    <h4 className='text-center'>OPCIONES DE BUSQUEDA</h4>
+                    <h5 className='text-center font-weight-bold'>OPCIONES DE BUSQUEDA</h5>
                 </Col>
             </Row>
-            <Row>
+            <Row className='px-3' >
                 <Col sm lg={12} className='pb-4'>
                     <SearchForm sells={sells} salaries={salaries} bills={bills} payments={payments} createReports={createReports} />
                 </Col>
             </Row>
-            <Row>
+            <h5 className='text-center font-weight-bold'>RESULTADOS</h5>
+            <Row className='px-3'>
                 <Col sm lg={12}>
                     <TableReports reports={reports} data={data} />
                 </Col>

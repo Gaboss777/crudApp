@@ -1,3 +1,6 @@
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDayspermonth } from 'components/Hooks/useDayspermonth';
 import React, { useState, Fragment, useEffect } from 'react';
 import { Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import Alerts from '../../Utils/Alerts/alerts'
@@ -17,20 +20,10 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
-    const [days, setDays] = useState('')
+
+    const days = useDayspermonth(month, year)
 
     useEffect(() => {
-        if(month.id === '01' || month.id === '03' || month.id === '05' || month.id === '07' || month.id === '08' || month.id === '10' || month.id === '12' ) {
-            setDays(31)
-        } if(month.id === '04' || month.id === '06' || month.id === '09' || month.id === '11') {
-            setDays(30)
-        } if(month.id === '02') {
-            if((year - 2016) % 4 === 0 ) {
-                setDays(29)
-            } else {
-                setDays(28)
-            }
-        }
     }, [month])
 
     const onSubmit = (event) => {
@@ -39,7 +32,7 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
         if(form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            let newBill = {provider_id: parseInt(provider), billNumber, amount, currency, method, bank, reference, date, comment, period:month.id+'-'+year}
+            let newBill = {provider_id: parseInt(provider), billNumber, amount, currency, method, bank, reference, date, comment, period:month+'-'+year}
             createBill(newBill)
             Alerts.InfoNotify('FACTURA CREADA CON EXITO')
             setProvider('')
@@ -74,13 +67,13 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
                 </Form.Group>
                 <Form.Group as={Col} sm lg={4} controlId='validation04'>
                     <Form.Label className='font-weight-bold text-uppercase'>Fecha</Form.Label>
-                    <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`} value={date} onChange={({target}) => setDate(target.value)} />
+                    <Form.Control required type='date' min={`${year}-${month}-01`} max={`${year}-${month}-${days}`} value={date} onChange={({target}) => setDate(target.value)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} sm lg={5}  controlId='validation02'>
-                    <Form.Label className='font-weight-bold text-uppercase' ># de Factura</Form.Label>
+                    <Form.Label className='font-weight-bold text-uppercase' ># Factura</Form.Label>
                     <Form.Control required type='number' value={billNumber} placeholder='Ingrese factura' onChange={({target}) => setBillNumber(target.valueAsNumber)} />
                     <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
@@ -90,10 +83,14 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
                         <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
-                    <Form.Label className='font-weight-bold text-uppercase'>Moneda</Form.Label>
-                    <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} />
-                    <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} />
-                    <Form.Text className='text-muted mt-3'>Campo obligatorio</Form.Text>
+                    <Col sm lg={12}>
+                        <Form.Label className='font-weight-bold text-uppercase'>Moneda</Form.Label>
+                    </Col>
+                    <Col sm lg={12}>
+                        <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={() => setCurrency('BS')} inline />
+                        <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={() => setCurrency('USD')} inline />
+                        <Form.Text className='text-muted mt-3'>Campo obligatorio</Form.Text>
+                    </Col>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -127,8 +124,8 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
             </Form.Group>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' variant='success'>Crear</Button>
-                    <Button variant='danger' className='ml-2' onClick={() => setShowModal(false)}>Cancelar</Button>
+                    <Button type='submit' variant='success' className='rounded'>CREAR</Button>
+                    <Button variant='danger' className='ml-2 rounded' onClick={() => setShowModal(false)}>CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -137,10 +134,10 @@ const PaymentForm = ({ providers, createBill, isModal, month, year }) => {
     if(isModal){
         return (
             <Fragment>
-                <Button variant='success' size='sm' onClick={() => setShowModal(true)} className='mt-3 mb-1' disabled={year ? false : true} >Agregar Pago</Button>
+                <Button variant='success' className='rounded' onClick={() => setShowModal(true)} disabled={year && month ? false : true} ><FontAwesomeIcon icon={faPlusSquare} className='mr-2' />Pago</Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName='modal-m-sm' >
                     <Modal.Header closeButton className='bg-success' >
-                        <Modal.Title className='text-center w-100 text-white' >CREAR FACTURA</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white font-weight-bold' >CREAR FACTURA</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {billform}

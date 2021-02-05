@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Container, Row, Col, ButtonGroup} from 'react-bootstrap';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { createSell, createSellUser, getSellsList, removeSellUser, removeSell, selectedSellUser, updateSellUser, getSellUsersList } from '../../../ducks/sellersReducer';
+import { createSell, createSellUser, getSellsList, removeSellUser, removeSell, selectedSellUser, updateSellUser, getSellUsersList, validationSell } from '../../../ducks/sellersReducer';
 import { getUserList } from '../../../ducks/usersReducer';
 import Calendar from './Calendar';
 import SellerForm from './forms/SellerForm';
@@ -12,7 +12,7 @@ import SelectionYear from '../../Utils/SelectionYear';
 import DropdownList from '../../Utils/DropdownList';
 import Permission from '../../Layouts/Permission';
 
-const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSelected, clientsList, getUserList, createSell, removeSell, sells, getSellsList, updateSellUser, getSellersList, year, user, isAuthenticated}) => {
+const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSelected, clientsList, getUserList, createSell, removeSell, sells, getSellsList, updateSellUser, validationSell, getSellersList, year, user, isAuthenticated}) => {
 
     const [count, setCount] = useState(0)
     const names = list.map(x => {return {name: x.firstname.toUpperCase()+' '+x.secondname.toUpperCase()+' '+x.lastname.toUpperCase()+' '+x.secondsurname.toUpperCase(), id: x.id}} )
@@ -29,41 +29,41 @@ const SellersView = ({createSellUser, removeSellUser, list, selected, sellUserSe
         getSellsList()
     }, [count])
 
-    console.log(selected)
-
     return (
-        <Container fluid className='px-0' >
+        <Container fluid className='px-0 bg-white rounded' >
             { user.role === 'vendedor' 
-                ? <h1 className='text-center text-white py-2 bg-warning title-section'>Ventas de {user.user}</h1>
-                : <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGOS VENDEDORES</h1>
+                ? <h3 className='text-center text-white py-2 bg-warning rounded-top font-weight-bold'>VENTAS DE {user.user}</h3>
+                : <h3 className='text-center text-white py-2 bg-warning rounded-top font-weight-bold'>REGISTRO PAGOS VENDEDORES</h3>
             }
-            <Row className='mt-2'>
+            <Row className='p-3'>
                 {user.role !== 'vendedor' &&
                         <Col sm lg={5}>
-                            <DropdownList data={names} action={sellUserSelected} labelKey='name' text='VENDEDORES' placeholder='Elija un venededor' />
+                            <DropdownList data={names} action={sellUserSelected} labelKey='name' text='VENDEDORES' placeholder='Elija venededor...' />
                         </Col>
                 }
-                <Col sm lg={2} className='mt-2'>
-                    <SelectionYear disabled={selected || isAuthenticated ? false : true} className={!selected ? isAuthenticated ? '' : 'form-disabled' : '' } />
+                <Col sm lg={2}>
+                    <SelectionYear disabled={!isAuthenticated ? true : selected || user.role === 'vendedor' ? false : true} />
                 </Col>
-                <Col sm lg={4} className='mt-2'>
-                    <ButtonGroup className='mt-1'>
-                    <Permission 
+                <Col sm lg={4}>
+                    <ButtonGroup>
+                    <Permission
                         role={user.role}
                         perform='sellers:create'
                         yes={
-                            <SellerForm isModal={true} createSeller={createSellUser} textBtn={<FontAwesomeIcon icon={faPlusSquare} size='lg' />} />
+                            <>
+                                <SellerForm isModal={true} createSeller={createSellUser} textBtn={<FontAwesomeIcon icon={faPlusSquare} size='lg' />} />
+                                <SellersList role={user.role} list={list} removeSeller={removeSellUser} updateSellUser={updateSellUser} />
+                            </>
                         }
                     />
-                        <SellersList role={user.role} list={list} removeSeller={removeSellUser} updateSellUser={updateSellUser} />
                     </ButtonGroup>
                 </Col>
             </Row>
             {year &&
-                <Row className='mt-2'>
+                <Row className='pb-3'>
                     <Col>
-                        <h4 className='text-center my-3'>CALENDARIO DE PAGOS {year}</h4>
-                        <Calendar seller={selected} clientsList={clientsList} getUserList={getUserList} createSell={createSell} removeSell={removeSell} sells={sells} getSellsList={getSellsList} year={year} user={user} />
+                        <h4 className='text-center my-3 font-weight-bold'>CALENDARIO DE PAGOS {year}</h4>
+                        <Calendar seller={selected} clientsList={clientsList} createSell={createSell} removeSell={removeSell} sells={sells} year={year} user={user} validationSell={validationSell} />
                     </Col>
                 </Row>
             }
@@ -93,7 +93,8 @@ const MDTP = dispatch => (
         createSell: (data) => dispatch(createSell(data)),
         removeSell: (data) => dispatch(removeSell(data)),
         getSellsList: () => dispatch(getSellsList()),
-        getSellersList: () => dispatch(getSellUsersList())
+        getSellersList: () => dispatch(getSellUsersList()),
+        validationSell: (data) => dispatch(validationSell(data))
     }
 )
 

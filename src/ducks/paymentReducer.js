@@ -32,6 +32,7 @@ export const getPayments = () => {
 }
 
 export const createPayment = (data) => {
+    console.log(data)
     return dispatch => {
         Axios.post(apiUrl+'/payments',data)
         .then(res=>{

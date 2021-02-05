@@ -7,8 +7,8 @@ const AccountsList = ({accounts, selectRow, selected, criteria}) => {
     const newList = useFilteredList(criteria, accounts)
 
     return (
-        <Table>
-            <thead className='bg-warning text-white'>
+        <Table size='sm' responsive striped bordered className='text-center' >
+            <thead className='cerecom-bg-dark text-white'>
                 <tr>
                     <th><FormCheck type='checkbox' /></th>
                     <th>ID</th>
@@ -22,7 +22,7 @@ const AccountsList = ({accounts, selectRow, selected, criteria}) => {
             {newList.length > 0 ? 
                 <>
                     {newList.map(account => 
-                        <tr>
+                        <tr className={`${selected.find(x => x.id === account.id) ? 'bg-secondary text-white' : ''} hover-table`} onClick={() => selectRow(!document.getElementById('select_row_' + account.id).checked, account)} >
                             <td><FormCheck type='checkbox' checked={selected.find(x => x.id === account.id)} onChange={({ target }) => selectRow(target.checked, account)} id={'select_row_' + account.id} /> </td>
                             <td>{account.id}</td>
                             <td>{account.username}</td>

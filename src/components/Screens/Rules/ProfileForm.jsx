@@ -42,7 +42,7 @@ const RolesForm = ({registerRole, isModal}) => {
     if(isModal){
         return (
         <>
-            <Button variant='primary' onClick={() => setShowModal(true)} ><FontAwesomeIcon icon={faPlusSquare} className='mr-2' /> Role</Button>
+            <Button variant='primary' onClick={() => setShowModal(true)} ><FontAwesomeIcon icon={faPlusSquare} className='mr-2' />Nuevo</Button>
             <Modal onHide={() => setShowModal(false)} show={showModal} centered >
                 <Modal.Header closeButton className='bg-primary'>
                     <Modal.Title className='text-center w-100 text-white'>CREAR ROLE</Modal.Title>

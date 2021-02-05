@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { selectedYear } from '../../ducks/datesReducer'
 import { useEffect } from 'react'
 
-const SelectionYear = ({ selectedYear, year, disabled, className }) => {
+const SelectionYear = ({ selectedYear, year, ...rest }) => {
 
     useEffect(() => {
         if(year) {
@@ -16,13 +16,13 @@ const SelectionYear = ({ selectedYear, year, disabled, className }) => {
 
     return (
         <InputGroup>
-            <InputGroup.Prepend className='bg-warning rounded-left text-uppercase'>
-                <InputGroup.Text className='text-white px-4 font-weight-bold'>AÑO</InputGroup.Text>
+            <InputGroup.Prepend className='text-uppercase'>
+                <InputGroup.Text className='text-white font-weight-bold bg-warning border border-warning'>AÑO</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl as='select' onChange={({target}) => selectedYear(target.value)} disabled={disabled} className={className} >
+            <FormControl as='select' className='border border-warning rounded-right' onChange={({target}) => selectedYear(target.value)} {...rest} >
                 <option value='' selected disabled>Elija</option>
-                {years.map(y =>
-                    <option value={y}>{y}</option>
+                {years.map(year =>
+                    <option value={year}>{year}</option>
                 )}
             </FormControl>
         </InputGroup>

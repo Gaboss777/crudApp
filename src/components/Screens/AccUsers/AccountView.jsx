@@ -9,7 +9,7 @@ import { getEmployies } from '../../../ducks/rrhhReducer'
 import { getSellUsersList } from '../../../ducks/sellersReducer'
 import SearchData from 'components/Utils/SearchData'
 
-const AccountsView = ({accounts, employies, sellers, user, selected, account, registerAccount, updateAccount, getAccountsList, selectRow, removeAccount, clearSelectedRow, getEmployies, getSellers}) => {
+const AccountsView = ({accounts, employies, sellers, selected, registerAccount, updateAccount, getAccountsList, selectRow, removeAccount, clearSelectedRow, getEmployies, getSellers}) => {
 
       const [criteria, setCriteria] = useState('')
 
@@ -23,37 +23,33 @@ const AccountsView = ({accounts, employies, sellers, user, selected, account, re
     }, [])
 
     return (
-          <>
-          <h1 className='text-center text-white py-2 bg-warning title-section'>CUENTAS DE USUARIOS</h1>
-          <Container fluid>
-              <Row>
-                  <Col sm lg={2} className='mb-2'>
-                      <ButtonGroup>
-                          <AccountForm isModal={true} employies={employies} registerAccount={registerAccount} edit={false} selected={selected} account={account} sellers={sellers} />
-                          <AccountForm isModal={true} employies={employies} updateAccount={updateAccount} edit={true} selected={selected} account={account} sellers={sellers} />
-                          <DeleteAccount selected={selected} removeAccount={removeAccount} />
-                      </ButtonGroup>
-                  </Col>
-                  <Col sm lg={3} className='mb-2'>
+        <Container fluid className='px-0 bg-white rounded'>
+            <h3 className='text-center text-white py-2 bg-warning font-weight-bold rounded-top'>CUENTAS DE USUARIOS</h3>
+            <Row className='p-3'>
+                <Col sm lg={2} className='mb-2'>
+                    <ButtonGroup>
+                        <AccountForm isModal={true} employies={employies} registerAccount={registerAccount} edit={false} sellers={sellers} selected={selected} />
+                        <AccountForm isModal={true} employies={employies} updateAccount={updateAccount} edit={true} selected={selected} sellers={sellers} />
+                        <DeleteAccount selected={selected} removeAccount={removeAccount} />
+                    </ButtonGroup>
+                </Col>
+                <Col sm lg={4} className='mb-2'>
                         <SearchData criteria={criteria} setCriteria={setCriteria} data={accounts} />
-                  </Col>
-                  <Col sm lg={12}>
-                      <AccountsList accounts={accounts} selectRow={selectRow} selected={selected} criteria={criteria} />
-                  </Col>
-              </Row>
-          </Container>
-          </>
+                </Col>
+                <Col sm lg={12}>
+                    <AccountsList accounts={accounts} selectRow={selectRow} selected={selected} criteria={criteria} />
+                </Col>
+            </Row>
+        </Container>
     )
 }
 
 const MSTP = state => (
     {
         accounts: state.auth.accounts,
-        account: state.auth.selected[0],
         selected: state.auth.selected,
         employies: state.rrhh.employies,
-        sellers: state.sellers.list,
-        user: state.auth.user
+        sellers: state.sellers.list
 
     }
 )

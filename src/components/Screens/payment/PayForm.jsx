@@ -1,11 +1,13 @@
 //import librerias
 import React, { Fragment, useEffect, useState } from 'react';
-import {  Row, Col, Form, Button, Modal } from 'react-bootstrap';
+import {  Row, Col, Form, Button, Modal, Table } from 'react-bootstrap';
 import Alerts from 'components/Utils/Alerts/alerts';
 import { useDayspermonth } from 'components/Hooks/useDayspermonth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 //crear componente
-const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, updatePayment, payment}) => {
+const PayForm = ({client, createPayment, asModal, month, year, edit, updatePayment, payment, ...rest}) => {
 
     const [amount, setAmount] = useState(0)
     const [method, setMethod] = useState('')
@@ -16,12 +18,10 @@ const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, u
     const [bank, setBank] = useState('')
     const [discount, setDiscount] = useState(0)
     const [concept, setConcept] = useState('')
-    const [bill, setBill] = useState('')
-
-    const [check, setCheck] = useState(false)
-
-    const [imgUrl, setImgUrl] = useState()
-    const [preview, setPreview] = useState()
+    const [numBill, setNumBill] = useState('')
+    const [numControl, setNumControl] = useState('')
+    const [exchangeRate, setExchangeRate] = useState(0)
+    const [arrPayments, setArrPayments] = useState([])
 
     const [showModal, setShowModal] = useState(false)
     const [valid, setValid] = useState(false)
@@ -29,7 +29,8 @@ const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, u
     const days = useDayspermonth(month.id, year)
     const discountAmount = (amount * discount ) / 100
     const newAmount = Math.round(amount - discountAmount)
-
+    const paymentsList = { user_id: client.id, amount: newAmount, numcontrol: numControl, numbill: numBill, method, reference, date, comment, currency, bank,period: month.id+'-'+year, discount, concept, exchangerate: exchangeRate }
+    
     useEffect(() => {
         if(edit && payment){
             setAmount(payment.amount)
@@ -41,14 +42,27 @@ const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, u
             setBank(payment.bank)
             setDiscount(payment.discount)
             setConcept(payment.concept)
-            setBill(payment.bill)
+            setNumBill(payment.numbill)
+            setNumControl(payment.numcontrol)
+            setExchangeRate(payment.exchangerate)
         }
     }, [month, edit, payment])
 
-    const handleCheck = (checked) => {
-        setCheck(checked)
-        if(!check) {
+    const addPayments = (e) => {
+        if(concept, amount, currency, exchangeRate, method, numBill, numControl, date){
+            let info = arrPayments
+            info.push(paymentsList)
+            setAmount(0)
+            setMethod('')
+            setReference('')
+            setComment('')
+            setCurrency('')
+            setBank('')
             setDiscount(0)
+            setConcept('')
+            setExchangeRate(0)
+        } else {
+            Alerts.RemoveNotify('Complete todos los campos')
         }
     }
 
@@ -62,124 +76,170 @@ const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, u
                 setBank('')
                 setReference('')
             }
-            let newPayment = { user_id:client.id, amount: newAmount, bill, method, reference, date, comment, currency, bank,period:month.id+'-'+year, discount, concept }
+            // let newPayment = { user_id:client.id, amount: newAmount, numControl, numBill, method, reference, date, comment, currency, bank,period:month.id+'-'+year, discount, concept }
             if(edit){
-                updatePayment({...newPayment, id: payment.id})
+                updatePayment({...paymentsList, id: payment.id})
                 Alerts.EditNotify('PAGO ACTUALZIADO')
             } else {
-                createPayment(newPayment)
-                Alerts.InfoNotify("PAGO AGREGADO")
+                arrPayments.forEach(x => createPayment(x))
+                // createPayment(newPayment)
+                Alerts.InfoNotify("PAGOS AGREGADOS")
             }
-            setAmount(0)
-            setMethod('')
-            setReference('')
             setDate('')
-            setComment('')
-            setCurrency('')
-            setBank('')
-            setImgUrl('')
-            setDiscount(0)
-            setConcept('')
+            setNumBill('')
+            setNumControl('')
+            setArrPayments([])
             setShowModal(false)
-            setCheck(false)
-            setBill('')
         }
         setValid(true)
     }
 
+    const tablePayments = (
+        <Table className='text-center' size='sm' responsive striped bordered >
+            <thead className='bg-success text-white'>
+                <tr>
+                    <th>CONCEPTO</th>
+                    <th>MONTO</th>
+                    <th>MONEDA</th>
+                    <th>DESCUENTO</th>
+                    <th>METODO</th>
+                    <th>TASA</th>
+                    <th>BANCO</th>
+                    <th>REFERENCIA</th>
+                </tr>
+            </thead>
+            <tbody>
+                {arrPayments.map(data => 
+                    <tr>
+                        <td>{data.concept}</td>
+                        <td>{data.amount}</td>
+                        <td>{data.currency}</td>
+                        <td>{data.discount} %</td>
+                        <td>{data.method}</td>
+                        <td>{data.exchangerate}</td>
+                        <td>{data.bank}</td>
+                        <td>{data.reference}</td>
+                    </tr>
+                )}
+            </tbody>
+        </Table>
+    )
+
     const formPay = (
         <Col>
             <Form onSubmit={onSubmit} noValidate validated={valid} >
-            <Form.Row>
-                <Form.Group as={Col} sm lg={6} controlId='validation01' >
-                    <Form.Label className='font-weight-bold text-uppercase'>Razon Social</Form.Label>
-                    <Form.Control required type='text' value={client.name} placeholder='Razon Social' plaintext readOnly className='form-disable pl-2' />
-                </Form.Group>
-                <Form.Group as={Col} sm lg={3} controlId='validation04'>
-                    <Form.Label className='font-weight-bold text-uppercase'># Factura</Form.Label>
-                    <Form.Control required type='text' value={bill} placeholder='Ingrese factura' onChange={({target}) => setBill(target.value)} />
-                </Form.Group>
-                <Form.Group as={Col} sm lg={3} controlId='validation04'>
-                    <Form.Label className='font-weight-bold text-uppercase'>Fecha de Pago</Form.Label>
-                    <Form.Control required type='date' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`}  value={date} placeholder='Indique fecha' onChange={({ target }) => setDate(target.value)} />
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} sm lg={3} controlId='validation02' >
-                    <Form.Label className='font-weight-bold text-uppercase'>Monto</Form.Label>
-                    <Form.Control required type='number' value={amount} placeholder='Indique monto' onChange={({ target }) => setAmount(target.valueAsNumber)} />
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Form.Group>
-                <Form.Group as={Col} sm lg={2} controlId='validation11'>
-                    <Form.Label className='font-weight-bold text-uppercase'>Moneda</Form.Label>
-                    <Form.Check required type='radio' label='BS' name='radioForm' id='radioForm1' onChange={(e) => setCurrency('BS')} />
-                    <Form.Check required type='radio' label='USD' name='radioForm' id='radioForm2' onChange={(e) => setCurrency('USD')} />
-                    <Form.Text className='text-muted mt-3'>Campo Obligatorio</Form.Text>
-                </Form.Group>
-                <Form.Group as={Col} sm lg={4} controlId='validation10'  >
-                    <Form.Label className='font-weight-bold text-uppercase'><Form.Check type='checkbox' label='Descuento %' name='checkDiscount' id='checkForm3' onChange={({target}) => handleCheck(target.checked)} /></Form.Label>
-                    <Row>
-                        <Col sm lg={6} className='pr-0'>
-                            <Form.Control required type='number' value={discount} onChange={({ target }) => setDiscount(target.valueAsNumber)} disabled={check ? false : true} className={!check ? 'form-disable' : '' } />
+            {/* Primera Linea */}
+                <Form.Row>
+                    <Form.Group as={Col} sm lg={6} className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Razon Social</Form.Label>
+                        <Form.Control type='text' size='sm' value={client.name} readOnly className='form-disabled' />
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={2} controlId='validation04' className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'># Factura</Form.Label>
+                        <Form.Control required type='text' size='sm' value={numBill} onChange={({target}) => setNumBill(target.value)} />
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={2} controlId='validation01' className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'># Control</Form.Label>
+                        <Form.Control required type='text' size='sm' value={numControl} onChange={({target}) => setNumControl(target.value)} />
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={2} controlId='validation04' className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Fecha Pago</Form.Label>
+                        <Form.Control required type='date' size='sm' min={`${year}-${month.id}-01`} max={`${year}-${month.id}-${days}`}  value={date} onChange={({ target }) => setDate(target.value)} />
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                    </Form.Group>
+                </Form.Row>
+            {/* Segunda Linea */}
+                <Form.Row className={edit ? ' ' : 'border border-dark border-3 rounded p-2 mb-2' } >
+                    {!edit && 
+                        <Col sm lg={12}>
+                            <h5 className='text-center font-weight-bold'>AGREGAR PAGO</h5>
                         </Col>
-                        <Col sm lg={6}>
-                            <Form.Control required type='number' value={discountAmount} disabled={check ? false : true} className={!check ? 'form-disable' : ''} readOnly plaintext />
-                        </Col>
-                    </Row>
-                </Form.Group>
-                <Form.Group as={Col} sm lg={3} controlId='validation20' >
-                    <Form.Label className='font-weight-bold text-uppercase'>Concepto:</Form.Label>
-                    <Form.Control required as='select' value={concept} onChange={({target}) => setConcept(target.value)} >
-                        <option value='' selected disabled>Elija una opcion</option>
-                        <option value='mensualidad'>Mensualidad</option>
-                        <option value='alquiler'>Alquiler</option>
-                        <option value='mantenimiento'>Mantenimiento</option>
-                        <option value='instalacion'>Instalacion</option>
-                        <option value='otros'>Otros</option>
-                    </Form.Control>
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} sm lg={4} controlId='validation03' >
-                    <Form.Label className='font-weight-bold text-uppercase'>Metodo de Pago</Form.Label>
-                    <Form.Control  required as='select' value={method} onChange={({ target }) => setMethod(target.value)} >
-                        <option value='' disabled selected hidden >Elegir metodo de pago</option>
-                        <option value='Efectivo' >Efectivo</option>
-                        <option value='Credito de Cortesia' >Credito de Cortesia</option>
-                        <option value='Transferencia Bancaria' >Transferencia Bancaria</option>
-                        <option value='Zelle' >Zelle</option>
-                    </Form.Control>
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                </Form.Group>
-                <Form.Group as={Col} sm lg={5} controlId='validation06' >
-                        <Form.Label className='font-weight-bold text-uppercase'>Banco</Form.Label>
-                        <Form.Control required as='select' value={bank} onChange={({ target }) => setBank(target.value)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' }>
-                            <option value='' selected disabled>Elija una opcion</option>
-                            <option value='BNC'>BNC - Banco Nacional de Credito</option>
+                    }
+                    <Form.Group as={Col} sm lg={3} controlId='validation20' className='mb-0' >
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Concepto:</Form.Label>
+                        <Form.Control as='select' size='sm' value={concept} onChange={({target}) => setConcept(target.value)} >
+                            <option value=''>...</option>
+                            <option value='servicio'>Servicio</option>
+                            <option value='alquiler'>Alquiler</option>
+                            <option value='mantenimiento'>Mantenimiento</option>
+                            <option value='instalacion'>Instalacion</option>
+                            <option value='iva'>IVA</option>
+                            <option value='otros'>Otros</option>
                         </Form.Control>
-                        { method === 'Transferencia Bancaria' && 
-                            <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                        }
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
                     </Form.Group>
-                    <Form.Group as={Col} sm lg={3} controlId='validation07'>
-                        <Form.Label className='font-weight-bold text-uppercase'># de Referencia</Form.Label>
-                        <Form.Control required type='number' value={reference} placeholder='Numero de Referencia' onChange={({ target }) => setReference(target.valueAsNumber) } disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } />
-                        { method === 'Transferencia Bancaria' && 
-                            <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
-                        }
+                    <Form.Group as={Col} sm lg={3} controlId='validation02' className='mb-0' >
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Monto</Form.Label>
+                        <Form.Control type='number' min='0' step='any' size='sm' value={amount} onChange={({ target }) => setAmount(target.value)} />
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
                     </Form.Group>
-            </Form.Row>
-                <Form.Group as={Row} controlId='validation05'>
-                    <Form.Label className='font-weight-bold text-uppercase' column sm={3}>Comentarios: </Form.Label>
-                    <Col sm={9} >
-                        <Form.Control as='textarea' value={comment} rows='3' placeholder='Comentarios...' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
-                    </Col>
-                </Form.Group>
+                    <Form.Group as={Col} sm lg={2} controlId='validation11' className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Moneda</Form.Label>
+                        <Form.Control as='select' size='sm' value={currency} onChange={({target}) => setCurrency(target.value)}>
+                            <option value=''>...</option>
+                            <option value='BS'>Bolivares</option>
+                            <option value='USD'>Dolares</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={2} classNAme='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Descuento</Form.Label>
+                        <Form.Control type='number' size='sm' value={discount} onChange={({target}) => setDiscount(target.value)} disabled={concept === 'iva' ? true : false} className={concept === 'iva' ? 'form-disable' : ''} />
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={2} className='mb-0'>
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Tasa de cambio</Form.Label>
+                        <Form.Control type='number' size='sm' value={exchangeRate} onChange={({target}) => setExchangeRate(target.valueAsNumber)} disabled={currency === 'BS' ? false : true} className={currency === 'BS' ? '' : 'form-disable'} />
+                    </Form.Group>
+                {/* </Form.Row>
+                <Form.Row> */}
+                    <Form.Group as={Col} sm lg={4} controlId='validation03' className='mb-0' >
+                        <Form.Label className='font-weight-bold text-uppercase mb-1'>Metodo de Pago</Form.Label>
+                        <Form.Control as='select' size='sm' value={method} onChange={({ target }) => setMethod(target.value)} >
+                            <option value='' disabled selected hidden >...</option>
+                            <option value='Efectivo' >Efectivo</option>
+                            <option value='Credito de Cortesia' >Credito de Cortesia</option>
+                            <option value='Transferencia Bancaria' >Transferencia Bancaria</option>
+                            <option value='Zelle' >Zelle</option>
+                        </Form.Control>
+                        <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                    </Form.Group>
+                    <Form.Group as={Col} sm lg={5} controlId='validation06' className='mb-0' >
+                            <Form.Label className='font-weight-bold text-uppercase mb-1'>Banco</Form.Label>
+                            <Form.Control as='select' size='sm' value={bank} onChange={({ target }) => setBank(target.value)} disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' }>
+                                <option value='' selected disabled>...</option>
+                                <option value='BNC'>BNC - Banco Nacional de Credito</option>
+                            </Form.Control>
+                            { method === 'Transferencia Bancaria' &&
+                                <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                            }
+                        </Form.Group>
+                        <Form.Group as={Col} sm lg={3} controlId='validation07' className='mb-0'>
+                            <Form.Label className='font-weight-bold text-uppercase mb-1'># de Referencia</Form.Label>
+                            <Form.Control required type='number' size='sm' value={reference} onChange={({ target }) => setReference(target.valueAsNumber) } disabled={method !== 'Transferencia Bancaria' ? true : false} className={method !== 'Transferencia Bancaria' ? 'form-disable' : '' } />
+                            { method === 'Transferencia Bancaria' && 
+                                <Form.Text className='text-muted mb-2'>Obligatorio</Form.Text>
+                            }
+                        </Form.Group>
+                        <Form.Group as={Col} sm lg={12} controlId='validation05'>
+                            <Form.Label className='font-weight-bold text-uppercase mb-1'>Comentarios: </Form.Label>
+                            <Form.Control as='textarea' value={comment} rows='1' id='pay-textarea' onChange={({ target }) => setComment(target.value)} />
+                        </Form.Group>
+                        { !edit &&
+                            <Col sm lg={12} className='text-center'>
+                                <Button variant='primary' className='rounded' onClick={addPayments}>AGREGAR</Button>
+                            </Col>
+                        }
+                </Form.Row>
+                { !edit &&
+                    <>
+                    <h5 className='text-center font-weight-bold'>PAGOS</h5>
+                    {tablePayments}
+                    </>
+                }
                 <Col className='text-center'>
-                    <Button variant='success' type='submit' className='mr-2' >CREAR</Button>
-                    <Button variant='danger' onClick={() => setShowModal(false)} className='ml-2'>CANCELAR</Button>
+                    <Button variant='success' type='submit' className='mr-2 rounded' disabled={arrPayments ? false : true} >{edit ? 'EDITAR' : 'CREAR'}</Button>
+                    <Button variant='danger' onClick={() => setShowModal(false)} className='ml-2 rounded'>CANCELAR</Button>
                 </Col>
             </Form>
         </Col>
@@ -188,10 +248,10 @@ const PayForm = ({client, createPayment, asModal, month, disabled, year, edit, u
     if (asModal) {
         return (
             <Fragment>
-                <Button size='sm' variant={edit ? 'primary' : 'success'} onClick={() => setShowModal(true)} className='ml-2' disabled={disabled}>{edit ? 'EDITAR' : 'AGREGAR PAGO'}</Button>
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} dialogClassName='modal-m-sm' >
-                    <Modal.Header closeButton className='bg-success' >
-                        <Modal.Title className='text-center w-100 text-white' >{edit ? 'EDITAR' : 'AGREGAR'} PAGO</Modal.Title>
+                <Button size='sm' variant={edit ? 'primary' : 'success'} onClick={() => setShowModal(true)} className='ml-2 rounded' {...rest} >{edit ? <FontAwesomeIcon icon={faUserEdit} /> : <FontAwesomeIcon icon={faPlusSquare} className='mr-2' />}{!edit && 'PAGOS'} </Button>
+                <Modal show={showModal} onHide={() => setShowModal(false)} onExit={() => setValid(false)} dialogClassName='modal-m-lg' >
+                    <Modal.Header closeButton className='bg-success py-1' >
+                        <Modal.Title className='text-center w-100 text-white font-weight-bold' >{edit ? 'EDITAR' : 'REGISTRAR'} PAGO</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {formPay}

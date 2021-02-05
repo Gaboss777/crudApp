@@ -20,27 +20,22 @@ const PayClientsView = ({client, user, year, payments, removePayment, list, getC
     }, [])
 
     return (
-        <Container fluid className='px-0'>
-            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO COBRO CLIENTES</h1>
-            <Row >
-                <Col sm lg={4} >
+        <Container fluid className='px-0 my-3 rounded bg-white'>
+            <h3 className='text-center text-white py-2 bg-warning rounded-top font-weight-bold'>REGISTRO COBRO</h3>
+            <Row className='p-3' >
+                <Col sm lg={5} >
                     <DropdownList data={list} action={getClient} labelKey='name' text='CLIENTES' placeholder='Elija un cliente' />
                 </Col>
-                <Col sm lg={2} className='mt-2' >
-                    <SelectionYear disabled={client ? false : true} className={!client ? 'form-disable' : ''} />
+                <Col sm lg={2} >
+                    <SelectionYear disabled={client ? false : true} className={`${!client ? 'form-disable' : ''} rounded-right border border-warning`} />
                 </Col>
-                {client && 
-                    <Col sm lg={4}>
-                        <InfoCard client={client} />
-                    </Col>
-                }
             </Row>
-            <Row>
+            <Row className='pb-3'>
                 { client &&
                 <>
                     { year &&
                     <Col sm lg={12} className='mt-3'>
-                        <h4 className='text-center'>CALENDARIO DE PAGOS</h4>
+                        <h4 className='text-center font-weight-bold'>CALENDARIO DE PAGOS</h4>
                         <Calendar client={client} year={year} payments={payments} removePayment={removePayment} createPayment={createPayment} user={user} updatePayment={updatePayment} />
                     </Col>
                     }

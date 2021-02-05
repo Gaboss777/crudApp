@@ -5,7 +5,7 @@ import PaymentForm from './forms/PaymentForm';
 import InfoPayment from './InfoPayment';
 import Permission from '../../Layouts/Permission'
 
-const Calendar = ({seller, clientsList, createSell, removeSell, sells, year, user}) => {
+const Calendar = ({seller, clientsList, createSell, removeSell, sells, year, user, validationSell}) => {
 
     const handleSellerPayments = () =>{
         let sellsFilter = []
@@ -17,7 +17,7 @@ const Calendar = ({seller, clientsList, createSell, removeSell, sells, year, use
         return sellsFilter
     }
 
-    const sellerPayments = handleSellerPayments()
+    const sellerPayments = year && seller ? handleSellerPayments() : []
  
     const months = [{ id: '01', name: 'enero' }, { id: '02', name: 'febrero' }, { id: '03', name: 'marzo' }, { id: '04', name: 'abril' }, { id: '05', name: 'mayo' }, { id: '06', name: 'junio' }, { id: '07', name: 'julio' }, { id: '08', name: 'agosto' }, { id: '09', name: 'septiembre' }, { id: '10', name: 'octubre' }, { id: '11', name: 'noviembre' }, { id: '12', name: 'diciembre' }]
 
@@ -34,7 +34,7 @@ const Calendar = ({seller, clientsList, createSell, removeSell, sells, year, use
                         <p className='font-weight-bold text-uppercase'>Total Pagos: {totalSells.length}</p>
                         <p className='font-weight-bold text-uppercase'>Total USD: {new Intl.NumberFormat("es-VE").format(totalAmountUsd)}</p>
                         <p className='font-weight-bold text-uppercase'>Total BS: {new Intl.NumberFormat("es-VE").format(totalAmountBs)}</p>
-                        <InfoPayment user={user} removeSell={removeSell} sells={sellerPayments} month={month} clientsList={clientsList} year={year} />
+                        <InfoPayment user={user} removeSell={removeSell} sells={sellerPayments} month={month} clientsList={clientsList} year={year} validationSell={validationSell} />
                         <Permission
                             role={user.role}
                             perform='sellers:create'

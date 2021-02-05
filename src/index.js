@@ -17,7 +17,7 @@ export const store = createStore(
 let authToken = getToken()
 if(authToken){
   setToken(authToken)
-  store.dispatch({type:'SET_CURRENT_USER',payload:jwtDecode(authToken)})
+  store.dispatch({type:'LOGIN_CURRENT_USER',payload:jwtDecode(authToken)})
 }
 
 

@@ -1,11 +1,11 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Button, Form, Row, Modal, Col } from 'react-bootstrap'
 
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Alerts from '../../Utils/Alerts/alerts'
 
-const NewProvider = ({isModal, createProvider}) => {
+const NewProvider = ({isModal, createProvider, provider, updateProvider, edit}) => {
 
     const [name, setName] = useState('')
     const [service, setService] = useState('')
@@ -20,14 +20,26 @@ const NewProvider = ({isModal, createProvider}) => {
             event.stopPropagation()
         } else {
             let newProvider = {name, service}
-            createProvider(newProvider)
-            Alerts.InfoNotify('PROVEEDOR CREADO CON EXITO')
+            if(provider && edit){
+                updateProvider({...newProvider, id: provider.id})
+                Alerts.InfoNotify('PROVEEDOR ACTUALIZACO CON EXITO')
+            } else {
+                createProvider(newProvider)
+                Alerts.InfoNotify('PROVEEDOR CREADO CON EXITO')
+            }
             setName('')
             setService('')
             setShowModal(false)
         }
         setValid(true)
     }
+
+    useEffect(() => {
+        if(edit && provider){
+            setName(provider.name)
+            setService(provider.service)
+        }
+    }, [edit, provider])
 
     const providerForm = (
         <Form onSubmit={onSubmitProvider} noValidate validated={valid}>
@@ -42,8 +54,8 @@ const NewProvider = ({isModal, createProvider}) => {
             </Form.Group>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' variant='success' className='mr-2'>Crear</Button>
-                    <Button type='submit' variant='danger' onClick={() => setShowModal(false)}>Cancelar</Button>
+                    <Button type='submit' variant='success' className='mr-2 rounded'>CREAR</Button>
+                    <Button type='submit' variant='danger' className='rounded' onClick={() => setShowModal(false)}>CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -52,10 +64,10 @@ const NewProvider = ({isModal, createProvider}) => {
     if(isModal) {
         return(
             <Fragment>
-                <Button variant='primary' onClick={() => setShowModal(true)} className='my-2'  ><FontAwesomeIcon icon={faPlusSquare} size='lg' /></Button>
+                <Button variant='primary' size={ edit ? 'sm' : ''} onClick={() => setShowModal(true)} className={edit ? '' : 'rounded-left'} >{edit ? <FontAwesomeIcon icon={faUserEdit} />  : <FontAwesomeIcon icon={faPlusSquare} /> } </Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered size='sm'  >
                     <Modal.Header closeButton className='bg-primary border border-primary' >
-                        <Modal.Title className='text-center w-100 text-white' >Crear Proveedor</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white font-weight-bold' >Crear Proveedor</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='border border-primary'>
                         {providerForm}

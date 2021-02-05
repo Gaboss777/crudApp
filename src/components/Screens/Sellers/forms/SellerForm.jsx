@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import Alerts from '../../../Utils/Alerts/alerts'
+import moment from 'moment'
 
 const SellerForm = ({isModal, createSeller, textBtn, user, editing, sizeBtn, updateSellUser}) => {
 
@@ -19,7 +20,7 @@ const SellerForm = ({isModal, createSeller, textBtn, user, editing, sizeBtn, upd
             setSecondname(user.secondname)
             setLastname(user.lastname)
             setSecondsurname(user.secondsurname)
-            setDate(user.date)
+            setDate(moment(user.date, 'YYYY-MM-DD').format('YYYY-MM-DD'))
             setDocument(user.document)
         }
     }, [user, editing])
@@ -79,8 +80,8 @@ const SellerForm = ({isModal, createSeller, textBtn, user, editing, sizeBtn, upd
         </Form.Row>
             <Row>
                 <Col className='text-center'>
-                    <Button variant='success' type='submit' onClick={() => setShow(false)} className='mr-2'>{editing ? 'EDITAR' : 'AGREGAR'}</Button>
-                    <Button variant='danger' onClick={() => setShow(false)} >CANCELAR</Button>
+                    <Button variant='success' type='submit' onClick={() => setShow(false)} className='mr-2 rounded'>{editing ? 'EDITAR' : 'AGREGAR'}</Button>
+                    <Button variant='danger' className='rounded' onClick={() => setShow(false)} >CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -89,10 +90,10 @@ const SellerForm = ({isModal, createSeller, textBtn, user, editing, sizeBtn, upd
     if(isModal){
         return (
             <>
-                <Button variant='primary' onClick={() => setShow(true)} size={sizeBtn}>{textBtn}</Button>
+                <Button variant='primary' className={editing ? 'rounded' : 'rounded-left'} onClick={() => setShow(true)} size={sizeBtn}>{textBtn}</Button>
                 <Modal show={show} onHide={() => setShow(false)} centered >
                     <Modal.Header closeButton className='bg-primary' >
-                        <Modal.Title className='text-center w-100 text-white' >{editing ? 'EDITAR VENDEDOR' : 'CREAR VENDEDOR'}</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white font-weight-bold' >{editing ? 'EDITAR VENDEDOR' : 'CREAR VENDEDOR'}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {form}

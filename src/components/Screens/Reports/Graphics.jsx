@@ -463,7 +463,7 @@ export const TableLastPayments = ({payments, list, year}) => {
 
     const currentYear = (year ? year : new Date().getFullYear().toString())
     const currentPeriod = handlePeriod(year)
-    console.log(currentYear)
+    
 
     const lastsPay = payments.filter(x => x.period <= currentPeriod && x.period.includes(currentYear) ).sort((a, b) => a.date < b.date ? 1 : -1)
 
@@ -521,8 +521,6 @@ export const TableLastExpenses = ({bills, sells, salaries, year}) => {
         })
         setLastPay(result)
     }
-
-    console.log(lastPay)
 
     useEffect(() => {
         handleLastItem()

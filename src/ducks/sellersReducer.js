@@ -8,6 +8,7 @@ const REMOVE_SELLER = 'REMOVE_SELLER'
 const PAYMENT_SELLER = 'PAYMENT_SELLER'
 const SELLS_LIST = 'SELLS_LIST'
 const REMOVE_SELL = 'REMOVE_SELL'
+const VALIDATION_SELL = 'VALIDATION_SELL'
 const UPDATE_SELLER = 'UPDATE_SELLER'
 
 export const getSellUsersList = () => {
@@ -55,6 +56,16 @@ export const createSell = (data) => {
         Axios.post(apiUrl + '/sells', data)
             .then(res => {
                 dispatch({type: PAYMENT_SELLER, payload: data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const validationSell = (data) => {
+    return dispatch => {
+        Axios.put(apiUrl + `/sells/${data.id}`, data)
+            .then(res => {
+                dispatch({type: VALIDATION_SELL, payload: data})
             })
             .catch(err => console.log(err))
     }
@@ -134,6 +145,11 @@ export const sellerReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 sells: state.sells.filter(p => p.id !== payload)
+            }
+        case VALIDATION_SELL:
+            return {
+                ...state,
+                sells: state.sells.map(sell => sell.id === payload.id ? payload : sell)
             }
         case UPDATE_SELLER:
             return {

@@ -5,7 +5,7 @@ const Info = ({children, classHeader, classBody, classContainer}) => {
     const body = React.Children.map(children, child => child.type.displayName === 'Body' ? child : null)
 
     return (
-        <div className={`border border-dark h-100 ${classContainer}`}>
+        <div className={`border border-dark rounded ${classContainer}`}>
             {header}
             {body}
         </div>
@@ -26,7 +26,7 @@ Info.Header = Header;
 
 const Body = ({children, className}) => {
     return(
-        <div className={`p-3 ${className}`}>
+        <div className={`p-3 bg-white ${className}`}>
             {children}
         </div>
     )

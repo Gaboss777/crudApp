@@ -3,27 +3,29 @@ import { Button, Modal, Table } from 'react-bootstrap'
 import SellerForm from './forms/SellerForm'
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import DeleteAlert from '../../Utils/Alerts/DeleteAlert';
+import ConfirmAlert from '../../Utils/Alerts/ConfirmAlert';
 import Permission from '../../Layouts/Permission';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
 const SellersList = ({list, removeSeller, updateSellUser, role}) => {
 
     const [show, setShow] = useState(false)
 
     const handleDelete = (data) => {
-        toast(<DeleteAlert action={() => removeSeller(data)}/>, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false })
+        toast(<ConfirmAlert title='Desea eliminar el siguiente dato?' action={() => removeSeller(data)}/>, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false })
     }
 
     return (
         <Fragment>
-            <Button variant='primary' onClick={() => setShow(true)} >VENDEDORES</Button>
+            <Button variant='primary' className='rounded-right' onClick={() => setShow(true)} >VENDEDORES</Button>
             <Modal show={show} onHide={() => setShow(false)} size='lg' >
                 <Modal.Header closeButton className='bg-primary'>
                     <Modal.Title className='text-center w-100 text-white'>LISTA DE VENDEDORES</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Table >
-                        <thead>
+                    <Table responsive striped bordered size='sm' className='text-center' >
+                        <thead className='bg-primary text-white'>
                             <tr>
                                 <th>ID</th>
                                 <th>NOMBRES</th>
@@ -35,7 +37,7 @@ const SellersList = ({list, removeSeller, updateSellUser, role}) => {
                         </thead>
                         <tbody>
                             {list.map(user =>
-                                <tr>
+                                <tr className='font-cerecom-sm'>
                                     <td>{user.id}</td>
                                     <td>{user.firstname} {user.secondname} </td>
                                     <td>{user.lastname} {user.secondsurname}</td>
@@ -46,14 +48,14 @@ const SellersList = ({list, removeSeller, updateSellUser, role}) => {
                                             role={role}
                                             perform='sellers:edit'
                                             yes={
-                                                <SellerForm isModal={true} editing={true} user={user} textBtn='Editar' sizeBtn='sm' className='ml-2' updateSellUser={updateSellUser} />
+                                                <SellerForm isModal={true} editing={true} user={user} textBtn={<FontAwesomeIcon icon={faUserEdit} />} sizeBtn='sm' className='ml-2' updateSellUser={updateSellUser} />
                                             }
                                         />
                                         <Permission
                                             role={role}
                                             perform='sellers:remove'
                                             yes={
-                                                <Button className='ml-2' variant='danger' onClick={() => handleDelete(user.id)} size='sm' >ELIMINAR</Button>
+                                                <Button className='ml-2 rounded' variant='danger' onClick={() => handleDelete(user.id)} size='sm' ><FontAwesomeIcon icon={faTrash} /></Button>
                                             }
 
                                         />

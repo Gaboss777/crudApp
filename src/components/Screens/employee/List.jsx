@@ -4,12 +4,12 @@ import InfoPayment from './InfoPayment';
 import moment from 'moment'
 import { useFilteredList } from 'components/Hooks/useFilteredList';
 
-const EmployeeList = ({employies, role, selectRow, selected, criteria, salaries, removeSalaries, year, createPayment, ocupations}) => {
+const EmployeeList = ({employies, role, selectRow, selected, criteria, salaries, removeSalaries, year, month, createPayment, ocupations}) => {
 
     const newList = useFilteredList(criteria, employies);
 
     return(
-        <Table>
+        <Table size='sm' responsive striped bordered className='text-center'>
             <thead className='bg-warning text-white'>
                 <tr>
                     <th><FormCheck type='checkbox' /></th>
@@ -30,7 +30,7 @@ const EmployeeList = ({employies, role, selectRow, selected, criteria, salaries,
                     let nameOcupation = ocupations.filter(x => x.id === e.ocupation_id).map(x => {return x.name})
 
                     return(
-                        <tr className='hover-table' onClick={() => selectRow(!document.getElementById('select_row_' + e.id).checked, e)} >
+                        <tr className='hover-table font-cerecom-sm' onClick={() => selectRow(!document.getElementById('select_row_' + e.id).checked, e)} >
                             <td><FormCheck type='checkbox' checked={selected.find(x => x.id === e.id) ? true : false} onChange={({ target }) => selectRow(target.checked, e)} id={'select_row_' + e.id} /> </td>
                             <td>{e.firstname} {e.secondname}</td>
                             <td>{e.lastname} {e.secondsurname}</td>
@@ -40,7 +40,7 @@ const EmployeeList = ({employies, role, selectRow, selected, criteria, salaries,
                             <td>{e.lastdate ? moment(e.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD') : 'ACTUALMENTE'}</td>
                             <td><Badge variant={!e.lastdate ? 'success' : 'danger'}>{!e.lastdate ? 'ACTIVO' : 'DESPEDIDO'}</Badge></td>
                             <td>
-                                <InfoPayment role={role} user={e} salaries={salaries} year={year} removeSalaries={removeSalaries} createPayment={createPayment} />
+                                <InfoPayment role={role} user={e} salaries={salaries} year={year} removeSalaries={removeSalaries} createPayment={createPayment} month={month} />
                             </td>
                         </tr>
                     )}

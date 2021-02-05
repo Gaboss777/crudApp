@@ -39,7 +39,6 @@ const ReportsClients = ({getBills, getSalaries, getSells, getPayments, getUsersL
 
     return (
         <Container fluid className='px-0 pb-4' >
-            <h1 className='text-center text-white py-2 bg-warning title-section'>DATOS GENERALES</h1>
             <Row>
                 <Col sm lg={2} className='my-2'>
                     <SelectionYear />

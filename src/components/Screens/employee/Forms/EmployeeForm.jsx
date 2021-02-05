@@ -132,8 +132,8 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
         </Form.Row>
             <Row>
                 <Col className='text-center' >
-                    <Button variant='success' type='submit' className='mr-2'>{editing ? 'EDITAR' : 'CREAR'}</Button>
-                    <Button variant='danger' type='submit' onClick={() => setShow(false)} >Cancelar</Button>
+                    <Button variant='success' type='submit' className='mr-2 rounded'>{editing ? 'EDITAR' : 'CREAR'}</Button>
+                    <Button variant='danger' type='submit'  className='rounded' onClick={() => setShow(false)} >CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -142,10 +142,10 @@ const EmployeeForm = ({ isModal, createEmployee, ocupations, editing, user, sele
     if(isModal) {
         return(
         <Fragment>
-            <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShow(true)} className='my-2' ><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} size='lg' /></Button>
+            <Button disabled={editing ? selection.length !== 1 : false} variant='warning' onClick={() => setShow(true)}  ><FontAwesomeIcon icon={editing ? faUserEdit : faUserPlus} /></Button>
             <Modal show={show} onHide={() => setShow(false)} centered onExit={() => setValid(false)} size='lg' >
                 <Modal.Header closeButton className='bg-warning' >
-                    <Modal.Title className='text-center w-100 text-white' >{editing ? 'EDITAR EMPLEADO' : 'CREAR EMPLEADO'}</Modal.Title>
+                    <Modal.Title className='text-center w-100 text-white font-weight-bold' >{editing ? 'EDITAR EMPLEADO' : 'CREAR EMPLEADO'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {formEmploye}

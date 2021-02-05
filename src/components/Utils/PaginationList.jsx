@@ -1,8 +1,27 @@
+import { faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Col, Container, Pagination, Row, Dropdown } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate'
 
-const PaginationList = ({ usersPerPage, list, setUsersPerPage, setCurrentPage, ...rest }) => {
+export const BtnPagination = ({setUsersPerPage, usersPerPage, list}) => {
+    return (
+        <Dropdown onSelect={(k) => setUsersPerPage(k)} >
+            <Dropdown.Toggle variant='dark' id='drop-basic' className='cerecom-bg-dark my-1 rounded'>
+                {usersPerPage == list.length ? 'TODOS' : usersPerPage}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className='border border-dark' >
+                <Dropdown.Item eventKey={15}>15 Registros</Dropdown.Item>
+                <Dropdown.Item eventKey={25}>25 Registros</Dropdown.Item>
+                <Dropdown.Item eventKey={50}>50 Registros</Dropdown.Item>
+                <Dropdown.Item eventKey={100}>100 Registros</Dropdown.Item>
+                <Dropdown.Item eventKey={list.length} disabled={list.length === 0 ? true : false} >TODOS</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    )
+}
+
+const PaginationList = ({ usersPerPage, list, setUsersPerPage, setCurrentPage }) => {
 
     const pageCount = Math.ceil(list.length / usersPerPage)
 
@@ -11,29 +30,16 @@ const PaginationList = ({ usersPerPage, list, setUsersPerPage, setCurrentPage, .
     }
 
     return (
-        <Container fluid className='my-2 align' >
-            <Row>
-                <Col sm lg={1} className='px-0 text-center mr-2'>
-                    <Dropdown onSelect={(k) => setUsersPerPage(k)} >
-                        <Dropdown.Toggle variant='dark' id='drop-basic'>
-                            {usersPerPage == list.length ? 'TODOS' : usersPerPage}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className='border border-dark' >
-                            <Dropdown.Item eventKey={10}>10</Dropdown.Item>
-                            <Dropdown.Item eventKey={20}>20</Dropdown.Item>
-                            <Dropdown.Item eventKey={30}>30</Dropdown.Item>
-                            <Dropdown.Item eventKey={list.length} disabled={list.length === 0 ? true : false} >TODOS</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
-                <Col sm lg={3} className='pl-0'>
+        <Container fluid >
+            <Row className='float-right'>
+                <Col sm lg={4}>
                     <ReactPaginate
-                        previousLabel={'Prev'}
-                        nextLabel={'Next'}
+                        previousLabel={<FontAwesomeIcon icon={faArrowAltCircleLeft} />}
+                        nextLabel={<FontAwesomeIcon icon={faArrowAltCircleRight}  />}
                         breakLabel={'...'}
                         pageCount={pageCount}
                         onPageChange={handlePageChange}
-                        marginPagesDisplayed={1}
+                        marginPagesDisplayed={2}
                         pageRangeDisplayed={1}
                         containerClassName={'pagination-cerecom pagination my-1'}
                         pageClassName={'page-item'}

@@ -2,32 +2,33 @@ import React, { useState } from 'react'
 import { Col, Row, Table, Container } from 'react-bootstrap'
 import moment from 'moment'
 import PaginationList from 'components/Utils/PaginationList'
-
-const TopTable = ({usersPerPage, currentPage, list, setUsersPerPage, setCurrentPage}) => {
-    return (
-    <Row>
-        <Col sm lg={11}>
-            <PaginationList usersPerPage={usersPerPage} currentPage={currentPage} list={list} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
-        </Col>
-    </Row>
-    )
-}
+import { BtnPagination } from 'components/Utils/PaginationList'
 
 export const TableReports = ({reports, data}) => {
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [usersPerPage, setUsersPerPage] = useState(10)
-
+    const [usersPerPage, setUsersPerPage] = useState(15)
+    
     const indexOfLastUser = currentPage * usersPerPage
     const indexOfFirstUser = indexOfLastUser - usersPerPage
     const currentList = reports.slice(indexOfFirstUser, indexOfLastUser)
-
+    
     return(
-    <Container className='px-0'>
-        <TopTable usersPerPage={usersPerPage} currentPage={currentPage} list={reports} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
+        <Container className='px-0'>
+        <Row>
+            <Col sm lg={2} className='mt-2'>
+                <p className='font-weight-bold'>Mostrar del {indexOfFirstUser + 1} al {indexOfLastUser}</p>
+            </Col>
+            <Col sm lg={1}>
+                <BtnPagination setUsersPerPage={setUsersPerPage} usersPerPage={usersPerPage} list={reports} />
+            </Col>
+            <Col sm lg={9}>
+                <PaginationList usersPerPage={usersPerPage} currentPage={currentPage} list={reports} setUsersPerPage={setUsersPerPage} setCurrentPage={setCurrentPage} />
+            </Col>
+        </Row>
         <Row>
             <Col sm lg={12}>
-                <Table >
+                <Table responsive striped bordered size='sm' className='text-center'>
                     <thead className='bg-dark text-white'>
                         <tr>
                             <th>FECHA</th>
@@ -57,7 +58,7 @@ export const TableReports = ({reports, data}) => {
                             let amountFormat = new Intl.NumberFormat("es-VE").format(report.amount)
 
                             return(
-                                <tr>
+                                <tr className='font-cerecom-sm'>
                                     <td>{moment(report.date, 'YYYY-MM-DD').format('YYYY-MM-DD')}</td>
                                     <td>{description[0]}</td>
                                     <td className={info !== 'COBRO CLIENTE' ? 'text-danger' : 'text-success'  } >{info === 'COBRO CLIENTE' ? '+ '+amountFormat : '- '+amountFormat}</td>

@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button, Col, Form, Row, Modal } from 'react-bootstrap';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createOcupation } from '../../../../ducks/rrhhReducer';
 import { connect } from 'react-redux';
 import Alerts from '../../../Utils/Alerts/alerts';
 
-const OcupationForm = ({isModal, createOcupation}) => {
+const OcupationForm = ({isModal, createOcupation, edit, occupation, updateOcupation}) => {
 
     const [name, setName] = useState('')
     const [gerency, setGerency] = useState('')
@@ -22,8 +22,13 @@ const OcupationForm = ({isModal, createOcupation}) => {
             e.stopPropagation()
         } else {
             let newOcupation = {name, gerency}
-            createOcupation(newOcupation)
-            Alerts.InfoNotify("CARGO CREADO")
+            if(edit && occupation){
+                updateOcupation({...newOcupation, id: occupation.id})
+                Alerts.InfoNotify('CARGO ACTUALZIADO')
+            } else {
+                createOcupation(newOcupation)
+                Alerts.InfoNotify("CARGO CREADO")
+            }
             setName('')
             setGerency('')
             setShowModal(false)
@@ -31,6 +36,12 @@ const OcupationForm = ({isModal, createOcupation}) => {
         setValid(true)
     }
 
+    useEffect(() => {
+        if(edit && occupation){
+            setName(occupation.name)
+            setGerency(occupation.gerency)
+        }
+    },[edit, occupation])
 
     const formOcupation = (
         <Form onSubmit={onSubmitOcupation} noValidate validated={valid}>
@@ -45,8 +56,8 @@ const OcupationForm = ({isModal, createOcupation}) => {
             </Form.Group>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' variant='success' className='mr-2'>Crear</Button>
-                    <Button variant='danger' onClick={()=>setShowModal(false)}>Cancelar</Button>
+                    <Button type='submit' variant='success' className='mr-2 rounded'>CREAR</Button>
+                    <Button variant='danger' className='rounded' onClick={()=>setShowModal(false)}>CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -54,10 +65,10 @@ const OcupationForm = ({isModal, createOcupation}) => {
     if(isModal) {
         return (
             <Fragment>
-                <Button variant='primary' onClick={() => setShowModal(true)} className='my-2' ><FontAwesomeIcon icon={faPlusSquare} size='lg' /></Button>
+                <Button variant='primary' size={edit ? 'sm' : ''} onClick={() => setShowModal(true)} className={edit ? '' : 'rounded-left'} >{edit ? <FontAwesomeIcon icon={faUserEdit} /> : <FontAwesomeIcon icon={faPlusSquare} /> }</Button>
                 <Modal show={showModal} onHide={() => setShowModal(false)} centered onExit={() => setValid(false)} size='sm' >
                     <Modal.Header closeButton className='bg-primary' >
-                        <Modal.Title className='text-center w-100 text-white' >CREAR CARGO</Modal.Title>
+                        <Modal.Title className='text-center w-100 text-white font-weight-bold' >{edit ? 'EDITAR' : 'CREAR'} CARGO</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {formOcupation}

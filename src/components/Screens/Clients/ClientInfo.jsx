@@ -2,31 +2,30 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { Badge, Button, Modal, Col, Container, Row, Card } from 'react-bootstrap';
+import { Button, Modal, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
 import moment from 'moment'
 
 
 const ClientInfo = ({ user, selection }) => {
+
+    const [key, setKey] = useState(1)
 
     const [showModal, setShowModal] = useState(false);
 
     return(
         <Fragment>
             <Button disabled={selection.length !== 1 ? true : false} variant='dark' onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faInfoCircle} size='lg' /></Button>
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered size='lg'  >
+            <Modal show={showModal} onHide={() => setShowModal(false)}  >
             { user &&
             <Fragment>
                 <Modal.Header closeButton className='bg-dark' >
                     <Modal.Title className='text-white text-center w-100'>INFORMACION</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Container fluid >
-                        <Row>
-                            <Col sm lg={7} >
-                                <Row>
-                                    <Col sm lg={12} className='pl-0' >
-                                        <h4 className='bg-warning py-2 text-center text-white'>DATOS DEL CLIENTE</h4>
-                                    </Col>
+                <Container fluid >
+                    <Tabs activeKey={key} onSelect={(k) => setKey(k)} id='tab-cerecom' className='nav-fill tab-payment'>
+                        <Tab eventKey={1} title='Datos Generales'>
+                                <Row className='mt-2'>
                                     <Col sm lg={9} className='pl-0'>
                                         <p className='bg-dark border border-dark text-white pl-1 '>RAZON SOCIAL</p>
                                         <p className='font-weight-bold pl-2' >{user.name}</p>
@@ -60,12 +59,9 @@ const ClientInfo = ({ user, selection }) => {
                                         <p className='font-weight-bold pl-2' >{user.lastdate ? moment(user.lastdate, 'YYYY-MM-DD').format('YYYY-MM-DD') : 'YYYY-MM-DD'}</p>
                                     </Col>
                                 </Row>
-                            </Col>
-                            <Col sm lg={5} className='pr-0' >
-                                <Row>
-                                    <Col sm lg={12} className='pl-0' >
-                                        <h4 className='bg-warning py-2 text-center text-white'>PLAN ACTUAL</h4>
-                                    </Col>
+                        </Tab>
+                        <Tab eventKey={2} title='Servicios'>
+                                <Row className='mt-2'>
                                     <Col sm lg={7} className='pl-0'>
                                         <p className='bg-dark border border-dark text-white pl-1'>PLAN</p>
                                         <p className='font-weight-bold pl-2'>{user.service}</p>
@@ -91,8 +87,8 @@ const ClientInfo = ({ user, selection }) => {
                                         <p className='font-weight-bold pl-2'>{user.serial ? user.serial : 'N/A'}</p>
                                     </Col>
                                 </Row>
-                            </Col>
-                        </Row>
+                        </Tab>
+                    </Tabs>
                     </Container>
                 </Modal.Body>
             </Fragment>

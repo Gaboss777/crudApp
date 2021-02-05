@@ -1,3 +1,5 @@
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {useEffect, useState} from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 
@@ -98,8 +100,8 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
             </Form.Row>
             <Row>
                 <Col className='text-center'>
-                    <Button type='submit' variant='success'>Agregar</Button>
-                    <Button variant='danger' onClick={() => setShow(false)} className='ml-2'>Cerrar</Button>
+                    <Button type='submit'  className='rounded' variant='success'>AGREGAR</Button>
+                    <Button variant='danger' onClick={() => setShow(false)} className='ml-2 rounded'>CERRAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -108,10 +110,10 @@ const PaymentForm = ({month, seller, clientsList, isModal, createSell, year}) =>
     if(isModal) {
         return (
             <>
-                <Button variant='success' size='sm' onClick={() => setShow(true)} >Agregar Pago</Button>
+                <Button variant='success' size='sm' onClick={() => setShow(true)} className='rounded' ><FontAwesomeIcon icon={faPlusSquare} className='mr-2' />PAGO</Button>
                 <Modal show={show} onHide={() => setShow(false)} size='lg' centered>
                     <Modal.Header closeButton className='bg-success'>
-                        <Modal.Title className='text-white w-100 text-center'>AGREGAR PAGO</Modal.Title>
+                        <Modal.Title className='text-white w-100 text-center font-weight-bold'>AGREGAR PAGO</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {form}

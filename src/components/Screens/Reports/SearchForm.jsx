@@ -129,7 +129,7 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                 <Col sm lg={3}>
                     <Form.Row>
                         <Form.Group as={Col} sm lg={12}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>TABLA</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>TABLA</Form.Label>
                             <Form.Control required as='select' value={tableData} onChange={({target}) => setTableData(target.value)} >
                                 <option value='' >Elija una opcion</option>
                                 <option value='5'>TODOS</option>
@@ -140,23 +140,23 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                             </Form.Control>
                         </Form.Group>
                         <Col sm lg={12} className='mt-3'>
-                            <Button variant='primary' type='submit'>BUSCAR</Button>
-                            <Button variant='danger' className='ml-2' onClick={handleResetFilters} disabled={tableData ? false : true} >REINICIAR</Button>
+                            <Button variant='primary' type='submit' className='rounded'>BUSCAR</Button>
+                            <Button variant='danger' className='ml-2 rounded' onClick={handleResetFilters} disabled={tableData ? false : true} >REINICIAR</Button>
                         </Col>
                     </Form.Row>
                 </Col>
                 <Col sm lg={9}>
                     <Form.Row>
                         <Form.Group as={Col} sm lg={3}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>FECHA INICIAL</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>FECHA INICIAL</Form.Label>
                             <Form.Control type='date' value={initialDate} onChange={({target}) => setInitialDate(target.value)} />
                         </Form.Group>
                         <Form.Group as={Col} sm lg={3}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>FECHA FINAL</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>FECHA FINAL</Form.Label>
                             <Form.Control type='date' value={lastDate} onChange={({target}) => setLastDate(target.value)} />
                         </Form.Group>
                         {/* <Form.Group as={Col} sm lg={6}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>OTRAS OPCIONES</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>OTRAS OPCIONES</Form.Label>
                             <Row className='mt-3'>
                                 <Col sm lg={3}><Form.Check label='7 dias' type='radio' name='report' onChange={() => setMoreOptions('7 dias')}  /></Col>
                                 <Col sm lg={3}><Form.Check label='1 Mes' type='radio' name='report' onChange={() => setMoreOptions('1 mes')} /></Col>
@@ -167,15 +167,15 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col} sm lg={2}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>MONTO MIN</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>MONTO MIN</Form.Label>
                             <Form.Control type='number' value={minAmount} onChange={({target}) => setMinAmount(target.valueAsNumber)} />
                         </Form.Group>
                         <Form.Group as={Col} sm lg={2}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>MONTO MAX</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>MONTO MAX</Form.Label>
                             <Form.Control type='number' value={maxAmount} onChange={({target}) => setMaxAmount(target.valueAsNumber)} />
                         </Form.Group>
                         <Form.Group as={Col} sm lg={2}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>MONEDA</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>MONEDA</Form.Label>
                             <Form.Control as='select' value={currency} onChange={({target}) => setCurrency(target.value)} >
                                 <option value='' selected>Todo</option>
                                 <option value='USD'>USD</option>
@@ -183,7 +183,7 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                             </Form.Control>
                         </Form.Group>
                         <Form.Group as={Col} sm lg={3}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>METODO DE PAGO</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>METODO DE PAGO</Form.Label>
                             <Form.Control as='select' value={method} onChange={({target}) => setMethod(target.value)} >
                                 <option value='' selected>Todo</option>
                                 <option value='Efectivo'>Efectivo</option>
@@ -192,7 +192,7 @@ const SearchForm = ({sells, bills, salaries, payments, createReports}) => {
                             </Form.Control>
                         </Form.Group>
                         <Form.Group as={Col} sm lg={3}>
-                            <Form.Label className='w-100 pl-2 bg-dark font-weight-bold text-white'>CONCEPTO</Form.Label>
+                            <Form.Label className='w-100 mb-0 pl-2 bg-dark font-weight-bold text-white'>CONCEPTO</Form.Label>
                             <Form.Control 
                                 as='select' 
                                 value={concept} 

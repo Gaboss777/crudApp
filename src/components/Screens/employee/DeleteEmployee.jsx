@@ -17,7 +17,7 @@ const DeleteEmployee = ({selection, deleteEmployees}) => {
 
     return(
     <>
-        <Button disabled={ selection.length===0 ? true : false} className='my-2' variant='warning' onClick={() => setShow(true)} size='lg' ><FontAwesomeIcon icon={faTrash} /></Button>
+        <Button disabled={ selection.length===0 ? true : false} variant='danger' onClick={() => setShow(true)} ><FontAwesomeIcon icon={faTrash} /></Button>
         <Modal show={show} onHide={() => setShow(false)} centered size='lg' >
             <Modal.Header closeButton className='bg-danger' >ELIMINAR DATOS</Modal.Header>
             <Modal.Body>
@@ -58,7 +58,7 @@ const DeleteEmployee = ({selection, deleteEmployees}) => {
                     </Row>
                     <Row className='text-center'>
                         <Col>
-                            <Button variant='danger' type='submit' className='mx-2' onClick={handleClick} >Confirmar</Button>
+                            <Button variant='danger' type='submit' className='mx-2 rounded' onClick={handleClick} >CONFIRMAR</Button>
                         </Col>
                     </Row>
                 </Container>

@@ -44,12 +44,13 @@ const rules = {
             'profiles:edit',
             'profiles:remove',
             'status-page:visual',
-            'check'
+            'check',
+            'test-page:visual',
+            'subLinks-page:visual'
         ]
     },
     vendedor: {
         static: [
-            'dashboard-page:visual',
             'payments-section:visual',
             'sellers-page:visual',
         ]
@@ -62,7 +63,11 @@ const rules = {
             'clients:actions',
             'clients:info',
             'payments-section:visual',
-            'payments:create'
+            'paymentsClient-page:visual',
+            'paymentsClient:create',
+            'paymentsClient:edit',
+            'paymentsClient:remove',
+            'status-page:visual',
         ]
     },
     asistente: {

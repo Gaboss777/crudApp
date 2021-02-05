@@ -1,27 +1,30 @@
 import React, { useState } from 'react'
 import { Button, Modal, Table } from 'react-bootstrap'
 import {toast} from 'react-toastify'
-import DeleteAlert from '../../Utils/Alerts/DeleteAlert'
+import ConfirmAlert from '../../Utils/Alerts/ConfirmAlert'
 import Permission from '../../Layouts/Permission'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import OcupationForm from './Forms/OcupationForm'
 
-const OcupationList = ({ocupations, removeOcupation, role}) => {
+const OcupationList = ({ocupations, removeOcupation, role, updateOcupation}) => {
 
     const [show, setShow] = useState(false)
 
     const handleDelete = (data) => {
-        toast(<DeleteAlert action={() => removeOcupation(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
+        toast(<ConfirmAlert title='Desea eliminar los datos?' action={() => removeOcupation(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
     }
 
     return(
         <>
-            <Button variant='primary' onClick={() => setShow(true)} className='my-2'>CARGOS</Button>
+            <Button variant='primary' onClick={() => setShow(true)} className='rounded-right'>CARGOS</Button>
             <Modal show={show} onHide={() => setShow(false)} >
                 <Modal.Header closeButton className='bg-primary' >
-                    <Modal.Title className='text-center w-100 text-white' >LISTA DE CARGOS</Modal.Title>
+                    <Modal.Title className='text-center w-100 text-white font-weight-bold'>LISTA DE CARGOS</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Table>
-                        <thead className='bg-primary text-white text-center'>
+                    <Table size='sm' striped bordered responsive className='text-center'>
+                        <thead className='bg-primary text-white'>
                             <tr>
                                 <th>CARGO</th>
                                 <th>GERENCIA</th>
@@ -30,15 +33,22 @@ const OcupationList = ({ocupations, removeOcupation, role}) => {
                         </thead>
                         <tbody>
                         {ocupations.map(ocu =>
-                            <tr className='text-center'>
+                            <tr className='font-cerecom-sm'>
                                 <td>{ocu.name}</td>
                                 <td>{ocu.gerency}</td>
                                 <td>
+                                    <Permission 
+                                        role={role}
+                                        perform='employies:edit'
+                                        yes={
+                                            <OcupationForm edit={true} isModal={true} updateOcupation={updateOcupation} occupation={ocu} />
+                                        }
+                                    />
                                     <Permission
                                         role={role}
-                                        perform='occupations:remove'
+                                        perform='employies:remove'
                                         yes={
-                                            <Button variant='danger' size='sm' onClick={() => handleDelete(ocu.id)} >Eliminar</Button>
+                                            <Button variant='danger' className='ml-2' size='sm' onClick={() => handleDelete(ocu.id)} ><FontAwesomeIcon icon={faTrash} /></Button>
                                         }
                                     />
                                 </td>

@@ -1,27 +1,30 @@
 import React, { useState } from 'react'
 import { Button, Modal, Table } from 'react-bootstrap'
-import DeleteAlert from '../../Utils/Alerts/DeleteAlert'
+import ConfirmAlert from '../../Utils/Alerts/ConfirmAlert'
 import {toast} from 'react-toastify'
 import Permission from '../../Layouts/Permission'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import NewProvider from './CreateProvider'
 
-const Listprovider = ({providers, removeProvider, user}) => {
+const Listprovider = ({providers, removeProvider, user, updateProvider}) => {
 
     const [show, setShow] = useState(false)
 
     const handleDelete = (data) => {
-        toast(<DeleteAlert action={() => removeProvider(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
+        toast(<ConfirmAlert title='Desea eliminar los datos?' action={() => removeProvider(data)} />, {position: toast.POSITION.BOTTOM_CENTER, autoClose: false} )
     }
 
     return (
         <>
-            <Button variant='primary' onClick={() => setShow(true)} className='my-2' >Proveedores</Button>
+            <Button variant='primary' onClick={() => setShow(true)} className='rounded-right' >Proveedores</Button>
             <Modal show={show} onHide={() => setShow(false)}>
                 <Modal.Header closeButton className='bg-primary'>
-                    <Modal.Title className='text-white text-center w-100'>Lista de Proveedores</Modal.Title>
+                    <Modal.Title className='text-white text-center w-100 font-weight-bold'>Lista de Proveedores</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Table>
-                        <thead>
+                    <Table size='sm' responsive striped bordered className='text-center' >
+                        <thead className='bg-primary text-white'>
                             <tr>
                                 <th>RAZON SOCIAL</th>
                                 <th>SERVICIO</th>
@@ -29,16 +32,23 @@ const Listprovider = ({providers, removeProvider, user}) => {
                             </tr>
                         </thead>
                         <tbody>
-                        {providers.map(p => 
-                            <tr>
-                                <td>{p.name}</td>
-                                <td>{p.service}</td>
+                        {providers.map(provider => 
+                            <tr  className='font-cerecom-sm'>
+                                <td>{provider.name}</td>
+                                <td>{provider.service}</td>
                                 <td>
+                                    <Permission 
+                                        role={user.role}
+                                        perform='providers:edit'
+                                        yes={
+                                            <NewProvider edit={true} provider={provider} updateProvider={updateProvider} isModal={true} />
+                                        }
+                                    />
                                     <Permission 
                                         role={user.role}
                                         perform='providers:remove'
                                         yes={
-                                            <Button variant='danger' onClick={() => handleDelete(p.id)} size='sm'>Eliminar</Button>
+                                            <Button variant='danger' size='sm' className='ml-2' onClick={() => handleDelete(provider.id)} ><FontAwesomeIcon icon={faTrash} /></Button>
                                         }
                                     />
                                 </td>

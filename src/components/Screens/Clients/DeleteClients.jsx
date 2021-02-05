@@ -17,10 +17,10 @@ const DeleteClients = ({ selection,deleteUser }) => {
     }
     return (
         <Fragment>
-            <Button disabled={selection.length===0} variant='danger' onClick={() => setShow(true)}><FontAwesomeIcon icon={faTrashAlt} size='lg' /></Button>
+            <Button disabled={selection.length===0} variant='danger' onClick={() => setShow(true)}><FontAwesomeIcon icon={faTrashAlt}/></Button>
             <Modal show={show} onHide={() => setShow(false)} dialogClassName='modal-xlg' >
                 <Modal.Header closeButton className='bg-danger' >
-                    <Modal.Title className='text-center w-100 text-white' >Eliminar Datos</Modal.Title>
+                    <Modal.Title className='text-center w-100 text-white font-weight-bold' >Eliminar Datos</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container >
@@ -70,7 +70,7 @@ const DeleteClients = ({ selection,deleteUser }) => {
                         </Row>
                         <Row className='text-center'>
                             <Col>
-                                <Button variant='danger' type='submit' className='mx-2' onClick={handleClick} >Confirmar</Button>
+                                <Button variant='danger' type='submit' className='mx-2 rounded' onClick={handleClick} >Confirmar</Button>
                             </Col>
                         </Row>
                     </Container>

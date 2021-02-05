@@ -14,20 +14,25 @@ const Calendar = ({client, year, user, payments, removePayment, createPayment, u
     <Container fluid >
         <Row>
             {months.map(month => {
-                let isPayedBs = clientPayments.filter(x=>x.period===month.id+'-'+year).filter(x=>x.currency==='BS').reduce((a,b) => { return a + b.amount; }, 0)
-                let isPayedUSD = clientPayments.filter(x=>x.period===month.id+'-'+year).filter(x=>x.currency==='USD').reduce((a,b) => { return a + b.amount; }, 0)
-                let totalPayed = clientPayments.filter(x=>x.period===month.id+'-'+year).filter(x=>x.concept === 'mensualidad').reduce((a,b) => {return a + b.amount}, 0)
+                let filterByMonth = clientPayments.filter(x=>x.period===month.id+'-'+year)
+                let isPayedBs = filterByMonth.filter(x=>x.currency==='BS').reduce((a,b) => { return a + b.amount; }, 0)
+                let isPayedUSD = filterByMonth.filter(x=>x.currency==='USD').reduce((a,b) => { return a + b.amount; }, 0)
+                let validation = filterByMonth.map(x => x.validation)
+                let period = filterByMonth.map(x => x.period)
+
+                console.log(period)
 
                 return(
                     <Month title={month.name}>
-                        <p className='font-weight-bold text-uppercase'>MENSUALIDAD: <Badge variant={totalPayed >= client.mensuality ? 'success' : 'danger'}>{totalPayed >= client.mensuality ? 'PAGADO' : 'PENDIENTE'}</Badge></p>
-                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO BS: {new Intl.NumberFormat("es-VE").format(isPayedBs)}</p>
-                        <p className='font-weight-bold text-uppercase'>TOTAL PAGADO USD: {new Intl.NumberFormat("es-VE").format(isPayedUSD)}</p>
+                        <p className='font-weight-bold text-uppercase'>MENSUALIDAD: <Badge variant={ validation.includes(1) && period.includes(month.id+'-'+year)  ? 'success' : 'danger'}>{validation.includes(1) && period.includes(month.id+'-'+year) ? 'PAGADO' : 'PENDIENTE'}</Badge></p>
+                        <p className='font-weight-bold text-uppercase mb-1'>TOTAL PAGADO:</p>
+                        <p className='font-weight-bold text-uppercase mb-1'>{new Intl.NumberFormat("es-VE", { style: 'currency', currency: 'VES', minimumFractionDigits: 2 }).format(isPayedBs)}</p>
+                        <p className='font-weight-bold text-uppercase'>{new Intl.NumberFormat("en-US", { style: 'currency', currency: 'USD'}).format(isPayedUSD)}</p>
                         <InfoPayments month={month} user={user} payments={clientPayments} year={year} removePayment={removePayment} updatePayment={updatePayment} client={client} />
                         <Permission
                             role={user.role}
                             perform='paymentsClient:create'
-                            yes={<PayForm edit={false} asModal={true} month={month} year={year} createPayment={createPayment} client={client} />}
+                            yes={<PayForm edit={false} asModal={true} month={month} year={year} createPayment={createPayment} client={client} disabled={validation.includes(1) && period.includes(month.id+'-'+year)} />}
                          />
 
                     </Month>

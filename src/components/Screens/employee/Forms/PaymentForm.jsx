@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { useDayspermonth } from 'components/Hooks/useDayspermonth'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import Alerts from '../../../Utils/Alerts/alerts'
 
-const PaymentForm = ({months, user, isModal, createPayment, year }) => {
+const PaymentForm = ({month, user, isModal, createPayment, year }) => {
 
-    const [month, setMonth] = useState('')
     const [concept, setConcept] = useState('')
     const [amount, setAmount] = useState()
     const [currency, setCurrency] = useState('')
@@ -15,24 +17,10 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
 
     const [show, setShow] = useState(false)
     const [valid, setValid] = useState(false)
-    const [days, setDays] = useState(0)
 
     const completeName = user.firstname.toUpperCase() +' '+ user.secondname.toUpperCase() +' '+ user.lastname.toUpperCase() +' '+ user.secondsurname.toUpperCase()
 
-    const handlerDays = (id) => {
-        setMonth(id)
-        if(id === '01' || id === '03' || id === '05' || id === '07' || id === '08' || id === '10' || id === '12' ) {
-            setDays(31)
-        } if(id === '04' || id === '06' || id === '09' || id === '11') {
-            setDays(30)
-        } if(id === '02') {
-            if((year - 2016) % 4 === 0 ) {
-                setDays(29)
-            } else {
-                setDays(28)
-            }
-        }
-    }
+    const days = useDayspermonth(month, year)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -55,22 +43,15 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
         setValid(true)
     }
 
+    useEffect(() =>{
+    }, [month])
+
     const formjsx = (
         <Form onSubmit={onSubmit} notValidate validated={valid}>
             <Form.Row>
-                <Form.Group as={Col} sm lg={6}>
+                <Form.Group as={Col} sm lg={9}>
                     <Form.Label className='font-weight-bold text-uppercase'>EMPLEADO</Form.Label>
                     <Form.Control type='text' value={completeName} readOnly plaintext className='form-disable' />
-                </Form.Group>
-                <Form.Group as={Col} sm lg={3}>
-                    <Form.Label className='font-weight-bold text-uppercase'>MES</Form.Label>
-                    <Form.Control required as='select' value={month} onChange={({target}) => handlerDays(target.value)} >
-                        <option value='' selected disabled>Elegir Mes..</option>
-                        {months.map(m =>
-                            <option value={m.id}>{m.name}</option>
-                        )}
-                    </Form.Control>
-                    <Form.Text className='text-muted'>Campo obligatorio</Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} sm lg={3}>
                     <Form.Label className='font-weight-bold text-uppercase'>FECHA DE PAGO</Form.Label>
@@ -135,8 +116,8 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
             </Form.Row>
             <Row>
                 <Col className='text-center'>
-                    <Button variant='success' type='submit' className='mr-2' >Crear Pago</Button>
-                    <Button variant='danger' onClick={() => setShow(false)}>Cancelar</Button>
+                    <Button variant='success' type='submit' className='mr-2 rounded' >CREAR</Button>
+                    <Button variant='danger' className='rounded' onClick={() => setShow(false)}>CANCELAR</Button>
                 </Col>
             </Row>
         </Form>
@@ -145,10 +126,10 @@ const PaymentForm = ({months, user, isModal, createPayment, year }) => {
     if(isModal) {
         return (
             <>
-            <Button variant='success' onClick={() => setShow(true)} className='mr-2' disabled={year ? false : true}>Pago</Button>
+            <Button variant='success' onClick={() => setShow(true)} className='mr-2 rounded' disabled={year && month ? false : true}><FontAwesomeIcon icon={faPlusSquare} className='mr-2' />Pago</Button>
             <Modal show={show} dialogClassName='modal-m-sm' onHide={() => setShow(false)} centered onExit={() => setValid(false)} >
                 <Modal.Header closeButton className='bg-success'>
-                    <Modal.Title className='text-center w-100 text-white' >AGREGAR PAGO</Modal.Title>
+                    <Modal.Title className='text-center w-100 text-white font-weight-bold' >AGREGAR PAGO</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {formjsx}

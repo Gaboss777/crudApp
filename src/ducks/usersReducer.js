@@ -22,6 +22,10 @@ export const actionCreator = (resource) => {
 
 const ACTIONS = actionCreator('user');
 const CLEAR_SELECTED_ROW = 'CLEAR_SELECTED_ROW'
+const MENSUALITY_LIST = 'MENSUALITY_LIST'
+const CREATE_MENSUALITY = 'CREATE_MENSUALITY'
+const REMOVE_MENSUALITY = 'REMOVE_MENSUALITY'
+const UPDATE_MENSUALITY = 'UPDATE_MENSUALITY'
 
 export const getUserList = () => {
     return dispatch => {
@@ -64,7 +68,6 @@ export const removeUser = (selection) => {
 }
 
 export const updateUser = (user) => {
-    console.log(user)
     return dispatch => {
         dispatch({ type: ACTIONS.UPDATE_REQUESTED })
         Axios.put(apiUrl + `/users/${user.id}`, user).then(res => {
@@ -74,6 +77,46 @@ export const updateUser = (user) => {
                 console.log(err)
                 dispatch({ type: ACTIONS.UPDATE_FAILED, payload: err })
             })
+    }
+}
+
+export const getMensualityList = () => {
+    return dispatch => {
+        Axios.get(apiUrl + '/mensualities')
+            .then(res => {
+                dispatch({type: MENSUALITY_LIST, payload: res.data.data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const createMensuality = (data) => {
+    return dispatch => {
+        Axios.post(apiUrl + '/mensualities', data)
+            .then(res => {
+                dispatch({type: CREATE_MENSUALITY, payload: data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const updateMensuality = (data) => {
+    return dispatch => {
+        Axios.put(apiUrl + `/mensualities/${data.id}`, data)
+            .then(res => {
+                dispatch({type: UPDATE_MENSUALITY, payload: data})
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const removeMensuality = (id) => {
+    return dispatch => {
+        Axios.delete(apiUrl + `/mensualities/${id}`)
+            .then(res => {
+                dispatch({type: REMOVE_MENSUALITY, payload: id})
+            })
+            .catch(err => console.log(err))
     }
 }
 
@@ -98,7 +141,8 @@ export const clearSelectedRow = () => {
 const initialState = {
     list: [],
     selected: [],
-    loading: false
+    loading: false,
+    mensuality: []
 }
 
 
@@ -169,6 +213,26 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 selected: initialState.selected
+            }
+        case MENSUALITY_LIST:
+            return {
+                ...state,
+                mensuality: payload
+            }
+        case CREATE_MENSUALITY:
+            return {
+                ...state,
+                mensuality: [...state.mensuality, payload]
+            }
+        case REMOVE_MENSUALITY:
+            return {
+                ...state,
+                mensuality: state.mensuality.filter(x => x.id !== payload)
+            }
+        case UPDATE_MENSUALITY:
+            return {
+                ...state,
+                mensuality: [...state.mensuality.map(men => men.id === payload.id ? payload : men)]
             }
         default:
             return state

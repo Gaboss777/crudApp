@@ -7,10 +7,10 @@ import DeleteEmployee from './DeleteEmployee';
 import SearchData from '../../Utils/SearchData';
 import OcupationList from './OcupationList';
 import { connect } from 'react-redux';
-import { removeOcupation, createEmployee, updateEmployee, getOcupationsList, deleteEmployee, createPayment, selectRow, getEmployies, getSalaries, removeSalaries, clearSelectedRow } from '../../../ducks/rrhhReducer';
+import { removeOcupation, createEmployee, updateEmployee, getOcupationsList, deleteEmployee, createPayment, selectRow, getEmployies, getSalaries, removeSalaries, clearSelectedRow, updateOcupation } from '../../../ducks/rrhhReducer';
 import Permission from '../../Layouts/Permission';
 
-const EmployeeView = ({ocupations, role, removeOcupation, user, selection, createEmployee, updateEmployee, deleteEmployees, createPayment, getSalaries, getEmployies, year, salaries, employies, getOcupationsList, removeSalaries, selectRow, clearSelectRow}) => {
+const EmployeeView = ({ocupations, role, removeOcupation, user, selection, createEmployee, updateEmployee, deleteEmployees, createPayment, getSalaries, getEmployies, year, month, salaries, employies, getOcupationsList, removeSalaries, selectRow, clearSelectRow, updateOcupation}) => {
 
     const [criteria, setCriteria] = useState('')
 
@@ -24,9 +24,9 @@ const EmployeeView = ({ocupations, role, removeOcupation, user, selection, creat
     },[])
 
     return (
-        <Container fluid className='px-0'>
-            <h1 className='text-center text-white py-2 bg-warning title-section'>REGISTRO PAGO EMPLEADO</h1>
-            <Row>
+        <Container fluid className='my-3 px-0 rounded bg-white'>
+            <h3 className='text-center text-white py-2 bg-warning font-weight-bold rounded-top'>REGISTRO PAGO EMPLEADO</h3>
+            <Row className='px-3'>
                 <Permission
                     role={role}
                     perform='employies:actions'
@@ -60,27 +60,21 @@ const EmployeeView = ({ocupations, role, removeOcupation, user, selection, creat
                 />
                 <Permission
                     role={role}
-                    perform='occupations:list'
+                    perform='employies:create'
                     yes={
                         <Col sm lg={2}>
                             <ButtonGroup>
-                            <Permission
-                                role={role}
-                                perform='occupations:create'
-                                yes={
-                                    <OcupationForm isModal={true} />
-                                }
-                            />
-                                <OcupationList role={role} ocupations={ocupations} removeOcupation={removeOcupation} />
+                                <OcupationForm isModal={true} edit={false} />
+                                <OcupationList role={role} ocupations={ocupations} removeOcupation={removeOcupation} updateOcupation={updateOcupation} />
                             </ButtonGroup>
                         </Col>
                     }
                 />
-                <Col sm lg={3} className='mt-2'>
+                <Col sm lg={4}>
                     <SearchData criteria={criteria} setCriteria={setCriteria} />
                 </Col>
                 <Col sm lg={12}>
-                    <EmployeeList role={role} criteria={criteria} createPayment={createPayment} selectRow={selectRow} selected={selection} year={year} salaries={salaries} employies={employies} removeSalaries={removeSalaries} ocupations={ocupations} />
+                    <EmployeeList role={role} criteria={criteria} createPayment={createPayment} selectRow={selectRow} selected={selection} year={year} salaries={salaries} employies={employies} removeSalaries={removeSalaries} ocupations={ocupations} month={month} />
                 </Col>
             </Row>
         </Container>
@@ -95,7 +89,8 @@ const MSTP = state => (
         employies: state.rrhh.employies,
         salaries: state.rrhh.salaries,
         year: state.dates.year,
-        role: state.auth.user.role
+        role: state.auth.user.role,
+        month: state.dates.month
     }
 )
 
@@ -111,7 +106,8 @@ const MDTP = dispatch => (
         getEmployies: () => dispatch(getEmployies()),
         getSalaries: () => dispatch(getSalaries()),
         removeSalaries: (data) => dispatch(removeSalaries(data)),
-        clearSelectRow: () => dispatch(clearSelectedRow())
+        clearSelectRow: () => dispatch(clearSelectedRow()),
+        updateOcupation: (data) => dispatch(updateOcupation(data))
     }
 )
 
